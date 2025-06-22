@@ -6,13 +6,18 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable in .env.local');
 }
 
-let cached = (global as unknown as { mongoose?: { conn: unknown; promise: unknown } }).mongoose;
+type MongooseCache = { conn: unknown; promise: unknown };
+let cached = (global as unknown as { mongoose?: MongooseCache }).mongoose;
 
 if (!cached) {
-  cached = (global as unknown as { mongoose: { conn: unknown; promise: unknown } }).mongoose = { conn: null, promise: null };
+  cached = (global as unknown as { mongoose: MongooseCache }).mongoose = { conn: null, promise: null };
 }
 
 async function dbConnect() {
+  // Ensure cached is always defined
+  if (!cached) {
+    cached = (global as unknown as { mongoose: MongooseCache }).mongoose = { conn: null, promise: null };
+  }
   if (cached.conn) return cached.conn;
   if (!cached.promise) {
     cached.promise = mongoose.connect(MONGODB_URI, {
