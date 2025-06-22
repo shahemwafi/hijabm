@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     country,
     city,
     description,
-    imageUrl: (uploadResult as any).secure_url,
+    imageUrl: (uploadResult as { secure_url: string }).secure_url,
     status: 'pending',
   });
   await profile.save();

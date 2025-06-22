@@ -26,7 +26,7 @@ export default function SubmitPage() {
         setSuccess("Profile submitted! Awaiting approval.");
         form.reset();
       }
-    } catch (err) {
+    } catch {
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
