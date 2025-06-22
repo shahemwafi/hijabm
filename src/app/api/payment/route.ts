@@ -1,0 +1,6 @@
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(req: NextRequest) {
+  // TODO: Handle PayFast payment verification
+  return NextResponse.json({ message: 'Payment verification endpoint' });
+} 
