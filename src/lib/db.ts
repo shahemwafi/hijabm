@@ -7,7 +7,6 @@ interface MongooseCache {
 }
 
 declare global {
-  // eslint-disable-next-line no-var
   var mongoose: MongooseCache | undefined;
 }
 
@@ -17,8 +16,7 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable in .env.local or Vercel dashboard');
 }
 
-let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
-
+const cached: MongooseCache = global.mongoose || { conn: null, promise: null };
 global.mongoose = cached;
 
 async function dbConnect(): Promise<Mongoose> {
