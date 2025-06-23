@@ -8,7 +8,7 @@ export default function HomePage() {
       {/* Cover Image */}
       <div className="w-full flex justify-center bg-gradient-to-b from-green-100/60 to-blue-100/0 pt-8">
         <Image
-          src="/.png"
+          src="/cover.png"
           alt="Hijab Marriage Bureau Cover"
           width={800}
           height={320}
