@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/db';
-import Profile, { IProfile } from '@/models/Profile';
+import Profile from '@/models/Profile';
 import Image from 'next/image';
 import { FaVenusMars, FaRing, FaGlobe, FaUser } from 'react-icons/fa';
 
@@ -18,7 +18,7 @@ function getFlagEmoji(country: string) {
 
 export default async function PortfolioPage() {
   await dbConnect();
-  const profiles: IProfile[] = await Profile.find({ status: 'approved' }).sort({ createdAt: -1 }).lean();
+  const profiles = await Profile.find({ status: 'approved' }).sort({ createdAt: -1 }).lean();
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-8">
@@ -29,7 +29,7 @@ export default async function PortfolioPage() {
         )}
         {profiles.map((profile) => (
           <div
-            key={profile._id.toString()}
+            key={profile._id as string}
             className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center border border-green-100 hover:shadow-2xl hover:scale-105 transition-transform duration-200"
           >
             <div className="w-24 h-24 mb-4 relative">
