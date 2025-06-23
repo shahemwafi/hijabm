@@ -1,11 +1,23 @@
 import Link from 'next/link';
 import { FaUserShield, FaHeart, FaLock, FaStar } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 flex flex-col items-center justify-center">
+      {/* Cover Image */}
+      <div className="w-full flex justify-center bg-gradient-to-b from-green-100/60 to-blue-100/0 pt-8">
+        <Image
+          src="/.png"
+          alt="Hijab Marriage Bureau Cover"
+          width={800}
+          height={320}
+          className="rounded-3xl shadow-xl object-cover w-full max-w-4xl h-64 md:h-80 lg:h-96"
+          priority
+        />
+      </div>
       {/* Hero Section */}
-      <section className="flex flex-col items-center text-center mt-16 mb-12">
+      <section className="flex flex-col items-center text-center mt-8 mb-12">
         <h1 className="text-5xl md:text-7xl font-extrabold text-green-900 mb-4 drop-shadow-lg">Hijab Marriage Bureau</h1>
         <p className="text-xl md:text-2xl text-green-800 mb-8 max-w-2xl">
           A secure, Shariah-compliant rishta platform for Pakistan & the world. Dignified, private, and easy matchmaking for Muslims everywhere.
