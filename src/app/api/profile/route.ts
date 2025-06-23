@@ -7,6 +7,9 @@ import { containsContactInfo } from '@/lib/validate';
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
+  if (process.env.MOCK_MODE === 'true') {
+    return NextResponse.json({ message: 'Mock profile submitted successfully', profileId: 'mock-id' });
+  }
   await dbConnect();
   const formData = await req.formData();
 
