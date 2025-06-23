@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
-import { FaUserShield, FaLock, FaCheck, FaTimes, FaUser, FaVenusMars, FaEnvelope, FaImage } from 'react-icons/fa';
+import { useState } from "react";
+import { FaUserShield, FaLock, FaCheck, FaTimes, FaUser, FaVenusMars, FaEnvelope } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface Profile {
   _id: string;
@@ -98,7 +99,7 @@ export default function AdminPage() {
             {profiles.map((profile) => (
               <div key={profile._id} className="bg-green-50 rounded-xl shadow p-6 flex flex-col gap-2 border border-green-100">
                 <div className="flex items-center gap-4 mb-2">
-                  <img src={profile.imageUrl} alt={profile.name} className="w-20 h-20 rounded-full object-cover border-2 border-green-300 shadow" />
+                  <Image src={profile.imageUrl} alt={profile.name} width={80} height={80} className="w-20 h-20 rounded-full object-cover border-2 border-green-300 shadow" />
                   <div>
                     <div className="font-bold text-green-900 text-lg flex items-center gap-2"><FaUser /> {profile.name}</div>
                     <div className="text-green-700 text-sm flex items-center gap-2"><FaVenusMars /> {profile.gender} | Age: {profile.age}</div>
