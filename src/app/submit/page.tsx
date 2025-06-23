@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import { FaInfoCircle, FaUser, FaVenusMars, FaBirthdayCake, FaRing, FaRulerVertical, FaGlobe, FaCity, FaImage } from "react-icons/fa";
+import Image from "next/image";
 
 export default function SubmitPage() {
   const [loading, setLoading] = useState(false);
@@ -95,14 +96,14 @@ export default function SubmitPage() {
         <div className="flex flex-col gap-2">
           <label className="font-semibold text-green-800 flex items-center gap-2"><FaInfoCircle /> Profile Description</label>
           <textarea className="border border-green-200 rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-green-900" name="description" placeholder="Profile Description (no contact info)" rows={4} required />
-          <span className="text-xs text-green-600">Share your background, values, and what you're looking for (no contact info).</span>
+          <span className="text-xs text-green-600">Share your background, values, and what you&apos;re looking for (no contact info).</span>
         </div>
         {/* Image Upload & Preview */}
         <div className="flex flex-col gap-2 items-center">
           <label className="font-semibold text-green-800 flex items-center gap-2"><FaImage /> Profile Image</label>
           <input className="border border-green-200 rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-green-900" name="image" type="file" accept="image/*" required onChange={handleImageChange} />
           {imagePreview && (
-            <img src={imagePreview} alt="Profile Preview" className="mt-2 rounded-full w-24 h-24 object-cover border-2 border-green-300 shadow" />
+            <Image src={imagePreview} alt="Profile Preview" className="mt-2 rounded-full object-cover border-2 border-green-300 shadow" width={96} height={96} />
           )}
           <span className="text-xs text-green-600">Upload a clear, recent photo. Your image is private and secure.</span>
         </div>

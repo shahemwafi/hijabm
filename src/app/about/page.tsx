@@ -12,7 +12,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="flex items-center gap-4 bg-green-50 rounded-lg p-4 border border-green-100">
             <FaQuran className="text-2xl text-green-600" />
-            <span className="font-semibold text-green-800">Islamic principles & modesty</span>
+            <span className="font-semibold text-green-800">Islamic principles &amp; modesty</span>
           </div>
           <div className="flex items-center gap-4 bg-green-50 rounded-lg p-4 border border-green-100">
             <FaLock className="text-2xl text-green-600" />
@@ -36,7 +36,7 @@ export default function AboutPage() {
           </div>
           <div className="text-green-800 text-base bg-green-50 rounded-lg p-4 border border-green-100 w-full">
             <p>
-              "Inspired by the need for a dignified, private, and truly Islamic matchmaking experience, we created Hijab Marriage Bureau. Our journey began with a vision to help Muslims find their life partners in a halal, respectful, and secure environment. We are committed to upholding Islamic values, privacy, and trust for every user."
+              &quot;Inspired by the need for a dignified, private, and truly Islamic matchmaking experience, we created Hijab Marriage Bureau. Our journey began with a vision to help Muslims find their life partners in a halal, respectful, and secure environment. We are committed to upholding Islamic values, privacy, and trust for every user.&quot;
             </p>
           </div>
         </div>

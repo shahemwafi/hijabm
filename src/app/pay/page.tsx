@@ -1,4 +1,4 @@
-import { FaMoneyCheckAlt, FaCreditCard, FaMobileAlt, FaUniversity, FaArrowRight } from 'react-icons/fa';
+import { FaCreditCard, FaMobileAlt, FaUniversity, FaArrowRight } from 'react-icons/fa';
 
 export default function PayPage() {
   return (
