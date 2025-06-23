@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <nav className="w-full flex justify-center gap-8 p-4 text-base font-medium text-green-900 bg-white/80 shadow-sm sticky top-0 z-50">
+          <Link href="/">Home</Link>
+          <Link href="/about">About</Link>
+          <Link href="/pay">Post Rishta</Link>
+          <Link href="/portfolio">Portfolio</Link>
+          <Link href="/terms">Terms</Link>
+          <Link href="/contact">Contact</Link>
+          <Link href="/admin">Admin</Link>
+        </nav>
         {children}
+        <footer className="w-full mt-16 py-6 bg-white/80 border-t border-green-100 text-center text-green-800 text-sm">
+          <div className="mb-2">
+            <Link href="/" className="font-semibold text-green-900 hover:underline">Hijab Marriage Bureau</Link> &mdash; Dignified, Shariah-compliant matchmaking for Muslims
+          </div>
+          <div>&copy; {new Date().getFullYear()} Hijab Marriage Bureau. All rights reserved.</div>
+        </footer>
       </body>
     </html>
   );
