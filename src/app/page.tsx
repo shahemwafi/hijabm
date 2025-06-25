@@ -1,3 +1,4 @@
+// Sample comment: This is the main home page for Hijab Marriage Bureau
 import Link from 'next/link';
 import { FaUserShield, FaHeart, FaLock, FaStar } from 'react-icons/fa';
 import Image from 'next/image';
