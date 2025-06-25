@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
-import { FaInfoCircle, FaUser, FaVenusMars, FaBirthdayCake, FaRing, FaRulerVertical, FaGlobe, FaCity, FaImage, FaWeight, FaPalette, FaWheelchair, FaFlag, FaUniversity, FaBriefcase, FaMoneyBill, FaLightbulb, FaHome, FaUsers, FaMapMarkerAlt, FaListUl, FaCheckCircle } from "react-icons/fa";
+import { FaInfoCircle, FaUser, FaUniversity, FaBriefcase, FaHome, FaUsers, FaMapMarkerAlt, FaListUl, FaCheckCircle, FaImage } from "react-icons/fa";
 import Image from "next/image";
 
 export default function SubmitPage() {
@@ -188,12 +188,12 @@ export default function SubmitPage() {
           <legend className="font-bold text-green-800 text-lg flex items-center gap-2 mb-4"><FaUsers /> Family Details</legend>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col gap-2">
-              <label className="font-semibold text-green-800">Father's Occupation</label>
-              <input className="border border-green-200 rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-green-900" name="fatherOccupation" placeholder="Father's Occupation" />
+              <label className="font-semibold text-green-800">Father&apos;s Occupation</label>
+              <input className="border border-green-200 rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-green-900" name="fatherOccupation" placeholder="Father&apos;s Occupation" />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="font-semibold text-green-800">Mother's Occupation</label>
-              <input className="border border-green-200 rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-green-900" name="motherOccupation" placeholder="Mother's Occupation" />
+              <label className="font-semibold text-green-800">Mother&apos;s Occupation</label>
+              <input className="border border-green-200 rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-green-900" name="motherOccupation" placeholder="Mother&apos;s Occupation" />
             </div>
             <div className="flex flex-col gap-2">
               <label className="font-semibold text-green-800">Brothers Details</label>

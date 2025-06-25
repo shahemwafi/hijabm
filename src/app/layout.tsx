@@ -26,9 +26,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gold text-crimson`}
       >
-        <nav className="w-full flex justify-center gap-8 p-4 text-base font-medium text-green-900 bg-white/80 shadow-sm sticky top-0 z-50">
+        <nav className="w-full flex justify-center gap-8 p-4 text-base font-medium text-crimson bg-gold/90 shadow-sm sticky top-0 z-50">
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
           <Link href="/pay">Post Rishta</Link>
@@ -38,9 +38,9 @@ export default function RootLayout({
           <Link href="/admin">Admin</Link>
         </nav>
         {children}
-        <footer className="w-full mt-16 py-6 bg-white/80 border-t border-green-100 text-center text-green-800 text-sm">
+        <footer className="w-full mt-16 py-6 bg-crimson text-gold border-t border-gold/30 text-center text-sm">
           <div className="mb-2">
-            <Link href="/" className="font-semibold text-green-900 hover:underline">Hijab Marriage Bureau</Link> &mdash; Dignified, Shariah-compliant matchmaking for Muslims
+            <Link href="/" className="font-semibold text-gold hover:underline">Hijab Marriage Bureau</Link> &mdash; Dignified, Shariah-compliant matchmaking for Muslims
           </div>
           <div>&copy; {new Date().getFullYear()} Hijab Marriage Bureau. All rights reserved.</div>
         </footer>
