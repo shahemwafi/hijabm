@@ -1,7 +1,7 @@
 import dbConnect from '@/lib/db';
 import Profile from '@/models/Profile';
 import Image from 'next/image';
-import { FaVenusMars, FaRing, FaGlobe, FaUser } from 'react-icons/fa';
+import { FaGlobe, FaRing, FaUser, FaVenusMars } from 'react-icons/fa';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,7 +17,18 @@ function getFlagEmoji(country: string) {
 }
 
 export default async function PortfolioPage() {
-  await dbConnect();
+  const res = await dbConnect();
+  
+    if (!res) {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center p-6">
+        <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-lg w-full text-center">
+          <h1 className="text-3xl font-bold text-green-900 mb-4">Connecting to Database...</h1>
+          <p className="text-green-700">Please wait while we establish a connection.</p>
+        </div>
+      </main>
+    );
+  }
   const profiles = await Profile.find({ status: 'approved' }).sort({ createdAt: -1 }).lean();
 
   return (
