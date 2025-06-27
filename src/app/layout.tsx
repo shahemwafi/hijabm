@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import "./globals.css";
+import { signOut } from "next-auth/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gold text-crimson`}
       >
-        <nav className="w-full flex justify-between p-4 text-base font-medium text-crimson bg-gold/90 shadow-sm sticky top-0 z-50">
+        <nav className="w-full flex items-center justify-between p-4 text-base font-medium text-white bg-black/90 shadow-sm sticky top-0 z-50">
           <div className="flex justify-center gap-8 ml-25">
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
@@ -42,13 +43,13 @@ export default async function RootLayout({
             <Link href="/contact">Contact</Link>
             <Link href="/admin">Admin</Link>
           </div>
-          {!session && (
+          {!session ? (
             <Link
               className="bg-amber-500 text-sm p-1.5 mx-3 rounded-xl hover:underline"
               href="/login"
             >
               SignIn
-            </Link>
+            </Link>) : (<LogoutButton/>
           )}
         </nav>
         {children}
@@ -66,5 +67,16 @@ export default async function RootLayout({
         </footer>
       </body>
     </html>
+  );
+}
+
+export function LogoutButton() {
+  return (
+    <button
+      className="bg-amber-500 text-sm p-1.5 mx-3 rounded-xl hover:underline"
+      onClick={() => signOut({ callbackUrl: '/' })}
+    >
+      Logout
+    </button>
   );
 }

@@ -24,7 +24,6 @@ export default async function RegisterPage() {
       step = 3;
     } else {
       step = 2;
-      console.log("Workin");
     }
   }
   return <PayPage CurrentStep={step} />;
