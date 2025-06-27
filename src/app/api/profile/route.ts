@@ -146,7 +146,7 @@ export async function GET(req: NextRequest) {
   try {
     const profiles = await Profile.find(filter).sort({ createdAt: -1 }).lean();
     return NextResponse.json({ profiles });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch profiles" },
       { status: 500 }

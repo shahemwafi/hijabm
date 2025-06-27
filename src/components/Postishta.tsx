@@ -51,7 +51,7 @@ function PaymentForm({
       }
       // Success
       onNext(); // Pass an empty string or the appropriate profileId if available
-    } catch (err) {
+    } catch {
       setError("Something went wrong. Please try again.");
     }
   }
@@ -226,7 +226,7 @@ export default function PayPage({ CurrentStep }: { CurrentStep: number }) {
         {/* Step Content */}
         {step === 1 && (
           <SubmitPage
-            onNext={(profileId: string) => {
+            onNext={() => {
               setStep(2);
             }}
           />
