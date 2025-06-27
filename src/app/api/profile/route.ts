@@ -138,7 +138,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const status = searchParams.get("status");
 
-  let filter: any = {};
+  const filter: Record<string, unknown> = {};
   if (status) {
     filter.status = status;
   }

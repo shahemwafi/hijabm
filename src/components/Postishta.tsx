@@ -16,7 +16,6 @@ function PaymentForm({
   const [screenshot, setScreenshot] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     setError("");
@@ -36,7 +35,6 @@ function PaymentForm({
       setError("Please enter the account holder's name.");
       return;
     }
-    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("screenshot", screenshot);
@@ -49,15 +47,12 @@ function PaymentForm({
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "Payment submission failed.");
-        setLoading(false);
         return;
       }
       // Success
       onNext(); // Pass an empty string or the appropriate profileId if available
     } catch (err) {
       setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -158,7 +153,6 @@ function ApprovalStep() {
 export default function PayPage({ CurrentStep }: { CurrentStep: number }) {
 
   const [step, setStep] = useState(CurrentStep);
-  const [profileId, setProfileId] = useState<string | null>(null);
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-6">
       <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-lg w-full border border-green-100 text-center">
@@ -233,7 +227,6 @@ export default function PayPage({ CurrentStep }: { CurrentStep: number }) {
         {step === 1 && (
           <SubmitPage
             onNext={(profileId: string) => {
-              setProfileId(profileId);
               setStep(2);
             }}
           />

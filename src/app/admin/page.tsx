@@ -190,9 +190,11 @@ export default function AdminPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <img
+                        <Image
                           src={profile.paymentScreenshot}
                           alt="Payment Screenshot"
+                          width={320}
+                          height={240}
                           className="mt-2 max-w-xs rounded border"
                         />
                       </a>
