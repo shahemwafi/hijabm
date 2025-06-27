@@ -5,7 +5,7 @@ import Profile from "@/models/Profile";
 import User from "@/models/User";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 
 export const dynamic = "force-dynamic";
 

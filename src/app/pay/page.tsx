@@ -4,7 +4,7 @@ import Profile from "@/models/Profile";
 import User from "@/models/User";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 
 export default async function RegisterPage() {
   await dbConnect();
