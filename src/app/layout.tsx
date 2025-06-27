@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { authOptions } from "@/lib/authOptions";
 import "./globals.css";
-import { signOut } from "next-auth/react";
+import { LogoutButton } from "@/components/logoutButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,19 +43,15 @@ export default async function RootLayout({
             <Link href="/contact">Contact</Link>
             <Link href="/admin">Admin</Link>
           </div>
-          {!session ? (
+          {(session ? <LogoutButton/> :(
             <Link
               className="bg-amber-500 text-sm p-1.5 mx-3 rounded-xl hover:underline"
               href="/login"
             >
               SignIn
-            </Link>) : (<button
-              className="bg-amber-500 text-sm p-1.5 mx-3 rounded-xl hover:underline"
-              onClick={() => signOut({ callbackUrl: '/' })}
-            >
-              Logout
-            </button>
-          )}
+            </Link>))
+          }
+          
         </nav>
         {children}
         <footer className="w-full mt-16 py-6 bg-crimson text-gold border-t border-gold/30 text-center text-sm">

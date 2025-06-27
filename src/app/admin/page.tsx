@@ -69,12 +69,17 @@ export default function AdminPage() {
   async function updateStatus(id: string, status: string) {
     setActionLoading(id + status);
     try {
-      await fetch(`/api/profile/${id}`, {
+      const res = await fetch(`/api/profile/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
       });
-      setProfiles((prev) => prev.filter((p) => p._id !== id));
+      if(res.ok){
+        setProfiles((prev) => prev.filter((p) => p._id !== id));
+      }else{
+        const data = await res.json();
+        setError(data.error || "Failed to update status");
+      }
     } catch {
       alert("Failed to update status");
     } finally {
@@ -221,6 +226,7 @@ export default function AdminPage() {
             ))}
           </div>
         )}
+        {error && <div className="text-red-600 text-center mb-4">{error}</div>}
       </div>
     </main>
   );
