@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import "./globals.css";
 import { signOut } from "next-auth/react";
 
@@ -49,7 +49,12 @@ export default async function RootLayout({
               href="/login"
             >
               SignIn
-            </Link>) : (<LogoutButton/>
+            </Link>) : (<button
+              className="bg-amber-500 text-sm p-1.5 mx-3 rounded-xl hover:underline"
+              onClick={() => signOut({ callbackUrl: '/' })}
+            >
+              Logout
+            </button>
           )}
         </nav>
         {children}
@@ -67,16 +72,5 @@ export default async function RootLayout({
         </footer>
       </body>
     </html>
-  );
-}
-
-export function LogoutButton() {
-  return (
-    <button
-      className="bg-amber-500 text-sm p-1.5 mx-3 rounded-xl hover:underline"
-      onClick={() => signOut({ callbackUrl: '/' })}
-    >
-      Logout
-    </button>
   );
 }

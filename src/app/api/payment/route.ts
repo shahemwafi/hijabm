@@ -3,7 +3,7 @@ import dbConnect from "@/lib/db";
 import cloudinary from "@/lib/cloudinary";
 import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import User from "@/models/User";
 
 
@@ -36,14 +36,15 @@ export async function POST(req: Request) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     // Upload to Cloudinary
-    const uploadResult = await new Promise<unknown>((resolve, reject) => {
+    const uploadResult = await new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream({ folder: "payments" }, (error, result) => {
           if (error) reject(error);
-          else resolve(result);
+          else if (result) resolve(result);
+          else reject(new Error("No result from Cloudinary"));
         })
         .end(buffer);
-    });
+    }) as { secure_url: string; public_id: string };
 
     // Update profile paymentStatus, paymentScreenshot, and AccountHolder in DB
     // Update profile paymentStatus, paymentScreenshot, and AccountHolder in DB
