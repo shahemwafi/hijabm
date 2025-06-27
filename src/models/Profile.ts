@@ -1,8 +1,8 @@
-import { Schema, Document, models, model } from 'mongoose';
+import { Document, model, models, Schema } from "mongoose";
 
 export interface IProfile extends Document {
   name: string;
-  gender: 'male' | 'female';
+  gender: "male" | "female";
   age: number;
   maritalStatus: string;
   height: string;
@@ -10,13 +10,16 @@ export interface IProfile extends Document {
   city: string;
   description: string;
   imageUrl: string;
-  status: 'pending' | 'approved' | 'rejected' | 'hidden';
+  status: "pending" | "approved" | "rejected" | "hidden";
+  AccountHolder?: string;
+  paymentStatus: "pending" | "paid";
+  paymentScreenshot?: string;
   createdAt: Date;
 }
 
 const ProfileSchema = new Schema<IProfile>({
   name: { type: String, required: true },
-  gender: { type: String, enum: ['male', 'female'], required: true },
+  gender: { type: String, enum: ["male", "female"], required: true },
   age: { type: Number, required: true },
   maritalStatus: { type: String, required: true },
   height: { type: String, required: true },
@@ -24,8 +27,19 @@ const ProfileSchema = new Schema<IProfile>({
   city: { type: String, required: true },
   description: { type: String, required: true },
   imageUrl: { type: String, required: true },
-  status: { type: String, enum: ['pending', 'approved', 'rejected', 'hidden'], default: 'pending' },
+  status: {
+    type: String,
+    enum: ["pending", "approved", "rejected", "hidden"],
+    default: "pending",
+  },
+  AccountHolder: { type: String },
+  paymentStatus: {
+    type: String,
+    enum: ["pending", "paid"],
+    default: "pending",
+  },
+  paymentScreenshot: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
 
-export default models.Profile || model<IProfile>('Profile', ProfileSchema); 
+export default models.Profile || model<IProfile>("Profile", ProfileSchema);

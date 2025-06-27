@@ -14,7 +14,11 @@ import {
   FaUsers,
 } from "react-icons/fa";
 
-export default function SubmitPage() {
+export default function SubmitPage({
+  onNext,
+}: {
+  onNext: (profileId: string) => void;
+}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -28,6 +32,18 @@ export default function SubmitPage() {
     setLoading(true);
     const form = e.currentTarget;
     const formData = new FormData(form);
+    const dob = formData.get("dob") as string;
+    if (dob) {
+      const birthDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      formData.append("age", age.toString());
+    }
+    
     try {
       const res = await fetch("/api/profile", {
         method: "POST",
@@ -35,11 +51,12 @@ export default function SubmitPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || "Submission failed. Please try again.");
+        setError(data.error.message || "Submission failed. Please try again.");
       } else {
         setSuccess("Profile submitted! Awaiting approval.");
         form.reset();
         setImagePreview(null);
+        onNext(data.profileId);
       }
     } catch {
       setError("Something went wrong. Please try again.");
