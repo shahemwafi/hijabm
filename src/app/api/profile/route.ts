@@ -1,8 +1,8 @@
-import { MESSAGE } from './../../../../node_modules/mongodb/src/constants';
 import cloudinary from "@/lib/cloudinary";
 import dbConnect from "@/lib/db";
 import { containsContactInfo } from "@/lib/validate";
 import Profile from "@/models/Profile";
+import User from "@/models/User";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
@@ -63,6 +63,32 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const email = session.user.email;
+    if (!email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const existingUser = await User.findOne({
+      email
+    });
+    if (!existingUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+    
+    const existingProfile = await Profile.findOne({
+      user: existingUser._id,
+    });
+    
+    if (existingProfile) {
+      return NextResponse.json(
+        { error: "You already have a profile" },
+        { status: 400 }
+      );
+    }
     // Upload image to Cloudinary
     const arrayBuffer = await image.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -74,7 +100,6 @@ export async function POST(req: NextRequest) {
         })
         .end(buffer);
     });
-
     // Save profile to MongoDB
     const profile = new Profile({
       name,
@@ -87,16 +112,11 @@ export async function POST(req: NextRequest) {
       description,
       imageUrl: (uploadResult as { secure_url: string }).secure_url,
       status: "pending",
+      user: existingUser._id, 
     });
     await profile.save();
-    const session = await getServerSession(authOptions);
 
-    if (!session || !session.user?.email) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const email = session.user.email;
-
+    console.log("Saved profile:", profile);
     return NextResponse.json({
       message: "Profile submitted successfully",
       profileId: profile._id,
@@ -107,8 +127,28 @@ export async function POST(req: NextRequest) {
     } else {
       console.log(error);
     }
+    return NextResponse.json(error, { status: 500 });
+  }
+}
+
+
+export async function GET(req: NextRequest) {
+  await dbConnect();
+
+  const { searchParams } = new URL(req.url);
+  const status = searchParams.get("status");
+
+  let filter: any = {};
+  if (status) {
+    filter.status = status;
+  }
+
+  try {
+    const profiles = await Profile.find(filter).sort({ createdAt: -1 }).lean();
+    return NextResponse.json({ profiles });
+  } catch (error) {
     return NextResponse.json(
-       error,
+      { error: "Failed to fetch profiles" },
       { status: 500 }
     );
   }

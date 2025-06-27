@@ -1,4 +1,4 @@
-import { Document, model, models, Schema } from "mongoose";
+import { Document, model, models, Schema, Types } from "mongoose";
 
 export interface IProfile extends Document {
   name: string;
@@ -14,6 +14,7 @@ export interface IProfile extends Document {
   AccountHolder?: string;
   paymentStatus: "pending" | "paid";
   paymentScreenshot?: string;
+  user: Types.ObjectId; // <-- Add this line
   createdAt: Date;
 }
 
@@ -39,6 +40,7 @@ const ProfileSchema = new Schema<IProfile>({
     default: "pending",
   },
   paymentScreenshot: { type: String },
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true }, // <-- Add this line
   createdAt: { type: Date, default: Date.now },
 });
 

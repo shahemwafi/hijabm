@@ -1,27 +1,28 @@
 import Profile from "@/models/Profile";
 import dbConnect from "@/lib/db";
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "@/lib/cloudinary";
 import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
+import User from "@/models/User";
 
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-  api_key: process.env.CLOUDINARY_API_KEY!,
-  api_secret: process.env.CLOUDINARY_API_SECRET!,
-});
 
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const file = formData.get("screenshot") as File | null;
     const name = formData.get("name") as string | null;
-    const profileId = formData.get("profileId") as string | null;
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user?.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const existingUser = await User.findOne({
+      email: session.user?.email,
+    });
+    if (!existingUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
     if (!file) {
@@ -31,17 +32,9 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!profileId) {
-      return NextResponse.json(
-        { error: "No profileId provided." },
-        { status: 400 }
-      );
-    }
-
     // Convert file to buffer
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-
     // Upload to Cloudinary
     const uploadResult = await new Promise<any>((resolve, reject) => {
       cloudinary.uploader
@@ -53,9 +46,10 @@ export async function POST(req: Request) {
     });
 
     // Update profile paymentStatus, paymentScreenshot, and AccountHolder in DB
+    // Update profile paymentStatus, paymentScreenshot, and AccountHolder in DB
     await dbConnect();
-    await Profile.findByIdAndUpdate(
-      profileId,
+    await Profile.findOneAndUpdate(
+      { user: existingUser._id },
       {
         paymentStatus: "paid",
         paymentScreenshot: uploadResult.secure_url,
@@ -69,6 +63,7 @@ export async function POST(req: Request) {
       public_id: uploadResult.public_id,
     });
   } catch (error) {
-    return NextResponse.json( error , { status: 500 });
+    console.log(error);
+    return NextResponse.json(error, { status: 500 });
   }
 }

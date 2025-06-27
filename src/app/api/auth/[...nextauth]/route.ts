@@ -18,7 +18,7 @@ export const authOptions = {
         if (!user) return null;
         const isValid = await bcrypt.compare(credentials!.password, user.password);
         if (!isValid) return null;
-        return { id: user._id.toString(), email: user.email };
+        return { id: user._id, email: user.email };
       },
     }),
   ],

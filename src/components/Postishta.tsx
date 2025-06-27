@@ -9,10 +9,8 @@ import {
 } from "react-icons/fa";
 
 function PaymentForm({
-  profileId,
   onNext,
 }: {
-  profileId: string;
   onNext: () => void;
 }) {
   const [screenshot, setScreenshot] = useState<File | null>(null);
@@ -43,8 +41,6 @@ function PaymentForm({
       const formData = new FormData();
       formData.append("screenshot", screenshot);
       formData.append("name", name);
-      formData.append("profileId", profileId); // Pass profileId to API
-
       const res = await fetch("/api/payment", {
         method: "POST",
         body: formData,
@@ -123,6 +119,7 @@ function PaymentForm({
         <input
           type="file"
           accept="image/*"
+          name="screenshot"
           onChange={handleFileChange}
           className="mb-2 border border-green-300 rounded-lg p-2 w-full max-w-md text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-100 file:text-green-700 hover:file:bg-green-200"
           title="Upload your payment screenshot"
@@ -158,8 +155,9 @@ function ApprovalStep() {
   );
 }
 
-export default function PayPage() {
-  const [step, setStep] = useState(1);
+export default function PayPage({ CurrentStep }: { CurrentStep: number }) {
+
+  const [step, setStep] = useState(CurrentStep);
   const [profileId, setProfileId] = useState<string | null>(null);
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-6">
@@ -240,8 +238,8 @@ export default function PayPage() {
             }}
           />
         )}
-        {step === 2 && profileId && (
-          <PaymentForm profileId={profileId} onNext={() => setStep(3)} />
+        {step === 2 && (
+          <PaymentForm  onNext={() => setStep(3)} />
         )}
         {step === 3 && <ApprovalStep />}
       </div>
