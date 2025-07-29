@@ -41,7 +41,6 @@ export default async function RootLayout({
             <Link href="/portfolio">Portfolio</Link>
             <Link href="/terms">Terms</Link>
             <Link href="/contact">Contact</Link>
-            <Link href="/admin">Admin</Link>
           </div>
           {(session ? <LogoutButton/> :(
             <Link
