@@ -26,5 +26,5 @@ export default async function RegisterPage() {
       step = 2;
     }
   }
-  return <PayPage CurrentStep={step} />;
+  return <PayPage CurrentStep={step} profile={profile} />;
 }

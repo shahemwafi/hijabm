@@ -136,21 +136,48 @@ function PaymentForm({
   );
 }
 
-function ApprovalStep() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function ApprovalStep({ profile }: { profile: any }) {
+  const isApproved = profile?.status === "approved";
+  const isRejected = profile?.status === "rejected";
+  
   return (
     <div className="text-center py-8">
       <h2 className="text-2xl font-bold text-green-800 mb-4">Thank you!</h2>
-      <p className="text-green-700 mb-2">
-        Your submission is received and pending admin approval.
-      </p>
-      <p className="text-green-500 text-sm">
-        You will be notified by email once approved.
-      </p>
+      {isApproved ? (
+        <>
+          <p className="text-green-700 mb-2">
+            🎉 Congratulations! Your profile has been approved!
+          </p>
+          <p className="text-green-500 text-sm">
+            Your profile is now live and visible to potential matches.
+          </p>
+        </>
+      ) : isRejected ? (
+        <>
+          <p className="text-red-700 mb-2">
+            Your profile was not approved at this time.
+          </p>
+          <p className="text-red-500 text-sm">
+            Please contact support for more information.
+          </p>
+        </>
+      ) : (
+        <>
+          <p className="text-green-700 mb-2">
+            Your submission is received and pending admin approval.
+          </p>
+          <p className="text-green-500 text-sm">
+            You will be notified by email once approved.
+          </p>
+        </>
+      )}
     </div>
   );
 }
 
-export default function PayPage({ CurrentStep }: { CurrentStep: number }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function PayPage({ CurrentStep, profile }: { CurrentStep: number; profile?: any }) {
 
   const [step, setStep] = useState(CurrentStep);
   return (
@@ -234,7 +261,7 @@ export default function PayPage({ CurrentStep }: { CurrentStep: number }) {
         {step === 2 && (
           <PaymentForm  onNext={() => setStep(3)} />
         )}
-        {step === 3 && <ApprovalStep />}
+        {step === 3 && <ApprovalStep profile={profile} />}
       </div>
     </main>
   );
