@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from 'next/image';
 import { FaGlobe, FaRing, FaUser, FaVenusMars } from 'react-icons/fa';
 import ProfileView from '@/components/ProfileView';
+import { IProfile } from '@/models/Profile';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,8 +18,8 @@ function getFlagEmoji(country: string) {
   return String.fromCodePoint(...codePoints);
 }
 
-export default function PortfolioPage({ profiles }: { profiles: any[] }) {
-  const [selectedProfile, setSelectedProfile] = useState<any | null>(null);
+export default function PortfolioPage({ profiles }: { profiles: IProfile[] }) {
+  const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(null);
 if(selectedProfile){
     return(
         <ProfileView profile={selectedProfile} setSelectedProfile={setSelectedProfile}/>

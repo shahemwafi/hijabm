@@ -15,7 +15,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       return NextResponse.json({ error: "Profile not found" }, { status: 404 });
     }
     return NextResponse.json({ message: "Profile status updated", profile: updated });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to update profile" }, { status: 500 });
   }
 }

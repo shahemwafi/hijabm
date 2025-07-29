@@ -1,6 +1,7 @@
 import Image from "next/image";
+import { IProfile } from "@/models/Profile";
 
-export default function ProfileView({ profile, setSelectedProfile }: { profile: any, setSelectedProfile: (value: any) => void; }) {
+export default function ProfileView({ profile, setSelectedProfile }: { profile: IProfile, setSelectedProfile: (value: IProfile | null) => void; }) {
   return (
     <div className="bg-white pt-10 w-full h-full border border-green-100">
       <button
