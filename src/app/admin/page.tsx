@@ -57,7 +57,7 @@ export default function AdminPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/profile?status=pending");
+      const res = await fetch("/api/profile");
       const data = await res.json();
       setProfiles(data.profiles || []);
     } catch {
@@ -150,7 +150,7 @@ export default function AdminPage() {
     <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex flex-col items-center p-6">
       <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-5xl w-full border border-green-100">
         <h1 className="text-3xl font-extrabold text-green-900 mb-6 drop-shadow text-center">
-          Pending Rishta Profiles
+          All Rishta Profiles
         </h1>
         {loading ? (
           <div className="text-green-700 text-center">Loading profiles...</div>
@@ -174,6 +174,15 @@ export default function AdminPage() {
                   <div>
                     <div className="font-bold text-green-900 text-lg flex items-center gap-2">
                       <FaUser /> {profile.name}
+                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                        profile.status === "approved" 
+                          ? "bg-green-100 text-green-800" 
+                          : profile.status === "rejected"
+                          ? "bg-red-100 text-red-800"
+                          : "bg-yellow-100 text-yellow-800"
+                      }`}>
+                        {profile.status}
+                      </span>
                     </div>
                     <div className="text-green-700 text-sm flex items-center gap-2">
                       <FaVenusMars /> {profile.gender} | Age: {profile.age}
@@ -231,20 +240,24 @@ export default function AdminPage() {
                   )}
                 </div>
                 <div className="flex gap-2 mt-2">
-                  <button
-                    className="flex-1 bg-green-600 text-white py-2 rounded-full font-semibold shadow hover:bg-green-700 transition disabled:opacity-60 flex items-center justify-center gap-2"
-                    disabled={actionLoading === profile._id + "approved"}
-                    onClick={() => updateStatus(profile._id, "approved")}
-                  >
-                    <FaCheck /> Approve
-                  </button>
-                  <button
-                    className="flex-1 bg-red-500 text-white py-2 rounded-full font-semibold shadow hover:bg-red-600 transition disabled:opacity-60 flex items-center justify-center gap-2"
-                    disabled={actionLoading === profile._id + "rejected"}
-                    onClick={() => updateStatus(profile._id, "rejected")}
-                  >
-                    <FaTimes /> Reject
-                  </button>
+                  {profile.status !== "approved" && (
+                    <button
+                      className="flex-1 bg-green-600 text-white py-2 rounded-full font-semibold shadow hover:bg-green-700 transition disabled:opacity-60 flex items-center justify-center gap-2"
+                      disabled={actionLoading === profile._id + "approved"}
+                      onClick={() => updateStatus(profile._id, "approved")}
+                    >
+                      <FaCheck /> Approve
+                    </button>
+                  )}
+                  {profile.status !== "rejected" && (
+                    <button
+                      className="flex-1 bg-red-500 text-white py-2 rounded-full font-semibold shadow hover:bg-red-600 transition disabled:opacity-60 flex items-center justify-center gap-2"
+                      disabled={actionLoading === profile._id + "rejected"}
+                      onClick={() => updateStatus(profile._id, "rejected")}
+                    >
+                      <FaTimes /> Reject
+                    </button>
+                  )}
                   <button
                     className="flex-1 bg-gray-600 text-white py-2 rounded-full font-semibold shadow hover:bg-gray-700 transition disabled:opacity-60 flex items-center justify-center gap-2"
                     disabled={actionLoading === profile._id + "delete"}
