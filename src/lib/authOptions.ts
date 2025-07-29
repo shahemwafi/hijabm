@@ -20,6 +20,7 @@ export const authOptions = {
         if (!user) return null;
         const isValid = await bcrypt.compare(credentials!.password, user.password);
         if (!isValid) return null;
+        console.log("User found:", { email: user.email, isAdmin: user.isAdmin });
         return { 
           id: user._id, 
           email: user.email, 
@@ -33,6 +34,8 @@ export const authOptions = {
     async jwt({ token, user }: { token: JWT; user?: any }) {
       if (user) {
         token.isAdmin = user.isAdmin;
+        console.log("JWT callback - user:", user);
+        console.log("JWT callback - token:", token);
       }
       return token;
     },
@@ -40,6 +43,8 @@ export const authOptions = {
       if (token) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (session.user as any).isAdmin = token.isAdmin;
+        console.log("Session callback - token:", token);
+        console.log("Session callback - session:", session);
       }
       return session;
     },
