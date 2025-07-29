@@ -8,6 +8,7 @@ import {
   FaLock,
   FaMoneyCheckAlt,
   FaTimes,
+  FaTrash,
   FaUser,
   FaUserShield,
   FaUserTag,
@@ -82,6 +83,29 @@ export default function AdminPage() {
       }
     } catch {
       alert("Failed to update status");
+    } finally {
+      setActionLoading(null);
+    }
+  }
+
+  async function deleteProfile(id: string) {
+    if (!confirm("Are you sure you want to delete this profile? This action cannot be undone.")) {
+      return;
+    }
+    
+    setActionLoading(id + "delete");
+    try {
+      const res = await fetch(`/api/profile/${id}`, {
+        method: "DELETE",
+      });
+      if(res.ok){
+        setProfiles((prev) => prev.filter((p) => p._id !== id));
+      }else{
+        const data = await res.json();
+        setError(data.error || "Failed to delete profile");
+      }
+    } catch {
+      alert("Failed to delete profile");
     } finally {
       setActionLoading(null);
     }
@@ -206,7 +230,7 @@ export default function AdminPage() {
                     </div>
                   )}
                 </div>
-                <div className="flex gap-4 mt-2">
+                <div className="flex gap-2 mt-2">
                   <button
                     className="flex-1 bg-green-600 text-white py-2 rounded-full font-semibold shadow hover:bg-green-700 transition disabled:opacity-60 flex items-center justify-center gap-2"
                     disabled={actionLoading === profile._id + "approved"}
@@ -220,6 +244,13 @@ export default function AdminPage() {
                     onClick={() => updateStatus(profile._id, "rejected")}
                   >
                     <FaTimes /> Reject
+                  </button>
+                  <button
+                    className="flex-1 bg-gray-600 text-white py-2 rounded-full font-semibold shadow hover:bg-gray-700 transition disabled:opacity-60 flex items-center justify-center gap-2"
+                    disabled={actionLoading === profile._id + "delete"}
+                    onClick={() => deleteProfile(profile._id)}
+                  >
+                    <FaTrash /> Delete
                   </button>
                 </div>
               </div>
