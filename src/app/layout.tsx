@@ -48,6 +48,7 @@ export default async function RootLayout({
             {/* Debug info - remove this later */}
             {session && (
               <span className="text-xs text-gray-400">
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 Debug: {JSON.stringify((session.user as any)?.isAdmin)}
               </span>
             )}

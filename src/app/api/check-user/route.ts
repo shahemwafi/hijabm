@@ -17,7 +17,7 @@ export async function GET() {
       isAdmin: user.isAdmin,
       id: user._id,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to check user" }, { status: 500 });
   }
 } 

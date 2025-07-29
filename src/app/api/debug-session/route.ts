@@ -9,10 +9,11 @@ export async function GET() {
     return NextResponse.json({
       session: session,
       user: session?.user,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       isAdmin: (session?.user as any)?.isAdmin,
       hasSession: !!session,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to get session" }, { status: 500 });
   }
 } 
