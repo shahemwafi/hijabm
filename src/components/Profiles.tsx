@@ -18,7 +18,8 @@ function getFlagEmoji(country: string) {
   return String.fromCodePoint(...codePoints);
 }
 
-export default function PortfolioPage({ profiles }: { profiles: IProfile[] }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function PortfolioPage({ profiles }: { profiles: any[] }) {
   const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(null);
 if(selectedProfile){
     return(

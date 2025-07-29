@@ -2,9 +2,9 @@ import dbConnect from "@/lib/db";
 import Profile from "@/models/Profile";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   await dbConnect();
-  const { id } = params;
+  const { id } = await params;
   try {
     const { status } = await req.json();
     if (!status) {
