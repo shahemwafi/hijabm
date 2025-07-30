@@ -70,21 +70,28 @@ export default function SubmitPage({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 py-4 sm:py-6 lg:py-8">
-      <div className="container-custom max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 max-h-[90vh] overflow-y-auto">
+      <div className="container-custom max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-green-900">Submit Your Rishta Profile</h2>
           </div>
 
           <form ref={formRef} onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-6">
-                            {/* Basic Info */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                          {/* Personal Information */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Basic Info</h3>
+                <h3 className="font-bold text-green-900">Personal Information</h3>
                 
+                <input
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  name="name"
+                  placeholder="Name"
+                  required
+                />
+
                 <select
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="gender"
                   required
                 >
@@ -94,217 +101,200 @@ export default function SubmitPage({
                 </select>
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
-                  name="name"
-                  placeholder="Full Name"
-                  required
-                />
-
-                <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="dob"
                   type="date"
                   required
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="maritalStatus"
                   placeholder="Marital Status"
                   required
                 />
-              </div>
 
-              {/* Physical Details */}
-              <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Physical Details</h3>
-                
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="height"
                   placeholder="Height"
                   required
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="weight"
                   placeholder="Weight"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="color"
                   placeholder="Complexion"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="nationality"
                   placeholder="Nationality"
                   required
                 />
               </div>
 
-              {/* Education */}
+              {/* Education & Career */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Education</h3>
+                <h3 className="font-bold text-green-900">Education & Career</h3>
                 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="qualification"
                   placeholder="Qualification"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="college"
                   placeholder="College"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="university"
                   placeholder="University"
                 />
-              </div>
 
-              {/* Career */}
-              <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Career</h3>
-                
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="rank"
                   placeholder="Rank/Position"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="income"
                   placeholder="Income"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="natureOfJob"
                   placeholder="Nature of Job"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="futurePlans"
                   placeholder="Future Plans"
                 />
               </div>
-              
-                                          {/* Religion */}
+
+              {/* Religion Details */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Religion</h3>
+                <h3 className="font-bold text-green-900">Religion Details</h3>
                 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="religion"
                   placeholder="Religion"
                   required
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="caste"
                   placeholder="Caste"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="sect"
                   placeholder="Sect"
                 />
               </div>
 
-              {/* Property */}
+              {/* Property Details */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Property</h3>
+                <h3 className="font-bold text-green-900">Property Details</h3>
                 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="home"
                   placeholder="Home Type"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="size"
                   placeholder="Property Size"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="propertyLocation"
                   placeholder="Property Location"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="otherProperties"
                   placeholder="Other Properties"
                 />
               </div>
-              
-                            {/* Family */}
+
+              {/* Family Information */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Family</h3>
+                <h3 className="font-bold text-green-900">Family Information</h3>
                 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="fatherOccupation"
                   placeholder="Father's Occupation"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="motherOccupation"
                   placeholder="Mother's Occupation"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="brothers"
                   placeholder="Brothers Details"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="sisters"
                   placeholder="Sisters Details"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="marriedSiblings"
                   placeholder="Married Siblings"
                 />
               </div>
-              
-                            {/* Address */}
+
+              {/* Address */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Address</h3>
+                <h3 className="font-bold text-green-900">Address</h3>
                 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="currentCity"
                   placeholder="Current City"
                   required
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="homeTown"
                   placeholder="Home Town"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="addressLocation"
                   placeholder="Country"
                 />
@@ -312,40 +302,40 @@ export default function SubmitPage({
 
               {/* Requirements */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Requirements</h3>
+                <h3 className="font-bold text-green-900">Your Requirements</h3>
                 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="reqAgeLimit"
                   placeholder="Age Limit"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="reqHeight"
                   placeholder="Height Preference"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="reqCity"
                   placeholder="City Preference"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="reqCaste"
                   placeholder="Caste Preference"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="reqQualification"
                   placeholder="Qualification Preference"
                 />
 
                 <input
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   name="reqOther"
                   placeholder="Other Requirements"
                 />
