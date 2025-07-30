@@ -2,16 +2,6 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import {
-  FaBriefcase,
-  FaCheckCircle,
-  FaHome,
-  FaImage,
-  FaInfoCircle,
-  FaListUl,
-  FaMapMarkerAlt,
-  FaUniversity,
-  FaUser,
-  FaUsers,
   FaSpinner,
   FaUpload,
 } from "react-icons/fa";
