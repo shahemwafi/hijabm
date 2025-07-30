@@ -63,6 +63,15 @@ function PaymentForm({
           <div className="mb-2 font-semibold text-green-800">
             Pay via Easypaisa
           </div>
+          <div className="mb-3 p-3 bg-white rounded-lg border border-green-300">
+            <div className="text-center mb-2">
+              <span className="text-lg font-bold text-green-800">Pre-registration Fee:</span>
+              <div className="text-2xl font-bold text-green-600">Rs. 6,000</div>
+            </div>
+            <div className="text-xs text-green-700 text-center">
+              One-time payment for profile submission and matching services
+            </div>
+          </div>
           <div className="mb-1">
             Number: <span className="font-mono font-bold">03340051076</span>
           </div>

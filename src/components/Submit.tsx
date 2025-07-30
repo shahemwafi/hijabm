@@ -90,255 +90,255 @@ export default function SubmitPage({
                   required
                 />
 
-                <select
+                  <select
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="gender"
-                  required
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
+                    name="gender"
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="dob"
-                  type="date"
-                  required
-                />
+                    name="dob"
+                    type="date"
+                    required
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="maritalStatus"
+                    name="maritalStatus"
                   placeholder="Marital Status"
-                  required
-                />
+                    required
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="height"
+                    name="height"
                   placeholder="Height"
-                  required
-                />
+                    required
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="weight"
+                    name="weight"
                   placeholder="Weight"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="color"
+                    name="color"
                   placeholder="Complexion"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="nationality"
+                    name="nationality"
                   placeholder="Nationality"
-                  required
-                />
+                    required
+                  />
               </div>
-
+              
               {/* Education & Career */}
               <div className="space-y-4">
                 <h3 className="font-bold text-green-900">Education & Career</h3>
                 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="qualification"
+                    name="qualification"
                   placeholder="Qualification"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="college"
+                    name="college"
                   placeholder="College"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="university"
+                    name="university"
                   placeholder="University"
                 />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="rank"
+                    name="rank"
                   placeholder="Rank/Position"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="income"
+                    name="income"
                   placeholder="Income"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="natureOfJob"
+                    name="natureOfJob"
                   placeholder="Nature of Job"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="futurePlans"
+                    name="futurePlans"
                   placeholder="Future Plans"
                 />
               </div>
-
+              
               {/* Religion Details */}
               <div className="space-y-4">
                 <h3 className="font-bold text-green-900">Religion Details</h3>
                 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="religion"
+                    name="religion"
                   placeholder="Religion"
-                  required
-                />
+                    required
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="caste"
+                    name="caste"
                   placeholder="Caste"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="sect"
+                    name="sect"
                   placeholder="Sect"
                 />
               </div>
-
+              
               {/* Property Details */}
               <div className="space-y-4">
                 <h3 className="font-bold text-green-900">Property Details</h3>
                 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="home"
+                    name="home"
                   placeholder="Home Type"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="size"
+                    name="size"
                   placeholder="Property Size"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="propertyLocation"
+                    name="propertyLocation"
                   placeholder="Property Location"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="otherProperties"
+                    name="otherProperties"
                   placeholder="Other Properties"
                 />
               </div>
-
+              
               {/* Family Information */}
               <div className="space-y-4">
                 <h3 className="font-bold text-green-900">Family Information</h3>
                 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="fatherOccupation"
+                    name="fatherOccupation"
                   placeholder="Father's Occupation"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="motherOccupation"
+                    name="motherOccupation"
                   placeholder="Mother's Occupation"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="brothers"
+                    name="brothers"
                   placeholder="Brothers Details"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="sisters"
+                    name="sisters"
                   placeholder="Sisters Details"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="marriedSiblings"
+                    name="marriedSiblings"
                   placeholder="Married Siblings"
                 />
               </div>
-
+              
               {/* Address */}
               <div className="space-y-4">
                 <h3 className="font-bold text-green-900">Address</h3>
                 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="currentCity"
+                    name="currentCity"
                   placeholder="Current City"
-                  required
-                />
+                    required
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="homeTown"
+                    name="homeTown"
                   placeholder="Home Town"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="addressLocation"
+                    name="addressLocation"
                   placeholder="Country"
                 />
               </div>
-
+              
               {/* Requirements */}
               <div className="space-y-4">
                 <h3 className="font-bold text-green-900">Your Requirements</h3>
                 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="reqAgeLimit"
+                    name="reqAgeLimit"
                   placeholder="Age Limit"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="reqHeight"
+                    name="reqHeight"
                   placeholder="Height Preference"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="reqCity"
+                    name="reqCity"
                   placeholder="City Preference"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="reqCaste"
+                    name="reqCaste"
                   placeholder="Caste Preference"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="reqQualification"
+                    name="reqQualification"
                   placeholder="Qualification Preference"
-                />
+                  />
 
-                <input
+                  <input
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                  name="reqOther"
+                    name="reqOther"
                   placeholder="Other Requirements"
-                />
+                  />
               </div>
             </div>
 

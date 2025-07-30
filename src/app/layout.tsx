@@ -46,8 +46,11 @@ export default function RootLayout({
                     <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-blue-500 rounded-lg flex items-center justify-center">
                       <span className="text-white font-bold text-sm">H</span>
                     </div>
-                    <span className="font-poppins font-semibold text-lg sm:text-xl text-gray-800">
+                    <span className="font-poppins font-semibold text-sm sm:text-lg lg:text-xl text-gray-800 hidden sm:block">
                       Hijab Marriage Bureau
+                    </span>
+                    <span className="font-poppins font-semibold text-sm text-gray-800 sm:hidden">
+                      HMB
                     </span>
                   </Link>
                 </div>
@@ -92,8 +95,8 @@ export default function RootLayout({
                   </Link>
                 </div>
 
-                {/* User Profile Dropdown */}
-                <div className="flex items-center">
+                {/* User Profile Dropdown - Desktop Only */}
+                <div className="hidden md:flex items-center">
                   <ClientUserProfileDropdown />
                 </div>
 

@@ -24,7 +24,7 @@ export default function UserProfileDropdown() {
 
   if (!user) {
     return (
-      <div className="flex items-center space-x-2 sm:space-x-4">
+      <div className="hidden md:flex items-center space-x-2 sm:space-x-4">
         <Link
           href="/login"
           className="btn-primary px-3 py-2 text-sm sm:px-4 sm:py-2"
