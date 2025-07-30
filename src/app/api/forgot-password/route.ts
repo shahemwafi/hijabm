@@ -13,6 +13,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
+    console.log('Forgot password request for:', email);
+
     // Check rate limiting
     if (!checkRateLimit(email)) {
       return NextResponse.json({ 
@@ -25,8 +27,11 @@ export async function POST(req: NextRequest) {
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
+      console.log('User not found:', email);
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
+
+    console.log('User found, generating reset token for:', email);
 
     // Generate reset token
     const resetToken = crypto.randomBytes(32).toString("hex");
@@ -40,13 +45,19 @@ export async function POST(req: NextRequest) {
     // Send password reset email
     const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
     
+    console.log('Attempting to send email to:', email);
+    console.log('Reset URL:', resetUrl);
+    
     const emailSent = await sendPasswordResetEmail(email, resetUrl);
     
     if (!emailSent) {
+      console.error('Failed to send email to:', email);
       return NextResponse.json({ 
         error: "Failed to send reset email. Please try again later." 
       }, { status: 500 });
     }
+
+    console.log('Email sent successfully to:', email);
 
     return NextResponse.json({ 
       message: "Password reset link has been sent to your email. Please check your inbox."
