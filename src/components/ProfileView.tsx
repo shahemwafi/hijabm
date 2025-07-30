@@ -251,12 +251,12 @@ export default function ProfileView({ profile, setSelectedProfile }: { profile: 
           <p className="text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-lg">
             {profile.description}
           </p>
-        </div>
+      </div>
 
         {/* Profile Status */}
-        <div className="mb-2 text-center">
-          <span className="font-semibold text-center">Profile Status:</span> {profile.status}
-        </div>
+      <div className="mb-2 text-center">
+        <span className="font-semibold text-center">Profile Status:</span> {profile.status}
+      </div>
         <div className="mb-2 text-xs text-center text-gray-500">
           <span className="font-semibold text-center">Created At:</span> {new Date(profile.createdAt).toLocaleString()}
         </div>

@@ -106,6 +106,14 @@ export default function LoginForm() {
             Register
           </a>
         </div>
+        <div className="text-center mt-2 text-sm text-gray-500">
+          <a
+            href="/forgot-password"
+            className="text-indigo-600 hover:underline font-medium"
+          >
+            Forgot Password?
+          </a>
+        </div>
       </form>
     </div>
   );
