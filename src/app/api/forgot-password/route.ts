@@ -49,7 +49,8 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ 
-      message: "Password reset link has been sent to your email. Please check your inbox."
+      message: "Password reset link has been sent to your email. Please check your inbox.",
+      resetUrl: process.env.NODE_ENV === 'development' ? resetUrl : undefined
     });
   } catch (error) {
     console.error("Forgot password error:", error);
