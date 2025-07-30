@@ -11,16 +11,23 @@ export default function Register() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
-    const res = await fetch("/api/user/register", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" },
-    });
-    if (res.ok) {
-      router.push("/login");
-    } else {
+    
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
       const data = await res.json();
-      setError(data.error || "Registration failed");
+
+      if (res.ok) {
+        router.push("/");
+      } else {
+        setError(data.error || "Registration failed");
+      }
+    } catch {
+      setError("Registration failed");
     }
   }
 
