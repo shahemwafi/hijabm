@@ -3,7 +3,27 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
+import { 
+  FaCheck, 
+  FaTimes, 
+  FaClock, 
+  FaEye, 
+  FaEyeSlash, 
+  FaMoneyBillWave,
+  FaInfoCircle,
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+  FaGraduationCap,
+  FaBriefcase,
+  FaHome,
+  FaUsers,
+  FaHeart,
+  FaRulerVertical,
+  FaPalette,
+  FaGlobe,
+  FaVenusMars,
+  FaUser
+} from "react-icons/fa";
 
 interface UserProfile {
   _id: string;
@@ -46,7 +66,7 @@ interface UserProfile {
   reqOther?: string;
   description: string;
   imageUrl: string;
-  status: string;
+  status: "pending" | "approved" | "rejected" | "hidden";
   createdAt: string;
   paymentStatus?: "pending" | "paid";
   paymentScreenshot?: string;
@@ -60,7 +80,6 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
 
   const fetchUserProfile = useCallback(async () => {
     try {
@@ -92,7 +111,60 @@ export default function ProfilePage() {
     fetchUserProfile();
   }, [user, authLoading, router, fetchUserProfile]);
 
+  const getStatusInfo = (status: string, paymentStatus?: string) => {
+    const statusConfig = {
+      pending: {
+        icon: FaClock,
+        color: "text-yellow-600",
+        bgColor: "bg-yellow-100",
+        borderColor: "border-yellow-300",
+        message: "Your profile is under review"
+      },
+      approved: {
+        icon: FaCheck,
+        color: "text-green-600",
+        bgColor: "bg-green-100",
+        borderColor: "border-green-300",
+        message: "Your profile has been approved and is visible in the portfolio"
+      },
+      rejected: {
+        icon: FaTimes,
+        color: "text-red-600",
+        bgColor: "bg-red-100",
+        borderColor: "border-red-300",
+        message: "Your profile has been rejected. Please contact support for details."
+      },
+      hidden: {
+        icon: FaEyeSlash,
+        color: "text-gray-600",
+        bgColor: "bg-gray-100",
+        borderColor: "border-gray-300",
+        message: "Your profile is currently hidden"
+      }
+    };
 
+    const paymentConfig = {
+      pending: {
+        icon: FaMoneyBillWave,
+        color: "text-orange-600",
+        bgColor: "bg-orange-100",
+        borderColor: "border-orange-300",
+        message: "Payment is pending. Please complete payment to proceed."
+      },
+      paid: {
+        icon: FaCheck,
+        color: "text-green-600",
+        bgColor: "bg-green-100",
+        borderColor: "border-green-300",
+        message: "Payment completed successfully"
+      }
+    };
+
+    return {
+      status: statusConfig[status as keyof typeof statusConfig] || statusConfig.pending,
+      payment: paymentConfig[paymentStatus as keyof typeof paymentConfig] || paymentConfig.pending
+    };
+  };
 
   if (authLoading || loading) {
     return (
@@ -111,10 +183,18 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-extrabold text-green-900">My Profile</h1>
+            <div className="flex gap-2">
+              <button
+                onClick={() => router.push("/pay")}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition"
+              >
+                Update Profile
+              </button>
+            </div>
           </div>
 
           {error && (
@@ -136,6 +216,69 @@ export default function ProfilePage() {
             </div>
           ) : (
             <div className="space-y-8">
+              {/* Status Notifications */}
+              {(() => {
+                const statusInfo = getStatusInfo(profile.status, profile.paymentStatus);
+                return (
+                  <div className="space-y-4">
+                    {/* Profile Status */}
+                    <div className={`p-4 rounded-lg border ${statusInfo.status.borderColor} ${statusInfo.status.bgColor}`}>
+                      <div className="flex items-center gap-3">
+                        <statusInfo.status.icon className={`text-xl ${statusInfo.status.color}`} />
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Profile Status</h3>
+                          <p className="text-sm text-gray-700">{statusInfo.status.message}</p>
+                        </div>
+                        <span className={`ml-auto px-3 py-1 rounded-full text-sm font-semibold ${statusInfo.status.color} ${statusInfo.status.bgColor}`}>
+                          {profile.status.charAt(0).toUpperCase() + profile.status.slice(1)}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Payment Status */}
+                    <div className={`p-4 rounded-lg border ${statusInfo.payment.borderColor} ${statusInfo.payment.bgColor}`}>
+                      <div className="flex items-center gap-3">
+                        <statusInfo.payment.icon className={`text-xl ${statusInfo.payment.color}`} />
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Payment Status</h3>
+                          <p className="text-sm text-gray-700">{statusInfo.payment.message}</p>
+                        </div>
+                        <span className={`ml-auto px-3 py-1 rounded-full text-sm font-semibold ${statusInfo.payment.color} ${statusInfo.payment.bgColor}`}>
+                          {profile.paymentStatus === "paid" ? "Paid" : "Pending"}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Portfolio Visibility */}
+                    <div className={`p-4 rounded-lg border ${
+                      profile.status === "approved" ? "border-green-300 bg-green-50" : "border-gray-300 bg-gray-50"
+                    }`}>
+                      <div className="flex items-center gap-3">
+                        {profile.status === "approved" ? (
+                          <FaEye className="text-xl text-green-600" />
+                        ) : (
+                          <FaEyeSlash className="text-xl text-gray-600" />
+                        )}
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Portfolio Visibility</h3>
+                          <p className="text-sm text-gray-700">
+                            {profile.status === "approved" 
+                              ? "Your profile is visible in the public portfolio" 
+                              : "Your profile is not yet visible in the portfolio"
+                            }
+                          </p>
+                        </div>
+                        <span className={`ml-auto px-3 py-1 rounded-full text-sm font-semibold ${
+                          profile.status === "approved" ? "text-green-600 bg-green-100" : "text-gray-600 bg-gray-100"
+                        }`}>
+                          {profile.status === "approved" ? "Visible" : "Hidden"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
               {/* Profile Header */}
               <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
                 <div className="flex-shrink-0">
@@ -149,47 +292,43 @@ export default function ProfilePage() {
                 </div>
                 
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-green-900 mb-4">{profile.name}</h2>
+                  <h2 className="text-3xl font-bold text-green-900 mb-4">{profile.name}</h2>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold">Status:</span>
-                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                        profile.status === "approved" ? "bg-green-100 text-green-800" :
-                        profile.status === "rejected" ? "bg-red-100 text-red-800" :
-                        "bg-yellow-100 text-yellow-800"
-                      }`}>
-                        {profile.status.charAt(0).toUpperCase() + profile.status.slice(1)}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold">Payment:</span>
-                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                        profile.paymentStatus === "paid" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                      }`}>
-                        {profile.paymentStatus === "paid" ? "Paid" : "Pending"}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center gap-2">
+                      <FaVenusMars className="text-green-600" />
                       <span className="font-semibold">Gender:</span>
                       <span className="text-green-800">{profile.gender}</span>
                     </div>
                     
                     <div className="flex items-center gap-2">
+                      <FaCalendarAlt className="text-green-600" />
                       <span className="font-semibold">Age:</span>
                       <span className="text-green-800">{profile.age} years</span>
                     </div>
                     
                     <div className="flex items-center gap-2">
+                      <FaHeart className="text-green-600" />
                       <span className="font-semibold">Marital Status:</span>
                       <span className="text-green-800">{profile.maritalStatus}</span>
                     </div>
                     
                     <div className="flex items-center gap-2">
+                      <FaRulerVertical className="text-green-600" />
                       <span className="font-semibold">Height:</span>
                       <span className="text-green-800">{profile.height}</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <FaPalette className="text-green-600" />
+                      <span className="font-semibold">Complexion:</span>
+                      <span className="text-green-800">{profile.color || "N/A"}</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <FaGlobe className="text-green-600" />
+                      <span className="font-semibold">Nationality:</span>
+                      <span className="text-green-800">{profile.nationality || "N/A"}</span>
                     </div>
                   </div>
                 </div>
@@ -199,42 +338,52 @@ export default function ProfilePage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Personal Information */}
                 <div className="bg-green-50 p-6 rounded-lg">
-                  <h3 className="font-bold text-green-900 mb-4">Personal Information</h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
+                  <h3 className="font-bold text-green-900 mb-4 flex items-center gap-2">
+                    <FaUser className="text-green-600" />
+                    Personal Information
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
                       <span className="font-semibold">Weight:</span>
-                      <span>{profile.weight || "N/A"}</span>
+                      <span className="text-green-800">{profile.weight || "N/A"}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-semibold">Complexion:</span>
-                      <span>{profile.color || "N/A"}</span>
-                    </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-center">
                       <span className="font-semibold">Disability:</span>
-                      <span>{profile.disability || "N/A"}</span>
+                      <span className="text-green-800">{profile.disability || "N/A"}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-semibold">Nationality:</span>
-                      <span>{profile.nationality || "N/A"}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold">Religion:</span>
+                      <span className="text-green-800">{profile.religion || "N/A"}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold">Caste:</span>
+                      <span className="text-green-800">{profile.caste || "N/A"}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold">Sect:</span>
+                      <span className="text-green-800">{profile.sect || "N/A"}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Address Information */}
                 <div className="bg-blue-50 p-6 rounded-lg">
-                  <h3 className="font-bold text-green-900 mb-4">Address Information</h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
+                  <h3 className="font-bold text-green-900 mb-4 flex items-center gap-2">
+                    <FaMapMarkerAlt className="text-green-600" />
+                    Address Information
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
                       <span className="font-semibold">Current City:</span>
-                      <span>{profile.currentCity || "N/A"}</span>
+                      <span className="text-green-800">{profile.currentCity || "N/A"}</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-center">
                       <span className="font-semibold">Home Town:</span>
-                      <span>{profile.homeTown || "N/A"}</span>
+                      <span className="text-green-800">{profile.homeTown || "N/A"}</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-center">
                       <span className="font-semibold">Location:</span>
-                      <span>{profile.addressLocation || "N/A"}</span>
+                      <span className="text-green-800">{profile.addressLocation || "N/A"}</span>
                     </div>
                   </div>
                 </div>
@@ -242,19 +391,22 @@ export default function ProfilePage() {
                 {/* Education Details */}
                 {(profile.qualification || profile.college || profile.university) && (
                   <div className="bg-purple-50 p-6 rounded-lg">
-                    <h3 className="font-bold text-green-900 mb-4">Education Details</h3>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
+                    <h3 className="font-bold text-green-900 mb-4 flex items-center gap-2">
+                      <FaGraduationCap className="text-green-600" />
+                      Education Details
+                    </h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
                         <span className="font-semibold">Qualification:</span>
-                        <span>{profile.qualification || "N/A"}</span>
+                        <span className="text-green-800">{profile.qualification || "N/A"}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="font-semibold">College:</span>
-                        <span>{profile.college || "N/A"}</span>
+                        <span className="text-green-800">{profile.college || "N/A"}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="font-semibold">University:</span>
-                        <span>{profile.university || "N/A"}</span>
+                        <span className="text-green-800">{profile.university || "N/A"}</span>
                       </div>
                     </div>
                   </div>
@@ -263,23 +415,122 @@ export default function ProfilePage() {
                 {/* Job Details */}
                 {(profile.rank || profile.income || profile.natureOfJob || profile.futurePlans) && (
                   <div className="bg-orange-50 p-6 rounded-lg">
-                    <h3 className="font-bold text-green-900 mb-4">Job Details</h3>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
+                    <h3 className="font-bold text-green-900 mb-4 flex items-center gap-2">
+                      <FaBriefcase className="text-green-600" />
+                      Job Details
+                    </h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
                         <span className="font-semibold">Rank/Position:</span>
-                        <span>{profile.rank || "N/A"}</span>
+                        <span className="text-green-800">{profile.rank || "N/A"}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="font-semibold">Income:</span>
-                        <span>{profile.income || "N/A"}</span>
+                        <span className="text-green-800">{profile.income || "N/A"}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="font-semibold">Nature of Job:</span>
-                        <span>{profile.natureOfJob || "N/A"}</span>
+                        <span className="text-green-800">{profile.natureOfJob || "N/A"}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="font-semibold">Future Plans:</span>
-                        <span>{profile.futurePlans || "N/A"}</span>
+                        <span className="text-green-800">{profile.futurePlans || "N/A"}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Property Details */}
+                {(profile.home || profile.size || profile.propertyLocation || profile.otherProperties) && (
+                  <div className="bg-yellow-50 p-6 rounded-lg">
+                    <h3 className="font-bold text-green-900 mb-4 flex items-center gap-2">
+                      <FaHome className="text-green-600" />
+                      Property Details
+                    </h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Home:</span>
+                        <span className="text-green-800">{profile.home || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Size:</span>
+                        <span className="text-green-800">{profile.size || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Property Location:</span>
+                        <span className="text-green-800">{profile.propertyLocation || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Other Properties:</span>
+                        <span className="text-green-800">{profile.otherProperties || "N/A"}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Family Details */}
+                {(profile.fatherOccupation || profile.motherOccupation || profile.brothers || profile.sisters || profile.marriedSiblings) && (
+                  <div className="bg-pink-50 p-6 rounded-lg">
+                    <h3 className="font-bold text-green-900 mb-4 flex items-center gap-2">
+                      <FaUsers className="text-green-600" />
+                      Family Details
+                    </h3>
+                    <div className="space-y-3">
+                                             <div className="flex justify-between items-center">
+                         <span className="font-semibold">Father&apos;s Occupation:</span>
+                         <span className="text-green-800">{profile.fatherOccupation || "N/A"}</span>
+                       </div>
+                       <div className="flex justify-between items-center">
+                         <span className="font-semibold">Mother&apos;s Occupation:</span>
+                         <span className="text-green-800">{profile.motherOccupation || "N/A"}</span>
+                       </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Brothers:</span>
+                        <span className="text-green-800">{profile.brothers || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Sisters:</span>
+                        <span className="text-green-800">{profile.sisters || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Married Siblings:</span>
+                        <span className="text-green-800">{profile.marriedSiblings || "N/A"}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Requirements */}
+                {(profile.reqAgeLimit || profile.reqHeight || profile.reqCity || profile.reqCaste || profile.reqQualification || profile.reqOther) && (
+                  <div className="bg-indigo-50 p-6 rounded-lg">
+                    <h3 className="font-bold text-green-900 mb-4 flex items-center gap-2">
+                      <FaHeart className="text-green-600" />
+                      Partner Requirements
+                    </h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Age Limit:</span>
+                        <span className="text-green-800">{profile.reqAgeLimit || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Height:</span>
+                        <span className="text-green-800">{profile.reqHeight || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">City:</span>
+                        <span className="text-green-800">{profile.reqCity || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Caste:</span>
+                        <span className="text-green-800">{profile.reqCaste || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Qualification:</span>
+                        <span className="text-green-800">{profile.reqQualification || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Other Requirements:</span>
+                        <span className="text-green-800">{profile.reqOther || "N/A"}</span>
                       </div>
                     </div>
                   </div>
@@ -288,19 +539,46 @@ export default function ProfilePage() {
 
               {/* About Section */}
               <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="font-bold text-green-900 mb-4">About</h3>
+                <h3 className="font-bold text-green-900 mb-4 flex items-center gap-2">
+                  <FaInfoCircle className="text-green-600" />
+                  About
+                </h3>
                 <p className="text-gray-700 whitespace-pre-line">{profile.description}</p>
               </div>
 
+              {/* Payment Information */}
+              {profile.paymentScreenshot && (
+                <div className="bg-green-50 p-6 rounded-lg">
+                  <h3 className="font-bold text-green-900 mb-4 flex items-center gap-2">
+                    <FaMoneyBillWave className="text-green-600" />
+                    Payment Proof
+                  </h3>
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src={profile.paymentScreenshot}
+                      alt="Payment Screenshot"
+                      width={200}
+                      height={150}
+                      className="rounded-lg border border-gray-300"
+                    />
+                    <div>
+                      <p className="text-sm text-gray-600">Payment screenshot uploaded</p>
+                      {profile.AccountHolder && (
+                        <p className="text-sm text-gray-600">Account: {profile.AccountHolder}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Created Date */}
-              <div className="text-center text-sm text-gray-500">
+              <div className="text-center text-sm text-gray-500 flex items-center justify-center gap-2">
+                <FaCalendarAlt className="text-gray-400" />
                 Profile created on: {new Date(profile.createdAt).toLocaleDateString()}
               </div>
             </div>
           )}
         </div>
-
-
       </div>
     </div>
   );
