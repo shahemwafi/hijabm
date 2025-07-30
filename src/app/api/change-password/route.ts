@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
+import { getAuthUser } from "@/lib/auth";
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user?.email) {
+    const authUser = await getAuthUser(req);
+    if (!authUser || !authUser.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -25,7 +24,7 @@ export async function POST(req: NextRequest) {
     await dbConnect();
 
     // Find the user
-    const user = await User.findOne({ email: session.user.email });
+    const user = await User.findOne({ email: authUser.email });
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }

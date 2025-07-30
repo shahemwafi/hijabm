@@ -1,70 +1,88 @@
-import Profile from "@/models/Profile";
+import { NextRequest, NextResponse } from "next/server";
+import { getAuthUser } from "@/lib/auth";
 import dbConnect from "@/lib/db";
-import cloudinary from "@/lib/cloudinary";
-import { getServerSession } from "next-auth/next";
-import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/authOptions";
+import Profile from "@/models/Profile";
 import User from "@/models/User";
 
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const file = formData.get("screenshot") as File | null;
-    const name = formData.get("name") as string | null;
-    const session = await getServerSession(authOptions);
+    const paymentScreenshot = formData.get("paymentScreenshot") as File;
+    const AccountHolder = formData.get("AccountHolder") as string;
 
-    if (!session || !session.user?.email) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const existingUser = await User.findOne({
-      email: session.user?.email,
-    });
-    if (!existingUser) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
-    if (!file) {
+    if (!paymentScreenshot) {
       return NextResponse.json(
-        { error: "No screenshot uploaded." },
+        { error: "Payment screenshot is required" },
         { status: 400 }
       );
     }
 
-    // Convert file to buffer
-    const arrayBuffer = await file.arrayBuffer();
+    if (!AccountHolder) {
+      return NextResponse.json(
+        { error: "Account holder name is required" },
+        { status: 400 }
+      );
+    }
+
+    // Get authenticated user
+    const authUser = await getAuthUser(req);
+    if (!authUser || !authUser.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    await dbConnect();
+
+    const existingUser = await User.findOne({
+      email: authUser.email,
+    });
+
+    if (!existingUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const profile = await Profile.findOne({ user: existingUser._id });
+
+    if (!profile) {
+      return NextResponse.json(
+        { error: "Profile not found" },
+        { status: 404 }
+      );
+    }
+
+    if (profile.paymentStatus === "paid") {
+      return NextResponse.json(
+        { error: "Payment already completed" },
+        { status: 400 }
+      );
+    }
+
+    // Upload payment screenshot to Cloudinary
+    const arrayBuffer = await paymentScreenshot.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    // Upload to Cloudinary
     const uploadResult = await new Promise((resolve, reject) => {
+      const cloudinary = require("cloudinary").v2;
       cloudinary.uploader
-        .upload_stream({ folder: "payments" }, (error, result) => {
-          if (error) reject(error);
-          else if (result) resolve(result);
-          else reject(new Error("No result from Cloudinary"));
+        .upload_stream({ folder: "hijabm-payments" }, (err: any, result: any) => {
+          if (err) reject(err);
+          else resolve(result);
         })
         .end(buffer);
-    }) as { secure_url: string; public_id: string };
+    });
 
-    // Update profile paymentStatus, paymentScreenshot, and AccountHolder in DB
-    // Update profile paymentStatus, paymentScreenshot, and AccountHolder in DB
-    await dbConnect();
-    await Profile.findOneAndUpdate(
-      { user: existingUser._id },
-      {
-        paymentStatus: "paid",
-        paymentScreenshot: uploadResult.secure_url,
-        ...(name && { AccountHolder: name }), // Only update AccountHolder if provided
-      }
-    );
+    // Update profile with payment information
+    profile.paymentScreenshot = (uploadResult as { secure_url: string }).secure_url;
+    profile.AccountHolder = AccountHolder;
+    profile.paymentStatus = "pending";
+    await profile.save();
 
     return NextResponse.json({
-      message: "Screenshot uploaded and payment status updated.",
-      url: uploadResult.secure_url,
-      public_id: uploadResult.public_id,
+      message: "Payment screenshot uploaded successfully"
     });
   } catch (error) {
-    console.log(error);
-    return NextResponse.json(error, { status: 500 });
+    console.error("Payment upload error:", error);
+    return NextResponse.json(
+      { error: "Failed to upload payment screenshot" },
+      { status: 500 }
+    );
   }
 }

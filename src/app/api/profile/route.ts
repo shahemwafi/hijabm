@@ -1,26 +1,18 @@
-import cloudinary from "@/lib/cloudinary";
+import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
-import { containsContactInfo } from "@/lib/validate";
 import Profile from "@/models/Profile";
 import User from "@/models/User";
-import { getServerSession } from "next-auth/next";
-import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "@/lib/authOptions";
+import { getAuthUser } from "@/lib/auth";
+import { containsContactInfo } from "@/lib/validation";
+import cloudinary from "@/lib/cloudinary";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
-    if (process.env.MOCK_MODE === "true") {
-      return NextResponse.json({
-        message: "Mock profile submitted successfully",
-        profileId: "mock-id",
-      });
-    }
-    await dbConnect();
     const formData = await req.formData();
 
-    // Extract all fields from form
+    // Personal Information
     const name = formData.get("name") as string;
     const gender = formData.get("gender") as string;
     const age = formData.get("age") as string;
@@ -30,41 +22,35 @@ export async function POST(req: NextRequest) {
     const color = formData.get("color") as string;
     const disability = formData.get("disability") as string;
     const nationality = formData.get("nationality") as string;
-    
-    // Education Details
+
+    // Education & Career
     const qualification = formData.get("qualification") as string;
     const college = formData.get("college") as string;
     const university = formData.get("university") as string;
-    
-    // Job Details
     const rank = formData.get("rank") as string;
     const income = formData.get("income") as string;
     const natureOfJob = formData.get("natureOfJob") as string;
     const futurePlans = formData.get("futurePlans") as string;
-    
-    // Religion Details
+
+    // Family Information
     const religion = formData.get("religion") as string;
     const caste = formData.get("caste") as string;
     const sect = formData.get("sect") as string;
-    
-    // Property Details
     const home = formData.get("home") as string;
     const size = formData.get("size") as string;
     const propertyLocation = formData.get("propertyLocation") as string;
     const otherProperties = formData.get("otherProperties") as string;
-    
-    // Family Details
     const fatherOccupation = formData.get("fatherOccupation") as string;
     const motherOccupation = formData.get("motherOccupation") as string;
     const brothers = formData.get("brothers") as string;
     const sisters = formData.get("sisters") as string;
     const marriedSiblings = formData.get("marriedSiblings") as string;
-    
+
     // Address
     const currentCity = formData.get("currentCity") as string;
     const homeTown = formData.get("homeTown") as string;
     const addressLocation = formData.get("addressLocation") as string;
-    
+
     // Requirements
     const reqAgeLimit = formData.get("reqAgeLimit") as string;
     const reqHeight = formData.get("reqHeight") as string;
@@ -72,7 +58,7 @@ export async function POST(req: NextRequest) {
     const reqCaste = formData.get("reqCaste") as string;
     const reqQualification = formData.get("reqQualification") as string;
     const reqOther = formData.get("reqOther") as string;
-    
+
     // Other fields
     const description = formData.get("description") as string;
     const image = formData.get("image") as File | null;
@@ -109,32 +95,30 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user?.email) {
+    // Get authenticated user
+    const authUser = await getAuthUser(req);
+    if (!authUser || !authUser.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const email = session.user.email;
-    if (!email) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+
     const existingUser = await User.findOne({
-      email
+      email: authUser.email
     });
     if (!existingUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-    
+
     const existingProfile = await Profile.findOne({
       user: existingUser._id,
     });
-    
+
     if (existingProfile) {
       return NextResponse.json(
         { error: "You already have a profile" },
         { status: 400 }
       );
     }
+
     // Upload image to Cloudinary
     const arrayBuffer = await image.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -146,6 +130,7 @@ export async function POST(req: NextRequest) {
         })
         .end(buffer);
     });
+
     // Save profile to MongoDB with all fields
     const profile = new Profile({
       name,
@@ -188,22 +173,20 @@ export async function POST(req: NextRequest) {
       description,
       imageUrl: (uploadResult as { secure_url: string }).secure_url,
       status: "pending",
-      user: existingUser._id, 
+      user: existingUser._id,
     });
     await profile.save();
 
     console.log("Saved profile:", profile);
     return NextResponse.json({
-      message: "Profile submitted successfully",
-      profileId: profile._id,
+      message: "Profile submitted successfully"
     });
   } catch (error) {
-    if (error instanceof Error) {
-      console.log(error.message);
-    } else {
-      console.log(error);
-    }
-    return NextResponse.json(error, { status: 500 });
+    console.error("Profile submission error:", error);
+    return NextResponse.json(
+      { error: "Failed to submit profile" },
+      { status: 500 }
+    );
   }
 }
 

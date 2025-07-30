@@ -2,21 +2,25 @@ import PayPage from "@/components/Postishta";
 import dbConnect from "@/lib/db";
 import Profile from "@/models/Profile";
 import User from "@/models/User";
-import { getServerSession } from "next-auth";
+import { getAuthUserFromCookies } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/authOptions";
 
 export default async function RegisterPage() {
   await dbConnect();
-  const session = await getServerSession(authOptions);
+  const user = await getAuthUserFromCookies();
 
-  if (!session) {
+  if (!user) {
     redirect("/login");
   }
 
   const existingUser = await User.findOne({
-    email: session.user?.email,
+    email: user.email,
   });
+  
+  if (!existingUser) {
+    redirect("/login");
+  }
+
   let step = 1;
   const profile = await Profile.findOne({ user: existingUser._id });
   if (profile) {
