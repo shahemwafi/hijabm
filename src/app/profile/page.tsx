@@ -185,7 +185,7 @@ export default function ProfilePage() {
               <h2 className="text-2xl font-bold text-green-900 mb-4">No Profile Found</h2>
               <p className="text-green-700 mb-6">You haven&apos;t submitted a profile yet.</p>
               <button
-                onClick={() => router.push("/submit")}
+                onClick={() => router.push("/pay")}
                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-semibold transition"
               >
                 Submit Profile
