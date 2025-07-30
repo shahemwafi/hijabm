@@ -44,3 +44,11 @@ hijabm.vercel.app
 ## Admin Setup
 
 To set up admin privileges for a user, make a POST request to `/api/setup-admin` endpoint.
+
+## Latest Updates
+
+- ✅ Complete profile form capture with all fields
+- ✅ Enhanced admin panel with "View More" functionality
+- ✅ Complete profile details display in admin modal
+- ✅ Fixed TypeScript and ESLint errors
+- ✅ All form fields now visible in admin panel
