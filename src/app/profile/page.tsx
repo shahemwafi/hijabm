@@ -1,9 +1,9 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { FaEdit, FaEye, FaEyeSlash, FaSave, FaTimes } from "react-icons/fa";
+import { FaEdit, FaSave, FaTimes } from "react-icons/fa";
 
 interface UserProfile {
   _id: string;
@@ -68,18 +68,7 @@ export default function ProfilePage() {
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
 
-  useEffect(() => {
-    if (status === "loading") return;
-    
-    if (!session) {
-      router.push("/login");
-      return;
-    }
-
-    fetchUserProfile();
-  }, [session, status, router]);
-
-  async function fetchUserProfile() {
+  const fetchUserProfile = useCallback(async () => {
     try {
       const res = await fetch("/api/profile");
       const data = await res.json();
@@ -91,12 +80,23 @@ export default function ProfilePage() {
       } else {
         setProfile(null);
       }
-    } catch (err) {
+    } catch {
       setError("Failed to fetch profile");
     } finally {
       setLoading(false);
     }
-  }
+  }, [session?.user?.email]);
+
+  useEffect(() => {
+    if (status === "loading") return;
+    
+    if (!session) {
+      router.push("/login");
+      return;
+    }
+
+    fetchUserProfile();
+  }, [session, status, router, fetchUserProfile]);
 
   async function handlePasswordChange(e: React.FormEvent) {
     e.preventDefault();
@@ -137,7 +137,7 @@ export default function ProfilePage() {
       } else {
         setPasswordError(data.error || "Failed to change password");
       }
-    } catch (err) {
+    } catch {
       setPasswordError("Failed to change password");
     } finally {
       setPasswordLoading(false);
@@ -182,7 +182,7 @@ export default function ProfilePage() {
           {!profile ? (
             <div className="text-center py-12">
               <h2 className="text-2xl font-bold text-green-900 mb-4">No Profile Found</h2>
-              <p className="text-green-700 mb-6">You haven't submitted a profile yet.</p>
+              <p className="text-green-700 mb-6">You haven&apos;t submitted a profile yet.</p>
               <button
                 onClick={() => router.push("/submit")}
                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-semibold transition"
