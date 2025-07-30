@@ -37,7 +37,7 @@ export default function UserProfileDropdown() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 bg-amber-500 text-sm p-2 mx-3 rounded-xl hover:bg-amber-600 transition-colors"
+        className="bg-amber-500 text-sm p-1.5 mx-3 rounded-xl hover:bg-amber-600 transition-colors flex items-center gap-2"
       >
         <FaUser className="text-white" />
         <span className="text-white font-medium">
