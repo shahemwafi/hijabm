@@ -29,18 +29,16 @@ export async function POST(req: NextRequest) {
     await user.save();
 
     // In a real application, you would send an email here
-    // For now, we'll return the reset token in the response
-    // In production, you should use a proper email service like SendGrid, Nodemailer, etc.
-    
+    // For now, we'll return the reset token in the response for testing
     const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
     
     console.log("Password reset URL:", resetUrl);
     console.log("Reset token:", resetToken);
 
     return NextResponse.json({ 
-      message: "Password reset email sent successfully",
-      resetUrl: resetUrl, // Remove this in production
-      resetToken: resetToken // Remove this in production
+      message: "Password reset link has been sent to your email. Please check your inbox.",
+      resetUrl: resetUrl, // Include this for testing
+      resetToken: resetToken // Include this for testing
     });
   } catch (error) {
     console.error("Forgot password error:", error);

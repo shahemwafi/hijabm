@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { FaEdit, FaSave, FaTimes } from "react-icons/fa";
+
 
 interface UserProfile {
   _id: string;
@@ -60,14 +60,7 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [showPasswordForm, setShowPasswordForm] = useState(false);
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-  const [passwordLoading, setPasswordLoading] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
+
 
   const fetchUserProfile = useCallback(async () => {
     try {
@@ -99,51 +92,7 @@ export default function ProfilePage() {
     fetchUserProfile();
   }, [session, status, router, fetchUserProfile]);
 
-  async function handlePasswordChange(e: React.FormEvent) {
-    e.preventDefault();
-    
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setPasswordError("New passwords do not match");
-      return;
-    }
 
-    if (passwordData.newPassword.length < 6) {
-      setPasswordError("Password must be at least 6 characters long");
-      return;
-    }
-
-    setPasswordLoading(true);
-    setPasswordError("");
-
-    try {
-      const res = await fetch("/api/change-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          currentPassword: passwordData.currentPassword,
-          newPassword: passwordData.newPassword,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setPasswordData({
-          currentPassword: "",
-          newPassword: "",
-          confirmPassword: "",
-        });
-        setShowPasswordForm(false);
-        alert("Password changed successfully!");
-      } else {
-        setPasswordError(data.error || "Failed to change password");
-      }
-    } catch {
-      setPasswordError("Failed to change password");
-    } finally {
-      setPasswordLoading(false);
-    }
-  }
 
   if (status === "loading" || loading) {
     return (
@@ -166,12 +115,6 @@ export default function ProfilePage() {
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-extrabold text-green-900">My Profile</h1>
-            <button
-              onClick={() => setShowPasswordForm(!showPasswordForm)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-semibold flex items-center gap-2 transition"
-            >
-              <FaEdit /> Change Password
-            </button>
           </div>
 
           {error && (
@@ -357,85 +300,7 @@ export default function ProfilePage() {
           )}
         </div>
 
-        {/* Change Password Form */}
-        {showPasswordForm && (
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-green-900">Change Password</h2>
-              <button
-                onClick={() => setShowPasswordForm(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <FaTimes size={20} />
-              </button>
-            </div>
 
-            {passwordError && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-                {passwordError}
-              </div>
-            )}
-
-            <form onSubmit={handlePasswordChange} className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-green-800 mb-2">
-                  Current Password
-                </label>
-                <input
-                  type="password"
-                  value={passwordData.currentPassword}
-                  onChange={(e) => setPasswordData({...passwordData, currentPassword: e.target.value})}
-                  className="w-full border border-green-200 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-green-800 mb-2">
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  value={passwordData.newPassword}
-                  onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
-                  className="w-full border border-green-200 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-green-800 mb-2">
-                  Confirm New Password
-                </label>
-                <input
-                  type="password"
-                  value={passwordData.confirmPassword}
-                  onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
-                  className="w-full border border-green-200 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
-                  required
-                />
-              </div>
-
-              <div className="flex gap-4">
-                <button
-                  type="submit"
-                  disabled={passwordLoading}
-                  className="bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white px-6 py-2 rounded-full font-semibold flex items-center gap-2 transition"
-                >
-                  <FaSave />
-                  {passwordLoading ? "Changing..." : "Change Password"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowPasswordForm(false)}
-                  className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-full font-semibold transition"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
       </div>
     </div>
   );
