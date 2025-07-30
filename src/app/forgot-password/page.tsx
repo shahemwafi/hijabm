@@ -8,7 +8,7 @@ export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [resetUrl, setResetUrl] = useState("");
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -32,10 +32,7 @@ export default function ForgotPasswordPage() {
       const data = await res.json();
 
       if (res.ok) {
-        setSuccess("Password reset link generated successfully!");
-        if (data.resetUrl) {
-          setResetUrl(data.resetUrl);
-        }
+        setSuccess("Password reset link has been sent to your email. Please check your inbox.");
         setEmail("");
       } else {
         setError(data.error || "Failed to send reset email");
@@ -70,19 +67,6 @@ export default function ForgotPasswordPage() {
           {success && (
             <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
               {success}
-              {resetUrl && (
-                <div className="mt-3">
-                  <p className="text-sm mb-2">Click the link below to reset your password:</p>
-                  <a
-                    href={resetUrl}
-                    className="text-blue-600 hover:text-blue-800 underline break-all"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {resetUrl}
-                  </a>
-                </div>
-              )}
             </div>
           )}
 

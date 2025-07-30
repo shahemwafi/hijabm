@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
 import crypto from "crypto";
+import { sendPasswordResetEmail } from "@/lib/email";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,6 +11,13 @@ export async function POST(req: NextRequest) {
 
     if (!email) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    }
+
+    // Check rate limiting
+    if (!checkRateLimit(email)) {
+      return NextResponse.json({ 
+        error: "Too many reset attempts. Please wait 1 hour before trying again." 
+      }, { status: 429 });
     }
 
     await dbConnect();
@@ -28,17 +37,19 @@ export async function POST(req: NextRequest) {
     user.resetTokenExpiry = resetTokenExpiry;
     await user.save();
 
-    // In a real application, you would send an email here
-    // For now, we'll return the reset token in the response for testing
+    // Send password reset email
     const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
     
-    console.log("Password reset URL:", resetUrl);
-    console.log("Reset token:", resetToken);
+    const emailSent = await sendPasswordResetEmail(email, resetUrl);
+    
+    if (!emailSent) {
+      return NextResponse.json({ 
+        error: "Failed to send reset email. Please try again later." 
+      }, { status: 500 });
+    }
 
     return NextResponse.json({ 
-      message: "Password reset link has been sent to your email. Please check your inbox.",
-      resetUrl: resetUrl, // Include this for testing
-      resetToken: resetToken // Include this for testing
+      message: "Password reset link has been sent to your email. Please check your inbox."
     });
   } catch (error) {
     console.error("Forgot password error:", error);
