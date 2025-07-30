@@ -1,7 +1,5 @@
 import { 
-  FaFileAlt, 
   FaCheckCircle, 
-  FaExclamationTriangle, 
   FaInfoCircle, 
   FaQuran, 
   FaLock, 

@@ -5,10 +5,9 @@ import {
   FaUserCheck, 
   FaMapMarkerAlt, 
   FaGraduationCap, 
-  FaDownload, 
   FaEye, 
-  FaEyeSlash, 
-  FaChartBar 
+  FaChartBar,
+  FaCalendarAlt
 } from 'react-icons/fa';
 
 interface AnalyticsData {
@@ -34,36 +33,29 @@ export default function AdminAnalyticsPage() {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [dateRange, setDateRange] = useState("30"); // days
   const [selectedChart, setSelectedChart] = useState("overview");
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    fetchAnalytics();
-  }, [dateRange, fetchAnalytics]);
-
-  async function fetchAnalytics() {
-    setLoading(true);
-    setError("");
-    try {
-      const res = await fetch(`/api/admin/analytics?range=${dateRange}`);
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Failed to fetch analytics");
-      } else {
-        setAnalyticsData(data);
+    async function fetchAnalytics() {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch(`/api/admin/analytics?range=30`);
+        const data = await res.json();
+        if (!res.ok) {
+          setError(data.error || "Failed to fetch analytics");
+        } else {
+          setAnalyticsData(data);
+        }
+      } catch {
+        setError("Failed to fetch analytics");
+      } finally {
+        setLoading(false);
       }
-    } catch {
-      setError("Failed to fetch analytics");
-    } finally {
-      setLoading(false);
     }
-  }
-
-  function exportData() {
-    // Implementation for exporting analytics data
-    alert("Export functionality will be implemented");
-  }
+    
+    fetchAnalytics();
+  }, []);
 
   if (loading) {
     return (

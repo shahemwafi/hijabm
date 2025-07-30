@@ -110,7 +110,7 @@ export default function HomePage() {
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Trust & Support</h3>
               <p className="text-gray-600 text-sm sm:text-base">
                 Our dedicated team provides support throughout your journey. 
-                We're here to help you find your perfect match.
+                We&rsquo;re here to help you find your perfect match.
               </p>
             </div>
           </div>

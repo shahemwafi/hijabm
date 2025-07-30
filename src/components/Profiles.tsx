@@ -1,7 +1,16 @@
 "use client";
 import { useState, useMemo } from "react";
 import Image from 'next/image';
-import { FaGlobe, FaRing, FaUser, FaVenusMars, FaSearch, FaMapMarkerAlt, FaGraduationCap, FaBriefcase, FaHeart } from 'react-icons/fa';
+import { 
+  FaGlobe, 
+  FaRing, 
+  FaUser, 
+  FaVenusMars, 
+  FaSearch, 
+  FaMapMarkerAlt, 
+  FaGraduationCap, 
+  FaBriefcase 
+} from 'react-icons/fa';
 import ProfileView from '@/components/ProfileView';
 import { IProfile } from '@/models/Profile';
 

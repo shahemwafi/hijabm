@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
 import { getAuthUserFromCookies } from "@/lib/auth";
@@ -27,7 +27,7 @@ export async function GET() {
     // Convert _id to string for serialization
     const safeUsers = users.map(user => ({
       ...user,
-      _id: user._id.toString(),
+      _id: (user._id as { toString(): string }).toString(),
       createdAt: user.createdAt ? new Date(user.createdAt).toISOString() : '',
       status: "active" // Default status, you can add status field to User model if needed
     }));
