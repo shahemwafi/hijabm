@@ -51,6 +51,7 @@ interface UserProfile {
   paymentStatus?: "pending" | "paid";
   paymentScreenshot?: string;
   AccountHolder?: string;
+  user: string;
 }
 
 export default function ProfilePage() {
