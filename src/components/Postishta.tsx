@@ -1,12 +1,7 @@
 "use client";
 import SubmitPage from "@/components/Submit";
 import { useState } from "react";
-import {
-  FaArrowRight,
-  FaCreditCard,
-  FaMobileAlt,
-  FaUniversity,
-} from "react-icons/fa";
+import { FaArrowRight, FaMobileAlt } from "react-icons/fa";
 
 function PaymentForm({
   onNext,

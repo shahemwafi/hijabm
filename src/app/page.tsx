@@ -1,6 +1,6 @@
 // Sample comment: This is the main home page for Hijab Marriage Bureau
 import Link from 'next/link';
-import { FaUserShield, FaHeart, FaLock, FaStar, FaCheckCircle, FaUsers, FaShieldAlt, FaPray, FaGlobe, FaArrowRight, FaCrown, FaHandshake } from 'react-icons/fa';
+import { FaUserShield, FaHeart, FaLock, FaStar, FaUsers, FaShieldAlt, FaPray, FaGlobe, FaArrowRight, FaHandshake } from 'react-icons/fa';
 
 export default function HomePage() {
   return (
@@ -235,7 +235,7 @@ export default function HomePage() {
               </div>
               <p className="text-gray-700 italic mb-4 text-sm sm:text-base">
                 &ldquo;I appreciate the privacy and Islamic values. Thank you for this service! 
-                We found each other through this platform and couldn&apos;t be happier.&rdquo;
+                We found each other through this platform and couldn&rsquo;t be happier.&rdquo;
               </p>
               <div className="flex items-center">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold mr-3 text-sm sm:text-base">

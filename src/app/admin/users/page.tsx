@@ -2,8 +2,6 @@
 import { useState, useEffect } from "react";
 import { 
   FaUser, 
-  FaEnvelope, 
-  FaCalendar, 
   FaTrash, 
   FaEye, 
   FaLock, 

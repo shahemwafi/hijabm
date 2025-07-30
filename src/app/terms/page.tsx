@@ -1,4 +1,15 @@
-import { FaBalanceScale, FaShieldAlt, FaUserSecret, FaCheckCircle, FaTimesCircle, FaInfoCircle, FaLock, FaHandshake, FaQuran } from 'react-icons/fa';
+import { 
+  FaFileAlt, 
+  FaCheckCircle, 
+  FaExclamationTriangle, 
+  FaInfoCircle, 
+  FaQuran, 
+  FaLock, 
+  FaHandshake, 
+  FaTimesCircle, 
+  FaBalanceScale, 
+  FaUserSecret 
+} from 'react-icons/fa';
 
 export default function TermsPage() {
   return (

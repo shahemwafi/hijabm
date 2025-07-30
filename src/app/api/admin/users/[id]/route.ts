@@ -27,7 +27,7 @@ export async function PATCH(
     const { status, isAdmin } = body;
 
     // Validate update data
-    const updateData: any = {};
+    const updateData: { status?: string; isAdmin?: boolean } = {};
     if (status !== undefined) {
       updateData.status = status;
     }

@@ -3,7 +3,7 @@ import dbConnect from "@/lib/db";
 import User from "@/models/User";
 import { getAuthUserFromCookies } from "@/lib/auth";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     await dbConnect();
     

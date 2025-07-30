@@ -3,22 +3,13 @@ import { useState, useEffect } from "react";
 import { 
   FaUsers, 
   FaUserCheck, 
-  FaUserTimes, 
-  FaUserClock, 
-  FaChartLine, 
-  FaChartBar, 
-  FaChartPie, 
-  FaCalendarAlt,
-  FaMapMarkerAlt,
-  FaVenusMars,
-  FaGraduationCap,
-  FaBriefcase,
-  FaHeart,
-  FaEye,
-  FaDownload,
-  FaFilter,
-  FaCalendar
-} from "react-icons/fa";
+  FaMapMarkerAlt, 
+  FaGraduationCap, 
+  FaDownload, 
+  FaEye, 
+  FaEyeSlash, 
+  FaChartBar 
+} from 'react-icons/fa';
 
 interface AnalyticsData {
   totalUsers: number;
@@ -46,9 +37,10 @@ export default function AdminAnalyticsPage() {
   const [dateRange, setDateRange] = useState("30"); // days
   const [selectedChart, setSelectedChart] = useState("overview");
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchAnalytics();
-  }, [dateRange]);
+  }, [dateRange, fetchAnalytics]);
 
   async function fetchAnalytics() {
     setLoading(true);
@@ -98,36 +90,11 @@ export default function AdminAnalyticsPage() {
     <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-8">
       <div className="container-custom max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-green-900 mb-4">
-                Analytics Dashboard
-              </h1>
-              <p className="text-green-700 text-sm sm:text-base">
-                Comprehensive insights into your platform's performance
-              </p>
-            </div>
-            <div className="flex items-center gap-4 mt-4 sm:mt-0">
-              <select
-                value={dateRange}
-                onChange={(e) => setDateRange(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              >
-                <option value="7">Last 7 days</option>
-                <option value="30">Last 30 days</option>
-                <option value="90">Last 90 days</option>
-                <option value="365">Last year</option>
-              </select>
-              <button
-                onClick={exportData}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-              >
-                <FaDownload />
-                Export
-              </button>
-            </div>
-          </div>
+        <div className="text-center mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-green-900 mb-4">Analytics Dashboard</h1>
+          <p className="text-green-700 text-sm sm:text-base">
+            Monitor platform performance and user engagement
+          </p>
         </div>
 
         {/* Error Message */}
@@ -179,7 +146,7 @@ export default function AdminAnalyticsPage() {
                 <p className="text-2xl font-bold text-green-900">{analyticsData.conversionRate}%</p>
                 <p className="text-xs text-green-600">Profiles to matches</p>
               </div>
-              <FaChartLine className="text-green-600 text-2xl" />
+              <FaChartBar className="text-green-600 text-2xl" />
             </div>
           </div>
         </div>
@@ -414,7 +381,7 @@ export default function AdminAnalyticsPage() {
                   {analyticsData.monthlyRegistrations.slice(-6).map((item, index) => (
                     <div key={index} className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <FaCalendar className="text-green-600" />
+                        <FaCalendarAlt className="text-green-600" />
                         <span className="text-sm text-gray-600">{item.month}</span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -455,7 +422,7 @@ export default function AdminAnalyticsPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-green-100 text-center">
             <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FaHeart className="text-white" />
+              <FaUsers className="text-white" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Profile Completion</h3>
             <p className="text-3xl font-bold text-green-600">{analyticsData.averageProfileCompletion}%</p>
@@ -464,7 +431,7 @@ export default function AdminAnalyticsPage() {
           
           <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-green-100 text-center">
             <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FaChartLine className="text-white" />
+              <FaChartBar className="text-white" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Growth Rate</h3>
             <p className="text-3xl font-bold text-green-600">+15%</p>

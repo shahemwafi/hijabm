@@ -10,7 +10,7 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="text-green-700 text-sm sm:text-base max-w-2xl mx-auto">
-            Get in touch with us for any questions, support, or feedback. We're here to help you on your journey.
+            Get in touch with us for any questions, support, or feedback. We&rsquo;re here to help you on your journey.
           </p>
         </div>
 

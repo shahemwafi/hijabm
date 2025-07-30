@@ -79,7 +79,7 @@ export default function AboutPage() {
               <h3 className="text-xl font-bold text-green-900 mb-2">Operational Head</h3>
               <p className="text-green-700 font-semibold mb-4">Shehla Gul</p>
               <p className="text-green-700 text-sm sm:text-base">
-                "Inspired by the need for a dignified, private, and truly Islamic matchmaking experience, we created Hijab Marriage Bureau. Our journey began with a vision to help Muslims find their life partners in a halal, respectful, and secure environment. We are committed to upholding Islamic values, privacy, and trust for every user."
+                &ldquo;Inspired by the need for a dignified, private, and truly Islamic matchmaking experience, we created Hijab Marriage Bureau. Our journey began with a vision to help Muslims find their life partners in a halal, respectful, and secure environment. We are committed to upholding Islamic values, privacy, and trust for every user.&rdquo;
               </p>
             </div>
             
