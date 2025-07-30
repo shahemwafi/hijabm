@@ -1,10 +1,17 @@
 import Image from "next/image";
 import { IProfile } from "@/models/Profile";
 
+// Extended interface to handle both old and new field names
+interface ExtendedProfile extends IProfile {
+  country?: string;
+  city?: string;
+}
+
 export default function ProfileView({ profile, setSelectedProfile }: { profile: IProfile, setSelectedProfile: (value: IProfile | null) => void; }) {
   // Handle both old and new field names
-  const nationality = profile.nationality || (profile as any).country || "N/A";
-  const currentCity = profile.currentCity || (profile as any).city || "N/A";
+  const extendedProfile = profile as ExtendedProfile;
+  const nationality = profile.nationality || extendedProfile.country || "N/A";
+  const currentCity = profile.currentCity || extendedProfile.city || "N/A";
   
   return (
     <div className="bg-white pt-10 w-full h-full border border-green-100 overflow-y-auto">
