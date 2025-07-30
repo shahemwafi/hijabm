@@ -5,6 +5,7 @@ import Link from "next/link";
 import { authOptions } from "@/lib/authOptions";
 import "./globals.css";
 import ClientUserProfileDropdown from "@/components/ClientUserProfileDropdown";
+import Providers from "@/components/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,34 +34,36 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gold text-crimson`}
       >
-        <nav className="w-full flex items-center justify-between p-4 text-base font-medium text-white bg-black/90 shadow-sm sticky top-0 z-50">
-          <div className="flex justify-center gap-8 ml-25">
-            <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-            <Link href="/pay">Post Rishta</Link>
-            <Link href="/portfolio">Portfolio</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/contact">Contact</Link>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {(session?.user as any)?.isAdmin && (
-              <Link href="/admin">Admin</Link>
-            )}
-          </div>
-          <ClientUserProfileDropdown />
-        </nav>
-        {children}
-        <footer className="w-full mt-16 py-6 bg-crimson text-gold border-t border-gold/30 text-center text-sm">
-          <div className="mb-2">
-            <Link href="/" className="font-semibold text-gold hover:underline">
-              Hijab Marriage Bureau
-            </Link>{" "}
-            &mdash; Dignified, Shariah-compliant matchmaking for Muslims
-          </div>
-          <div>
-            &copy; {new Date().getFullYear()} Hijab Marriage Bureau. All rights
-            reserved.
-          </div>
-        </footer>
+        <Providers>
+          <nav className="w-full flex items-center justify-between p-4 text-base font-medium text-white bg-black/90 shadow-sm sticky top-0 z-50">
+            <div className="flex justify-center gap-8 ml-25">
+              <Link href="/">Home</Link>
+              <Link href="/about">About</Link>
+              <Link href="/pay">Post Rishta</Link>
+              <Link href="/portfolio">Portfolio</Link>
+              <Link href="/terms">Terms</Link>
+              <Link href="/contact">Contact</Link>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              {(session?.user as any)?.isAdmin && (
+                <Link href="/admin">Admin</Link>
+              )}
+            </div>
+            <ClientUserProfileDropdown />
+          </nav>
+          {children}
+          <footer className="w-full mt-16 py-6 bg-crimson text-gold border-t border-gold/30 text-center text-sm">
+            <div className="mb-2">
+              <Link href="/" className="font-semibold text-gold hover:underline">
+                Hijab Marriage Bureau
+              </Link>{" "}
+              &mdash; Dignified, Shariah-compliant matchmaking for Muslims
+            </div>
+            <div>
+              &copy; {new Date().getFullYear()} Hijab Marriage Bureau. All rights
+              reserved.
+            </div>
+          </footer>
+        </Providers>
       </body>
     </html>
   );
