@@ -1,28 +1,17 @@
-// Create a generic email service that works for all users
-// For development/testing, we'll use a simple approach
-// In production, you'd use a proper email service like SendGrid, AWS SES, etc.
+import nodemailer from 'nodemailer';
+
+// Create a transporter for sending actual emails
+// You'll need to provide EMAIL_USER and EMAIL_PASS in your .env.local file
+const transporter = nodemailer.createTransporter({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
 
 export async function sendPasswordResetEmail(email: string, resetUrl: string) {
   try {
-    // For now, we'll simulate email sending and log the reset URL
-    // In production, you would integrate with a real email service
-    
-    console.log('=== PASSWORD RESET EMAIL ===');
-    console.log('To:', email);
-    console.log('Subject: Password Reset Request - Hijab Marriage Bureau');
-    console.log('Reset URL:', resetUrl);
-    console.log('===========================');
-    
-    // In production, you would use something like:
-    /*
-    const transporter = nodemailer.createTransporter({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
@@ -65,9 +54,7 @@ export async function sendPasswordResetEmail(email: string, resetUrl: string) {
     };
 
     await transporter.sendMail(mailOptions);
-    */
-    
-    // For now, return true to simulate successful email sending
+    console.log('Password reset email sent successfully to:', email);
     return true;
   } catch (error) {
     console.error('Email sending error:', error);
