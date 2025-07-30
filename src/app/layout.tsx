@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { authOptions } from "@/lib/authOptions";
 import "./globals.css";
-import UserProfileDropdown from "@/components/UserProfileDropdown";
+import ClientUserProfileDropdown from "@/components/ClientUserProfileDropdown";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,7 +46,7 @@ export default async function RootLayout({
               <Link href="/admin">Admin</Link>
             )}
           </div>
-          <UserProfileDropdown />
+          <ClientUserProfileDropdown />
         </nav>
         {children}
         <footer className="w-full mt-16 py-6 bg-crimson text-gold border-t border-gold/30 text-center text-sm">
