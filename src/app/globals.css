@@ -384,9 +384,9 @@ body {
 @media print {
   .no-print {
     display: none !important;
-  }
-  
-  body {
+}
+
+body {
     background: white !important;
     color: black !important;
   }

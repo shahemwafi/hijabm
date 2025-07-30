@@ -440,7 +440,7 @@ export default function SubmitPage({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Father's Occupation
+                    Father&apos;s Occupation
                   </label>
                   <input
                     className="input-field"
@@ -451,7 +451,7 @@ export default function SubmitPage({
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Mother's Occupation
+                    Mother&apos;s Occupation
                   </label>
                   <input
                     className="input-field"
@@ -639,9 +639,9 @@ export default function SubmitPage({
                   placeholder="Tell us about yourself, your values, and what you're looking for. Please do not include any contact information."
                   required
                 />
-                <p className="text-xs text-gray-500 mt-2">
-                  Share your background, values, and what you're looking for. No contact information allowed.
-                </p>
+                                        <p className="text-xs text-gray-500 mt-2">
+                          Share your background, values, and what you&apos;re looking for. No contact information allowed.
+                        </p>
               </div>
             </div>
 

@@ -149,7 +149,7 @@ export async function POST(req: NextRequest) {
       uploadStream.end(imageBuffer);
     });
 
-    const uploadResult = await uploadPromise as any;
+    const uploadResult = await uploadPromise as { secure_url: string };
     const imageUrl = uploadResult.secure_url;
 
     // Create profile with optimized settings

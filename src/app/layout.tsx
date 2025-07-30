@@ -107,7 +107,7 @@ export default function RootLayout({
 
           {/* Main Content */}
           <main className="flex-1">
-            {children}
+          {children}
           </main>
 
           {/* Enhanced Footer */}
@@ -121,7 +121,7 @@ export default function RootLayout({
                       <span className="text-green-600 font-bold text-sm">H</span>
                     </div>
                     <span className="font-poppins font-semibold text-lg sm:text-xl">
-                      Hijab Marriage Bureau
+                Hijab Marriage Bureau
                     </span>
                   </div>
                   <p className="text-green-100 mb-4 max-w-md text-sm sm:text-base">
@@ -153,10 +153,10 @@ export default function RootLayout({
                     <li><Link href="/portfolio" className="text-green-100 hover:text-white transition-colors text-sm sm:text-base">Portfolio</Link></li>
                     <li><Link href="/contact" className="text-green-100 hover:text-white transition-colors text-sm sm:text-base">Contact</Link></li>
                   </ul>
-                </div>
+            </div>
 
                 {/* Legal */}
-                <div>
+            <div>
                   <h3 className="font-poppins font-semibold text-lg mb-4">Legal</h3>
                   <ul className="space-y-2">
                     <li><Link href="/terms" className="text-green-100 hover:text-white transition-colors text-sm sm:text-base">Terms of Service</Link></li>

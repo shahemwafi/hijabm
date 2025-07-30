@@ -1,7 +1,6 @@
 // Sample comment: This is the main home page for Hijab Marriage Bureau
 import Link from 'next/link';
 import { FaUserShield, FaHeart, FaLock, FaStar, FaCheckCircle, FaUsers, FaShieldAlt, FaPray, FaGlobe } from 'react-icons/fa';
-import Image from 'next/image';
 
 export default function HomePage() {
   return (
@@ -29,7 +28,7 @@ export default function HomePage() {
               </Link>
               <Link href="/about" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
                 Learn More
-              </Link>
+        </Link>
             </div>
           </div>
         </div>
@@ -154,14 +153,14 @@ export default function HomePage() {
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
                   3
                 </div>
-              </div>
+          </div>
               <FaHeart className="text-3xl sm:text-4xl text-green-600 mb-4 mx-auto" />
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Get Matched</h3>
               <p className="text-gray-600 text-sm sm:text-base">
                 Our team reviews and matches profiles, upholding Islamic values 
                 and ensuring compatibility for successful relationships.
               </p>
-            </div>
+          </div>
           </div>
         </div>
       </section>
@@ -184,8 +183,8 @@ export default function HomePage() {
                 <FaStar className="text-yellow-400 text-lg sm:text-xl" />
               </div>
               <p className="text-gray-700 italic mb-4 text-sm sm:text-base">
-                "A truly dignified and private experience. I found my match in just a few weeks! 
-                The process was respectful and aligned with our Islamic values."
+                &ldquo;A truly dignified and private experience. I found my match in just a few weeks! 
+                The process was respectful and aligned with our Islamic values.&rdquo;
               </p>
               <div className="flex items-center">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold mr-3 text-sm sm:text-base">
@@ -207,8 +206,8 @@ export default function HomePage() {
                 <FaStar className="text-yellow-400 text-lg sm:text-xl" />
               </div>
               <p className="text-gray-700 italic mb-4 text-sm sm:text-base">
-                "The process was so easy and respectful. Highly recommended for Muslims! 
-                We appreciate the privacy and Islamic approach to matchmaking."
+                &ldquo;The process was so easy and respectful. Highly recommended for Muslims! 
+                We appreciate the privacy and Islamic approach to matchmaking.&rdquo;
               </p>
               <div className="flex items-center">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold mr-3 text-sm sm:text-base">
@@ -230,8 +229,8 @@ export default function HomePage() {
                 <FaStar className="text-yellow-400 text-lg sm:text-xl" />
               </div>
               <p className="text-gray-700 italic mb-4 text-sm sm:text-base">
-                "I appreciate the privacy and Islamic values. Thank you for this service! 
-                We found each other through this platform and couldn't be happier."
+                &ldquo;I appreciate the privacy and Islamic values. Thank you for this service! 
+                We found each other through this platform and couldn&apos;t be happier.&rdquo;
               </p>
               <div className="flex items-center">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold mr-3 text-sm sm:text-base">
@@ -241,8 +240,8 @@ export default function HomePage() {
                   <div className="font-semibold text-gray-800 text-sm sm:text-base">Fatima, Islamabad</div>
                   <div className="text-xs sm:text-sm text-gray-600">Married 2023</div>
                 </div>
-              </div>
-            </div>
+          </div>
+          </div>
           </div>
         </div>
       </section>

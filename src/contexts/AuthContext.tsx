@@ -1,6 +1,5 @@
 "use client";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { useRouter } from "next/navigation";
 
 interface User {
   id: string;
@@ -22,7 +21,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   // Optimized user refresh with caching
   const refreshUser = async () => {
