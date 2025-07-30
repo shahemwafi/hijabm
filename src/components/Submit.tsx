@@ -78,10 +78,10 @@ export default function SubmitPage({
           </div>
 
           <form ref={formRef} onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-                            {/* Personal Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-6">
+                            {/* Basic Info */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Personal Information</h3>
+                <h3 className="font-bold text-green-900 text-lg">Basic Info</h3>
                 
                 <select
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
@@ -113,7 +113,12 @@ export default function SubmitPage({
                   placeholder="Marital Status"
                   required
                 />
+              </div>
 
+              {/* Physical Details */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-green-900 text-lg">Physical Details</h3>
+                
                 <input
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
                   name="height"
@@ -141,9 +146,9 @@ export default function SubmitPage({
                 />
               </div>
 
-              {/* Education & Career */}
+              {/* Education */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Education & Career</h3>
+                <h3 className="font-bold text-green-900 text-lg">Education</h3>
                 
                 <input
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
@@ -162,7 +167,12 @@ export default function SubmitPage({
                   name="university"
                   placeholder="University"
                 />
+              </div>
 
+              {/* Career */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-green-900 text-lg">Career</h3>
+                
                 <input
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
                   name="rank"
@@ -188,9 +198,9 @@ export default function SubmitPage({
                 />
               </div>
               
-                            {/* Religion Details */}
+                                          {/* Religion */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Religion Details</h3>
+                <h3 className="font-bold text-green-900 text-lg">Religion</h3>
                 
                 <input
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
@@ -211,10 +221,10 @@ export default function SubmitPage({
                   placeholder="Sect"
                 />
               </div>
-              
-                            {/* Property Details */}
+
+              {/* Property */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Property Details</h3>
+                <h3 className="font-bold text-green-900 text-lg">Property</h3>
                 
                 <input
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
@@ -241,9 +251,9 @@ export default function SubmitPage({
                 />
               </div>
               
-                            {/* Family Information */}
+                            {/* Family */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Family Information</h3>
+                <h3 className="font-bold text-green-900 text-lg">Family</h3>
                 
                 <input
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
@@ -302,7 +312,7 @@ export default function SubmitPage({
 
               {/* Requirements */}
               <div className="space-y-4">
-                <h3 className="font-bold text-green-900 text-lg">Your Requirements</h3>
+                <h3 className="font-bold text-green-900 text-lg">Requirements</h3>
                 
                 <input
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base"
