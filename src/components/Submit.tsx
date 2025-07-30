@@ -79,52 +79,52 @@ export default function SubmitPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 py-4 sm:py-8">
-      <div className="container-custom max-w-4xl">
-        <div className="form-container">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 py-2 sm:py-4 lg:py-8">
+      <div className="container-custom max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="form-container bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8">
           {/* Header */}
-          <div className="text-center mb-6 sm:mb-8">
-            <div className="flex justify-center mb-4">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
-                <FaUser className="text-white text-lg sm:text-2xl" />
+          <div className="text-center mb-4 sm:mb-6 lg:mb-8">
+            <div className="flex justify-center mb-3 sm:mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
+                <FaUser className="text-white text-base sm:text-lg lg:text-2xl" />
               </div>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
               Submit Your Rishta Profile
             </h1>
-            <p className="text-gray-600 text-sm sm:text-base">
+            <p className="text-gray-600 text-xs sm:text-sm lg:text-base max-w-2xl mx-auto">
               Create your profile with dignity and respect. All information is kept private and secure.
             </p>
           </div>
 
           {/* Progress Indicator */}
-          <div className="flex items-center justify-center mb-6 sm:mb-8">
-            <div className="flex items-center space-x-2 sm:space-x-4">
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm">
+          <div className="flex items-center justify-center mb-4 sm:mb-6 lg:mb-8">
+            <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-4">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm">
                 1
               </div>
-              <div className="w-8 h-1 sm:w-16 bg-green-200 rounded"></div>
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-xs sm:text-sm">
+              <div className="w-6 h-0.5 sm:w-8 sm:h-1 lg:w-16 bg-green-200 rounded"></div>
+              <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-xs sm:text-sm">
                 2
               </div>
-              <div className="w-8 h-1 sm:w-16 bg-gray-200 rounded"></div>
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-xs sm:text-sm">
+              <div className="w-6 h-0.5 sm:w-8 sm:h-1 lg:w-16 bg-gray-200 rounded"></div>
+              <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-xs sm:text-sm">
                 3
               </div>
             </div>
           </div>
 
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 lg:space-y-8">
             {/* PERSONAL INFORMATION */}
             <div className="card">
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaUser className="text-white text-sm sm:text-base" />
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 lg:mb-6">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
+                  <FaUser className="text-white text-xs sm:text-sm lg:text-base" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Personal Information</h2>
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">Personal Information</h2>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Gender <span className="text-red-500">*</span>
@@ -226,14 +226,14 @@ export default function SubmitPage({
 
             {/* EDUCATION DETAILS */}
             <div className="card">
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaUniversity className="text-white text-sm sm:text-base" />
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 lg:mb-6">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
+                  <FaUniversity className="text-white text-xs sm:text-sm lg:text-base" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Education Details</h2>
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">Education Details</h2>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Qualification <span className="text-red-500">*</span>
@@ -272,14 +272,14 @@ export default function SubmitPage({
 
             {/* JOB DETAILS */}
             <div className="card">
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaBriefcase className="text-white text-sm sm:text-base" />
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 lg:mb-6">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
+                  <FaBriefcase className="text-white text-xs sm:text-sm lg:text-base" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Job Details</h2>
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">Job Details</h2>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Position/Rank
@@ -374,14 +374,14 @@ export default function SubmitPage({
 
             {/* PROPERTY DETAILS */}
             <div className="card">
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaHome className="text-white text-sm sm:text-base" />
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 lg:mb-6">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
+                  <FaHome className="text-white text-xs sm:text-sm lg:text-base" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Property Details</h2>
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">Property Details</h2>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Home Type
@@ -430,14 +430,14 @@ export default function SubmitPage({
 
             {/* FAMILY DETAILS */}
             <div className="card">
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaUsers className="text-white text-sm sm:text-base" />
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 lg:mb-6">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
+                  <FaUsers className="text-white text-xs sm:text-sm lg:text-base" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Family Details</h2>
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">Family Details</h2>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Father&apos;s Occupation
@@ -497,14 +497,14 @@ export default function SubmitPage({
 
             {/* ADDRESS */}
             <div className="card">
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaMapMarkerAlt className="text-white text-sm sm:text-base" />
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 lg:mb-6">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
+                  <FaMapMarkerAlt className="text-white text-xs sm:text-sm lg:text-base" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Address</h2>
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">Address</h2>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Current City <span className="text-red-500">*</span>
@@ -543,14 +543,14 @@ export default function SubmitPage({
 
             {/* REQUIREMENTS */}
             <div className="card">
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaListUl className="text-white text-sm sm:text-base" />
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 lg:mb-6">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
+                  <FaListUl className="text-white text-xs sm:text-sm lg:text-base" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Your Requirements</h2>
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">Your Requirements</h2>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Age Limit
@@ -621,11 +621,11 @@ export default function SubmitPage({
 
             {/* DESCRIPTION */}
             <div className="card">
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaInfoCircle className="text-white text-sm sm:text-base" />
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 lg:mb-6">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
+                  <FaInfoCircle className="text-white text-xs sm:text-sm lg:text-base" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Profile Description</h2>
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">Profile Description</h2>
               </div>
               
               <div>
@@ -647,11 +647,11 @@ export default function SubmitPage({
 
             {/* IMAGE UPLOAD */}
             <div className="card">
-              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaImage className="text-white text-sm sm:text-base" />
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4 lg:mb-6">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
+                  <FaImage className="text-white text-xs sm:text-sm lg:text-base" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Profile Image</h2>
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">Profile Image</h2>
               </div>
               
               <div className="space-y-4">
@@ -701,7 +701,7 @@ export default function SubmitPage({
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-primary text-base sm:text-lg px-8 sm:px-12 py-3 sm:py-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-12 py-2.5 sm:py-3 lg:py-4 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
               >
                 {loading ? (
                   <div className="flex items-center space-x-2">

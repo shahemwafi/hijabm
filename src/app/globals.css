@@ -109,11 +109,25 @@ body {
   /* Card Styles */
   .card {
     background: white;
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     border: 1px solid #f3f4f6;
-    padding: 1.5rem;
+    padding: 1rem;
     transition: box-shadow 0.2s;
+  }
+  
+  @media (min-width: 640px) {
+    .card {
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .card {
+      padding: 1.5rem;
+      border-radius: 1rem;
+    }
   }
   
   .card:hover {
@@ -151,13 +165,29 @@ body {
 
   /* Form Styles */
   .form-container {
-    max-width: 28rem;
+    max-width: 100%;
     margin: 0 auto;
     background: white;
-    border-radius: 1rem;
+    border-radius: 0.75rem;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+    padding: 1rem;
     border: 1px solid #f3f4f6;
+  }
+  
+  @media (min-width: 640px) {
+    .form-container {
+      max-width: 42rem;
+      padding: 1.5rem;
+      border-radius: 1rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .form-container {
+      max-width: 48rem;
+      padding: 2rem;
+      border-radius: 1.25rem;
+    }
   }
 
   /* Navigation Styles */

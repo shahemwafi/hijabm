@@ -63,39 +63,19 @@ function PaymentForm({
           <span title="Easypaisa">
             <FaMobileAlt />
           </span>
-          <span title="JazzCash">
-            <FaMobileAlt />
-          </span>
-          <span title="Raast">
-            <FaUniversity />
-          </span>
-          <span title="Bank">
-            <FaUniversity />
-          </span>
-          <span title="Cards">
-            <FaCreditCard />
-          </span>
         </div>
         <div className="bg-green-50 text-black border border-green-200 rounded-lg p-4 mb-4 text-left">
           <div className="mb-2 font-semibold text-green-800">
-            Pay via Easypaisa / JazzCash
+            Pay via Easypaisa
           </div>
           <div className="mb-1">
-            Account Name:{" "}
-            <span className="font-bold">Hijab Marriage Bureau</span>
+            Number: <span className="font-mono font-bold">03340051076</span>
           </div>
           <div className="mb-1">
-            Account Number: <span className="font-mono">0312-1234567</span>
-          </div>
-          <div className="mb-1">
-            Bank: <span className="font-bold">Meezan Bank</span>
-          </div>
-          <div className="mb-1">
-            IBAN: <span className="font-mono">PK00MEZN0000000000000000</span>
+            Title: <span className="font-bold">Shehla Gul</span>
           </div>
           <div className="text-xs text-green-700 mt-2">
-            Send payment to the above account using Easypaisa, JazzCash, or bank
-            transfer. Then upload your payment screenshot below.
+            Send payment to the above Easypaisa number. Then upload your payment screenshot below.
           </div>
         </div>
       </div>

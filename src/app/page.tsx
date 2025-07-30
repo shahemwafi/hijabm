@@ -1,50 +1,55 @@
 // Sample comment: This is the main home page for Hijab Marriage Bureau
 import Link from 'next/link';
-import { FaUserShield, FaHeart, FaLock, FaStar, FaCheckCircle, FaUsers, FaShieldAlt, FaPray, FaGlobe } from 'react-icons/fa';
+import { FaUserShield, FaHeart, FaLock, FaStar, FaCheckCircle, FaUsers, FaShieldAlt, FaPray, FaGlobe, FaArrowRight, FaCrown, FaHandshake } from 'react-icons/fa';
 
 export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-green-50 via-white to-blue-50 py-12 sm:py-16 lg:py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-green-50 via-white to-blue-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-blue-600/10"></div>
         <div className="container-custom relative z-10">
-          <div className="text-center max-w-4xl mx-auto px-4">
+          <div className="text-center max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-center mb-4 sm:mb-6">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-xl sm:text-2xl">H</span>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center shadow-xl">
+                <span className="text-white font-bold text-xl sm:text-2xl lg:text-3xl">H</span>
               </div>
             </div>
-            <h1 className="section-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-gray-800 mb-4 sm:mb-6 leading-tight">
               Hijab Marriage Bureau
             </h1>
-            <p className="section-subtitle text-lg sm:text-xl md:text-2xl text-gray-600 mb-6 sm:mb-8 px-4">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-6 sm:mb-8 px-4 max-w-3xl mx-auto leading-relaxed">
               Dignified, Shariah-compliant matchmaking for Muslims worldwide. 
               Find your soulmate with respect and Islamic values.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-              <Link href="/pay" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
+              <Link href="/pay" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center gap-2 group">
                 Start Your Journey
+                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link href="/about" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
                 Learn More
-        </Link>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="section bg-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container-custom">
-          <h2 className="section-title text-2xl sm:text-3xl md:text-4xl">Why Choose Hijab Marriage Bureau?</h2>
-          <p className="section-subtitle text-base sm:text-lg">
-            We provide a secure, dignified, and Islamic approach to finding your life partner
-          </p>
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
+              Why Choose Hijab Marriage Bureau?
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+              We provide a secure, dignified, and Islamic approach to finding your life partner
+            </p>
+          </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12">
-            <div className="card-hover text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-green-100 hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                 <FaShieldAlt className="text-white text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Privacy & Security</h3>
@@ -54,8 +59,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="card-hover text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-green-100 hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                 <FaPray className="text-white text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Shariah Compliant</h3>
@@ -65,8 +70,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="card-hover text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-green-100 hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                 <FaUsers className="text-white text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Verified Profiles</h3>
@@ -76,8 +81,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="card-hover text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-green-100 hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                 <FaGlobe className="text-white text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Global Reach</h3>
@@ -87,8 +92,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="card-hover text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-green-100 hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                 <FaHeart className="text-white text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Personalized Matching</h3>
@@ -98,14 +103,14 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="card-hover text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaCheckCircle className="text-white text-lg sm:text-2xl" />
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 sm:p-8 border border-green-100 hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <FaHandshake className="text-white text-lg sm:text-2xl" />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Success Stories</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">Trust & Support</h3>
               <p className="text-gray-600 text-sm sm:text-base">
-                Join thousands of successful couples who found their soulmates 
-                through our platform. Your success story could be next!
+                Our dedicated team provides support throughout your journey. 
+                We're here to help you find your perfect match.
               </p>
             </div>
           </div>
