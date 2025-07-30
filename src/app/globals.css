@@ -109,24 +109,31 @@ body {
   /* Card Styles */
   .card {
     background: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     border: 1px solid #f3f4f6;
-    padding: 1rem;
-    transition: box-shadow 0.2s;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
   }
   
   @media (min-width: 640px) {
     .card {
-      padding: 1.25rem;
-      border-radius: 0.75rem;
+      padding: 1.5rem;
+      border-radius: 1rem;
     }
   }
   
   @media (min-width: 1024px) {
     .card {
-      padding: 1.5rem;
-      border-radius: 1rem;
+      padding: 2rem;
+      border-radius: 1.25rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .card {
+      padding: 2.5rem;
+      border-radius: 1.5rem;
     }
   }
   
@@ -151,16 +158,33 @@ body {
   /* Input Styles */
   .input-field {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.875rem 1.125rem;
     border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
-    transition: all 0.2s;
+    border-radius: 0.625rem;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    background-color: white;
+  }
+  
+  @media (min-width: 640px) {
+    .input-field {
+      padding: 1rem 1.25rem;
+      font-size: 0.9375rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .input-field {
+      padding: 1.125rem 1.5rem;
+      font-size: 1rem;
+    }
   }
   
   .input-field:focus {
     outline: none;
-    box-shadow: 0 0 0 2px #16a34a, 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    border-color: transparent;
+    border-color: #16a34a;
+    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
+    transform: translateY(-1px);
   }
 
   /* Form Styles */
@@ -168,25 +192,32 @@ body {
     max-width: 100%;
     margin: 0 auto;
     background: white;
-    border-radius: 0.75rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
     border: 1px solid #f3f4f6;
   }
   
   @media (min-width: 640px) {
     .form-container {
-      max-width: 42rem;
-      padding: 1.5rem;
-      border-radius: 1rem;
+      max-width: 48rem;
+      padding: 2rem;
+      border-radius: 1.5rem;
     }
   }
   
   @media (min-width: 1024px) {
     .form-container {
-      max-width: 48rem;
-      padding: 2rem;
-      border-radius: 1.25rem;
+      max-width: 64rem;
+      padding: 3rem;
+      border-radius: 2rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .form-container {
+      max-width: 80rem;
+      padding: 4rem;
     }
   }
 
