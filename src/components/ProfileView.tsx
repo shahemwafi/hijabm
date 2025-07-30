@@ -3,13 +3,15 @@ import { IProfile } from "@/models/Profile";
 
 export default function ProfileView({ profile, setSelectedProfile }: { profile: IProfile, setSelectedProfile: (value: IProfile | null) => void; }) {
   return (
-    <div className="bg-white pt-10 w-full h-full border border-green-100">
+    <div className="bg-white pt-10 w-full h-full border border-green-100 overflow-y-auto">
       <button
         className="absolute z-50 top-20 left-9 text-4xl bg-white rounded-full px-2 py-1 shadow"
         onClick={() => setSelectedProfile(null)}
       >
         &times;
       </button>
+      
+      {/* Header with Image and Basic Info */}
       <div className="flex flex-col items-center mb-6">
         <Image
           src={profile.imageUrl}
@@ -34,15 +36,207 @@ export default function ProfileView({ profile, setSelectedProfile }: { profile: 
           Marital Status: {profile.maritalStatus}
         </div>
       </div>
-      <div className="mb-4">
-        <h2 className="font-bold text-center text-green-800 mb-1">About</h2>
-        <p className="text-gray-700 text-center whitespace-pre-line">{profile.description}</p>
-      </div>
-      <div className="mb-2 text-center">
-        <span className="font-semibold text-center">Profile Status:</span> {profile.status}
-      </div>
-      <div className="mb-2 text-xs  text-center text-gray-500">
-        <span className="font-semibold  text-center">Created At:</span> {new Date(profile.createdAt).toLocaleString()}
+
+      <div className="px-6 pb-6 space-y-6">
+        {/* Personal Information */}
+        <div className="mb-6">
+          <h4 className="font-bold text-green-900 mb-3 text-center">Personal Information</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-green-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Weight:</span>
+              <span className="text-green-800">{profile.weight || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Complexion:</span>
+              <span className="text-green-800">{profile.color || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Disability:</span>
+              <span className="text-green-800">{profile.disability || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Nationality:</span>
+              <span className="text-green-800">{profile.nationality || "N/A"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Education Details */}
+        <div className="mb-6">
+          <h4 className="font-bold text-green-900 mb-3 text-center">Education Details</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-blue-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Qualification:</span>
+              <span className="text-blue-800">{profile.qualification || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">College:</span>
+              <span className="text-blue-800">{profile.college || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">University:</span>
+              <span className="text-blue-800">{profile.university || "N/A"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Job Details */}
+        <div className="mb-6">
+          <h4 className="font-bold text-green-900 mb-3 text-center">Job Details</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-purple-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Rank/Position:</span>
+              <span className="text-purple-800">{profile.rank || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Income:</span>
+              <span className="text-purple-800">{profile.income || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Nature of Job:</span>
+              <span className="text-purple-800">{profile.natureOfJob || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Future Plans:</span>
+              <span className="text-purple-800">{profile.futurePlans || "N/A"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Religion Details */}
+        <div className="mb-6">
+          <h4 className="font-bold text-green-900 mb-3 text-center">Religion Details</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-yellow-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Religion:</span>
+              <span className="text-yellow-800">{profile.religion || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Caste:</span>
+              <span className="text-yellow-800">{profile.caste || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Sect:</span>
+              <span className="text-yellow-800">{profile.sect || "N/A"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Property Details */}
+        <div className="mb-6">
+          <h4 className="font-bold text-green-900 mb-3 text-center">Property Details</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-orange-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Home:</span>
+              <span className="text-orange-800">{profile.home || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Size:</span>
+              <span className="text-orange-800">{profile.size || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Location:</span>
+              <span className="text-orange-800">{profile.propertyLocation || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Other Properties:</span>
+              <span className="text-orange-800">{profile.otherProperties || "N/A"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Family Details */}
+        <div className="mb-6">
+          <h4 className="font-bold text-green-900 mb-3 text-center">Family Details</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-pink-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Father&apos;s Occupation:</span>
+              <span className="text-pink-800">{profile.fatherOccupation || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Mother&apos;s Occupation:</span>
+              <span className="text-pink-800">{profile.motherOccupation || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Brothers:</span>
+              <span className="text-pink-800">{profile.brothers || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Sisters:</span>
+              <span className="text-pink-800">{profile.sisters || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Married Siblings:</span>
+              <span className="text-pink-800">{profile.marriedSiblings || "N/A"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Address Details */}
+        <div className="mb-6">
+          <h4 className="font-bold text-green-900 mb-3 text-center">Address Details</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-indigo-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Current City:</span>
+              <span className="text-indigo-800">{profile.currentCity || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Home Town:</span>
+              <span className="text-indigo-800">{profile.homeTown || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Location/Area:</span>
+              <span className="text-indigo-800">{profile.addressLocation || "N/A"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Requirements */}
+        <div className="mb-6">
+          <h4 className="font-bold text-green-900 mb-3 text-center">Requirements</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-teal-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Age Limit:</span>
+              <span className="text-teal-800">{profile.reqAgeLimit || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Height:</span>
+              <span className="text-teal-800">{profile.reqHeight || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">City:</span>
+              <span className="text-teal-800">{profile.reqCity || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Caste:</span>
+              <span className="text-teal-800">{profile.reqCaste || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Qualification:</span>
+              <span className="text-teal-800">{profile.reqQualification || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Other Demands:</span>
+              <span className="text-teal-800">{profile.reqOther || "N/A"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* About */}
+        <div className="mb-6">
+          <h4 className="font-bold text-green-900 mb-2 text-center">About</h4>
+          <p className="text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-lg">
+            {profile.description}
+          </p>
+        </div>
+
+        {/* Profile Status */}
+        <div className="mb-2 text-center">
+          <span className="font-semibold text-center">Profile Status:</span> {profile.status}
+        </div>
+        <div className="mb-2 text-xs text-center text-gray-500">
+          <span className="font-semibold text-center">Created At:</span> {new Date(profile.createdAt).toLocaleString()}
+        </div>
       </div>
       
       {/* WhatsApp Contact Button */}
