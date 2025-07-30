@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { authOptions } from "@/lib/authOptions";
 import "./globals.css";
-import { LogoutButton } from "@/components/logoutButton";
+import UserProfileDropdown from "@/components/UserProfileDropdown";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,23 +41,12 @@ export default async function RootLayout({
             <Link href="/portfolio">Portfolio</Link>
             <Link href="/terms">Terms</Link>
             <Link href="/contact">Contact</Link>
-            {session && (
-              <Link href="/profile">My Profile</Link>
-            )}
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {(session?.user as any)?.isAdmin && (
               <Link href="/admin">Admin</Link>
             )}
           </div>
-          {(session ? <LogoutButton/> :(
-            <Link
-              className="bg-amber-500 text-sm p-1.5 mx-3 rounded-xl hover:underline"
-              href="/login"
-            >
-              SignIn
-            </Link>))
-          }
-          
+          <UserProfileDropdown />
         </nav>
         {children}
         <footer className="w-full mt-16 py-6 bg-crimson text-gold border-t border-gold/30 text-center text-sm">
