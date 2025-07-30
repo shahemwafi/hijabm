@@ -224,15 +224,15 @@ export default function AdminPage() {
       });
       
       if (res.ok) {
-        const data = await res.json();
+        const responseData = await res.json();
         setProfiles(prev => prev.map(p => 
-          p._id === editingProfile._id ? { ...p, ...data.profile } : p
+          p._id === editingProfile._id ? { ...p, ...responseData.profile } : p
         ));
         closeEditModal();
         alert("Profile updated successfully!");
       } else {
-        const data = await res.json();
-        setError(data.error || "Failed to update profile");
+        const errorData = await res.json();
+        setError(errorData.error || "Failed to update profile");
       }
     } catch {
       setError("Failed to update profile");
@@ -250,13 +250,13 @@ export default function AdminPage() {
       });
       
       if (res.ok) {
-        const data = await res.json();
+        await res.json();
         alert("Rishta profile posted successfully!");
         setShowPostRishtaModal(false);
         fetchProfiles(); // Refresh the list
       } else {
-        const data = await res.json();
-        setError(data.error || "Failed to post rishta");
+        const errorData = await res.json();
+        setError(errorData.error || "Failed to post rishta");
       }
     } catch {
       setError("Failed to post rishta");

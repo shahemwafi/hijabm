@@ -1,19 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Profile from "@/models/Profile";
-import { getAuthUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 // GET profile by ID
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
     
-    const profile = await Profile.findById(params.id).lean();
+    const { id } = await params;
+    const profile = await Profile.findById(id).lean();
     
     if (!profile) {
       return NextResponse.json(
@@ -35,15 +35,16 @@ export async function GET(
 // PATCH - Update profile status
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { status } = await req.json();
     
     await dbConnect();
     
+    const { id } = await params;
     const profile = await Profile.findByIdAndUpdate(
-      params.id,
+      id,
       { status },
       { new: true }
     );
@@ -72,15 +73,16 @@ export async function PATCH(
 // PUT - Update entire profile
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const updateData = await req.json();
     
     await dbConnect();
     
+    const { id } = await params;
     const profile = await Profile.findByIdAndUpdate(
-      params.id,
+      id,
       updateData,
       { new: true }
     );
@@ -109,12 +111,13 @@ export async function PUT(
 // DELETE - Delete profile
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
     
-    const profile = await Profile.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const profile = await Profile.findByIdAndDelete(id);
     
     if (!profile) {
       return NextResponse.json(

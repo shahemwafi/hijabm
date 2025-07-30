@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
     await dbConnect();
 
     // Find user with optimized query
-    const user = await User.findOne({ email: authUser.email }).select('_id').lean();
+    const user = await User.findOne({ email: authUser.email }).select('_id').lean() as { _id: any } | null;
     if (!user) {
       return NextResponse.json(
         { error: "User not found" },
@@ -122,7 +122,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Check if profile already exists with optimized query
-    const existingProfile = await Profile.findOne({ user: user._id as string }).select('_id').lean();
+    const existingProfile = await Profile.findOne({ user: user._id }).select('_id').lean();
     if (existingProfile) {
       return NextResponse.json(
         { error: "Profile already exists" },
@@ -154,7 +154,7 @@ export async function POST(req: NextRequest) {
 
     // Create profile with optimized settings
     const profile = await Profile.create({
-      user: user._id as string,
+      user: user._id,
       name,
       gender,
       age: parseInt(age),
