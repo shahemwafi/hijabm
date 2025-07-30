@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
     await dbConnect();
 
     // Find user with optimized query
-    const user = await User.findOne({ email: authUser.email }).select('_id').lean() as { _id: any } | null;
+    const user = await User.findOne({ email: authUser.email }).select('_id').lean() as { _id: string } | null;
     if (!user) {
       return NextResponse.json(
         { error: "User not found" },
