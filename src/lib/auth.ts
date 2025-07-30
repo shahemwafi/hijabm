@@ -8,7 +8,7 @@ import User from '@/models/User';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 // Optimize bcrypt rounds for development vs production
-const BCRYPT_ROUNDS = process.env.NODE_ENV === 'production' ? 12 : 8;
+const BCRYPT_ROUNDS = process.env.NODE_ENV === 'production' ? 12 : 6; // Reduced for faster dev
 
 export interface AuthUser {
   id: string;
@@ -17,7 +17,7 @@ export interface AuthUser {
 }
 
 // Cache for user data to reduce database calls
-const userCache = new Map<string, { user: any; timestamp: number }>();
+const userCache = new Map<string, { user: Record<string, unknown>; timestamp: number }>();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 // Generate JWT token
@@ -51,11 +51,13 @@ export async function getAuthUserFromCookies(): Promise<AuthUser | null> {
   return verifyToken(token);
 }
 
-// Get user with caching
-async function getCachedUser(email: string) {
-  const cached = userCache.get(email);
-  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-    return cached.user;
+// Get user with caching - optimized for login
+async function getCachedUser(email: string, skipCache = false) {
+  if (!skipCache) {
+    const cached = userCache.get(email);
+    if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+      return cached.user;
+    }
   }
   
   await dbConnect();
@@ -77,10 +79,10 @@ export function clearUserCache(email?: string) {
   }
 }
 
-// Login function
+// Login function - optimized for speed
 export async function loginUser(email: string, password: string): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
   try {
-    const user = await getCachedUser(email);
+    const user = await getCachedUser(email, true); // Skip cache for login to get fresh data
     if (!user) {
       return { success: false, error: 'Invalid credentials' };
     }

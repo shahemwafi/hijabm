@@ -22,7 +22,10 @@ export default function LoginForm() {
       const success = await login(email, password);
       
       if (success) {
-        router.push("/");
+        // Small delay to ensure state is updated before redirect
+        setTimeout(() => {
+          router.replace("/");
+        }, 100);
       } else {
         setError("Invalid credentials");
       }
@@ -139,7 +142,7 @@ export default function LoginForm() {
         </div>
 
         <div className="text-center mt-2">
-          <span className="text-gray-500 text-sm">Don't have an account? </span>
+          <span className="text-gray-500 text-sm">Don&apos;t have an account? </span>
           <a
             href="/register"
             className="text-indigo-600 hover:text-indigo-800 font-medium transition"

@@ -19,14 +19,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshUser = async () => {
     try {
+      console.log('Refreshing user...');
       const res = await fetch('/api/auth/me');
       if (res.ok) {
         const data = await res.json();
+        console.log('User refreshed:', data.user);
         setUser(data.user);
       } else {
+        console.log('No user found');
         setUser(null);
       }
-    } catch {
+    } catch (error) {
+      console.error('Refresh user error:', error);
       setUser(null);
     } finally {
       setLoading(false);
@@ -35,6 +39,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
+      console.log('Logging in...', email);
+      const startTime = Date.now();
+      
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -42,20 +49,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       const data = await res.json();
+      const endTime = Date.now();
+      console.log(`Login response time: ${endTime - startTime}ms`);
 
       if (res.ok) {
+        console.log('Login successful:', data.user);
         setUser(data.user);
         return true;
       } else {
+        console.log('Login failed:', data.error);
         return false;
       }
-    } catch {
+    } catch (error) {
+      console.error('Login error:', error);
       return false;
     }
   };
 
   const register = async (email: string, password: string): Promise<boolean> => {
     try {
+      console.log('Registering...', email);
+      const startTime = Date.now();
+      
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -63,24 +78,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       const data = await res.json();
+      const endTime = Date.now();
+      console.log(`Register response time: ${endTime - startTime}ms`);
 
       if (res.ok) {
+        console.log('Register successful:', data.user);
         setUser(data.user);
         return true;
       } else {
+        console.log('Register failed:', data.error);
         return false;
       }
-    } catch {
+    } catch (error) {
+      console.error('Register error:', error);
       return false;
     }
   };
 
   const logout = async () => {
     try {
+      console.log('Logging out...');
       await fetch('/api/auth/logout', { method: 'POST' });
-    } catch {
-      // Ignore logout errors
+    } catch (error) {
+      console.error('Logout error:', error);
     } finally {
+      console.log('User logged out');
       setUser(null);
     }
   };

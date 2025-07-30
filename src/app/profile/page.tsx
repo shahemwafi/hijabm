@@ -83,13 +83,11 @@ export default function ProfilePage() {
 
   const fetchUserProfile = useCallback(async () => {
     try {
-      const res = await fetch("/api/profile");
+      const res = await fetch("/api/profile/me");
       const data = await res.json();
       
-      if (data.profiles && data.profiles.length > 0) {
-        // Find the user's profile
-        const userProfile = data.profiles.find((p: UserProfile) => p.user === user?.email);
-        setProfile(userProfile || null);
+      if (data.profile) {
+        setProfile(data.profile);
       } else {
         setProfile(null);
       }
@@ -98,7 +96,7 @@ export default function ProfilePage() {
     } finally {
       setLoading(false);
     }
-  }, [user?.email]);
+  }, []);
 
   useEffect(() => {
     if (authLoading) return;
