@@ -3,7 +3,7 @@ import dbConnect from "@/lib/db";
 import Profile from "@/models/Profile";
 import User from "@/models/User";
 import { getAuthUser } from "@/lib/auth";
-import { containsContactInfo } from "@/lib/validation";
+import { containsContactInfo } from "@/lib/validate";
 import cloudinary from "@/lib/cloudinary";
 
 export const dynamic = "force-dynamic";

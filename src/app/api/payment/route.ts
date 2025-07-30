@@ -3,6 +3,7 @@ import { getAuthUser } from "@/lib/auth";
 import dbConnect from "@/lib/db";
 import Profile from "@/models/Profile";
 import User from "@/models/User";
+import cloudinary from "@/lib/cloudinary";
 
 export async function POST(req: NextRequest) {
   try {
@@ -59,18 +60,18 @@ export async function POST(req: NextRequest) {
     // Upload payment screenshot to Cloudinary
     const arrayBuffer = await paymentScreenshot.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const uploadResult = await new Promise((resolve, reject) => {
-      const cloudinary = require("cloudinary").v2;
+    const uploadResult = await new Promise<{ secure_url: string }>((resolve, reject) => {
       cloudinary.uploader
-        .upload_stream({ folder: "hijabm-payments" }, (err: any, result: any) => {
-          if (err) reject(err);
-          else resolve(result);
+        .upload_stream({ folder: "hijabm-payments" }, (error, result) => {
+          if (error) reject(error);
+          else if (result) resolve(result);
+          else reject(new Error("Upload failed"));
         })
         .end(buffer);
     });
 
     // Update profile with payment information
-    profile.paymentScreenshot = (uploadResult as { secure_url: string }).secure_url;
+    profile.paymentScreenshot = uploadResult.secure_url;
     profile.AccountHolder = AccountHolder;
     profile.paymentStatus = "pending";
     await profile.save();
