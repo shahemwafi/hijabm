@@ -63,7 +63,7 @@ async function getCachedUser(email: string, skipCache = false) {
   await dbConnect();
   const user = await User.findOne({ email }).lean();
   
-  if (user) {
+  if (user && !Array.isArray(user)) {
     userCache.set(email, { user, timestamp: Date.now() });
   }
   
@@ -83,19 +83,19 @@ export function clearUserCache(email?: string) {
 export async function loginUser(email: string, password: string): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
   try {
     const user = await getCachedUser(email, true); // Skip cache for login to get fresh data
-    if (!user) {
+    if (!user || Array.isArray(user)) {
       return { success: false, error: 'Invalid credentials' };
     }
     
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(password, user.password as string);
     if (!isValidPassword) {
       return { success: false, error: 'Invalid credentials' };
     }
     
     const authUser: AuthUser = {
-      id: user._id.toString(),
-      email: user.email,
-      isAdmin: user.isAdmin
+      id: String(user._id),
+      email: user.email as string,
+      isAdmin: user.isAdmin as boolean
     };
     
     return { success: true, user: authUser };

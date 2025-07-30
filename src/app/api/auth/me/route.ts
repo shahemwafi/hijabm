@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       await dbConnect();
       const dbUser = await User.findOne({ email: user.email }).select('isAdmin').lean();
       
-      if (dbUser) {
+      if (dbUser && typeof dbUser === 'object' && 'isAdmin' in dbUser) {
         return NextResponse.json({ 
           user: {
             ...user,

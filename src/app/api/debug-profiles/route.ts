@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Profile from "@/models/Profile";
 import User from "@/models/User";
@@ -14,14 +14,14 @@ export async function GET() {
     // Convert ObjectIds to strings for JSON serialization
     const profilesWithStringIds = profiles.map(profile => ({
       ...profile,
-      _id: profile._id.toString(),
-      user: profile.user.toString(),
+      _id: String(profile._id),
+      user: String(profile.user),
       createdAt: profile.createdAt ? new Date(profile.createdAt).toISOString() : new Date().toISOString()
     }));
 
     const usersWithStringIds = users.map(user => ({
       ...user,
-      _id: user._id.toString(),
+      _id: String(user._id),
       createdAt: user.createdAt ? new Date(user.createdAt).toISOString() : new Date().toISOString()
     }));
 

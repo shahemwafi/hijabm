@@ -22,15 +22,15 @@ export async function GET(req: NextRequest) {
     // Find the user's profile
     const profile = await Profile.findOne({ user: user._id }).lean();
     
-    if (!profile) {
+    if (!profile || Array.isArray(profile)) {
       return NextResponse.json({ profile: null });
     }
 
     // Convert ObjectId to string for JSON serialization
     const profileWithStringId = {
       ...profile,
-      _id: profile._id.toString(),
-      user: profile.user.toString(),
+      _id: String(profile._id),
+      user: String(profile.user),
       createdAt: profile.createdAt ? new Date(profile.createdAt).toISOString() : new Date().toISOString()
     };
 

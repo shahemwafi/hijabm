@@ -448,11 +448,11 @@ export default function SubmitPage({
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="font-semibold text-green-800">Location</label>
+              <label className="font-semibold text-green-800">Country</label>
               <input
                 className="border border-green-200 rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-green-900"
                 name="addressLocation"
-                placeholder="Location/Area"
+                placeholder="Country"
               />
             </div>
           </div>
