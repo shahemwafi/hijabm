@@ -27,7 +27,7 @@ export default function UserProfileDropdown() {
       <div className="flex items-center space-x-2 sm:space-x-4">
         <Link
           href="/login"
-          className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 text-sm sm:text-base"
+          className="btn-primary px-3 py-2 text-sm sm:px-4 sm:py-2"
         >
           Sign In
         </Link>
