@@ -518,11 +518,11 @@ export default function AdminPage() {
                 <h4 className="font-bold text-green-900 mb-3">Family Details</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-pink-50 p-4 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold">Father's Occupation:</span>
+                    <span className="font-semibold">Father&apos;s Occupation:</span>
                     <span className="text-pink-800">{selectedProfile.fatherOccupation || "N/A"}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold">Mother's Occupation:</span>
+                    <span className="font-semibold">Mother&apos;s Occupation:</span>
                     <span className="text-pink-800">{selectedProfile.motherOccupation || "N/A"}</span>
                   </div>
                   <div className="flex items-center gap-2">
