@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   FaCheck,
   FaEnvelope,
+  FaEye,
   FaImage,
   FaLock,
   FaMoneyCheckAlt,
@@ -13,6 +14,11 @@ import {
   FaUserShield,
   FaUserTag,
   FaVenusMars,
+  FaCalendar,
+  FaMapMarkerAlt,
+  FaRulerVertical,
+  FaHeart,
+  FaClock,
 } from "react-icons/fa";
 
 interface Profile {
@@ -40,6 +46,8 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   async function handleLogin() {
     if (
@@ -109,6 +117,16 @@ export default function AdminPage() {
     } finally {
       setActionLoading(null);
     }
+  }
+
+  function openProfileModal(profile: Profile) {
+    setSelectedProfile(profile);
+    setShowModal(true);
+  }
+
+  function closeProfileModal() {
+    setSelectedProfile(null);
+    setShowModal(false);
   }
 
   if (!authed) {
@@ -193,7 +211,9 @@ export default function AdminPage() {
                   </div>
                 </div>
                 <div className="text-green-800 text-sm mb-2">
-                  {profile.description}
+                  {profile.description.length > 100 
+                    ? `${profile.description.substring(0, 100)}...` 
+                    : profile.description}
                 </div>
                 <div className="flex flex-col gap-2 mb-2">
                   <div>
@@ -240,6 +260,12 @@ export default function AdminPage() {
                   )}
                 </div>
                 <div className="flex gap-2 mt-2">
+                  <button
+                    className="flex-1 bg-blue-600 text-white py-2 rounded-full font-semibold shadow hover:bg-blue-700 transition flex items-center justify-center gap-2"
+                    onClick={() => openProfileModal(profile)}
+                  >
+                    <FaEye /> View More
+                  </button>
                   {profile.status !== "approved" && (
                     <button
                       className="flex-1 bg-green-600 text-white py-2 rounded-full font-semibold shadow hover:bg-green-700 transition disabled:opacity-60 flex items-center justify-center gap-2"
@@ -272,6 +298,170 @@ export default function AdminPage() {
         )}
         {error && <div className="text-red-600 text-center mb-4">{error}</div>}
       </div>
+
+      {/* Profile Detail Modal */}
+      {showModal && selectedProfile && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-green-900">Complete Profile Details</h2>
+              <button
+                onClick={closeProfileModal}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                &times;
+              </button>
+            </div>
+            
+            <div className="flex flex-col md:flex-row gap-6 mb-6">
+              <div className="flex-shrink-0">
+                <Image
+                  src={selectedProfile.imageUrl}
+                  alt={selectedProfile.name}
+                  width={200}
+                  height={200}
+                  className="w-48 h-48 rounded-full object-cover border-4 border-green-300 shadow"
+                />
+              </div>
+              
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-green-900 mb-4">{selectedProfile.name}</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2">
+                    <FaVenusMars className="text-green-600" />
+                    <span className="font-semibold">Gender:</span>
+                    <span className="text-green-800">{selectedProfile.gender}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <FaCalendar className="text-green-600" />
+                    <span className="font-semibold">Age:</span>
+                    <span className="text-green-800">{selectedProfile.age} years</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <FaHeart className="text-green-600" />
+                    <span className="font-semibold">Marital Status:</span>
+                    <span className="text-green-800">{selectedProfile.maritalStatus}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <FaRulerVertical className="text-green-600" />
+                    <span className="font-semibold">Height:</span>
+                    <span className="text-green-800">{selectedProfile.height}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <FaMapMarkerAlt className="text-green-600" />
+                    <span className="font-semibold">Location:</span>
+                    <span className="text-green-800">{selectedProfile.city}, {selectedProfile.country}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <FaClock className="text-green-600" />
+                    <span className="font-semibold">Created:</span>
+                    <span className="text-green-800">{new Date(selectedProfile.createdAt).toLocaleDateString()}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mb-6">
+              <h4 className="font-bold text-green-900 mb-2">About</h4>
+              <p className="text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-lg">
+                {selectedProfile.description}
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-bold text-green-900 mb-2">Account Information</h4>
+                <div className="flex items-center gap-2 mb-2">
+                  <FaUserTag className="text-green-600" />
+                  <span className="font-semibold">Account Holder:</span>
+                  <span className="text-green-800">{selectedProfile.AccountHolder || "N/A"}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FaMoneyCheckAlt className="text-green-600" />
+                  <span className="font-semibold">Payment Status:</span>
+                  <span className={`font-semibold ${
+                    selectedProfile.paymentStatus === "paid" ? "text-green-600" : "text-red-600"
+                  }`}>
+                    {selectedProfile.paymentStatus === "paid" ? "Paid" : "Pending"}
+                  </span>
+                </div>
+              </div>
+              
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-bold text-blue-900 mb-2">Profile Status</h4>
+                <div className="flex items-center gap-2">
+                  <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                    selectedProfile.status === "approved" 
+                      ? "bg-green-100 text-green-800" 
+                      : selectedProfile.status === "rejected"
+                      ? "bg-red-100 text-red-800"
+                      : "bg-yellow-100 text-yellow-800"
+                  }`}>
+                    {selectedProfile.status.toUpperCase()}
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            {selectedProfile.paymentScreenshot && (
+              <div className="mb-6">
+                <h4 className="font-bold text-green-900 mb-2">Payment Screenshot</h4>
+                <a
+                  href={selectedProfile.paymentScreenshot}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block"
+                >
+                  <Image
+                    src={selectedProfile.paymentScreenshot}
+                    alt="Payment Screenshot"
+                    width={400}
+                    height={300}
+                    className="rounded-lg border shadow-lg hover:shadow-xl transition-shadow"
+                  />
+                </a>
+              </div>
+            )}
+            
+            <div className="flex gap-3 pt-4 border-t">
+              <button
+                onClick={closeProfileModal}
+                className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition"
+              >
+                Close
+              </button>
+              {selectedProfile.status !== "approved" && (
+                <button
+                  className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
+                  onClick={() => {
+                    updateStatus(selectedProfile._id, "approved");
+                    closeProfileModal();
+                  }}
+                >
+                  <FaCheck className="inline mr-2" /> Approve Profile
+                </button>
+              )}
+              {selectedProfile.status !== "rejected" && (
+                <button
+                  className="flex-1 bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition"
+                  onClick={() => {
+                    updateStatus(selectedProfile._id, "rejected");
+                    closeProfileModal();
+                  }}
+                >
+                  <FaTimes className="inline mr-2" /> Reject Profile
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

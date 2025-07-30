@@ -45,13 +45,6 @@ export default async function RootLayout({
             {(session?.user as any)?.isAdmin && (
               <Link href="/admin">Admin</Link>
             )}
-            {/* Debug info - remove this later */}
-            {session && (
-              <span className="text-xs text-gray-400">
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                Debug: {JSON.stringify((session.user as any)?.isAdmin)}
-              </span>
-            )}
           </div>
           {(session ? <LogoutButton/> :(
             <Link
