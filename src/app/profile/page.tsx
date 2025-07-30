@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/contexts/AuthContext";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -55,7 +55,7 @@ interface UserProfile {
 }
 
 export default function ProfilePage() {
-  const { data: session, status } = useSession();
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -69,7 +69,7 @@ export default function ProfilePage() {
       
       if (data.profiles && data.profiles.length > 0) {
         // Find the user's profile
-        const userProfile = data.profiles.find((p: UserProfile) => p.user === session?.user?.email);
+        const userProfile = data.profiles.find((p: UserProfile) => p.user === user?.email);
         setProfile(userProfile || null);
       } else {
         setProfile(null);
@@ -79,22 +79,22 @@ export default function ProfilePage() {
     } finally {
       setLoading(false);
     }
-  }, [session?.user?.email]);
+  }, [user?.email]);
 
   useEffect(() => {
-    if (status === "loading") return;
+    if (authLoading) return;
     
-    if (!session) {
+    if (!user) {
       router.push("/login");
       return;
     }
 
     fetchUserProfile();
-  }, [session, status, router, fetchUserProfile]);
+  }, [user, authLoading, router, fetchUserProfile]);
 
 
 
-  if (status === "loading" || loading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center">
         <div className="text-center">
@@ -105,7 +105,7 @@ export default function ProfilePage() {
     );
   }
 
-  if (!session) {
+  if (!user) {
     return null; // Will redirect to login
   }
 

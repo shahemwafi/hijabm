@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { FaSave, FaTimes } from "react-icons/fa";
 
 export default function ChangePasswordPage() {
-  const { data: session, status } = useSession();
+  const { user, loading } = useAuth();
   const router = useRouter();
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
@@ -16,7 +16,7 @@ export default function ChangePasswordPage() {
   const [passwordError, setPasswordError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  if (status === "loading") {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center">
         <div className="text-center">
@@ -27,7 +27,7 @@ export default function ChangePasswordPage() {
     );
   }
 
-  if (!session) {
+  if (!user) {
     router.push("/login");
     return null;
   }

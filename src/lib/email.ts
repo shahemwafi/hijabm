@@ -1,5 +1,20 @@
 import nodemailer from 'nodemailer';
 
+// Email configuration interface
+interface EmailConfig {
+  service?: string;
+  host?: string;
+  port?: number;
+  secure?: boolean;
+  auth: {
+    user: string;
+    pass: string;
+  };
+  tls: {
+    rejectUnauthorized: boolean;
+  };
+}
+
 // Email configuration based on environment
 const getTransporter = () => {
   const emailService = process.env.EMAIL_SERVICE || 'gmail';
@@ -12,7 +27,7 @@ const getTransporter = () => {
   }
 
   // Configuration for different email services
-  const config: any = {
+  const config: EmailConfig = {
     auth: {
       user: emailUser,
       pass: emailPass
