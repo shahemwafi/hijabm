@@ -1,6 +1,4 @@
-import nodemailer from 'nodemailer';
-
-// Create a generic transporter that works for all users
+// Create a generic email service that works for all users
 // For development/testing, we'll use a simple approach
 // In production, you'd use a proper email service like SendGrid, AWS SES, etc.
 
