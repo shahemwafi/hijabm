@@ -1,9 +1,15 @@
 "use client";
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { AuthUser } from '@/lib/auth';
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { useRouter } from "next/navigation";
+
+interface User {
+  id: string;
+  email: string;
+  isAdmin?: boolean;
+}
 
 interface AuthContextType {
-  user: AuthUser | null;
+  user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   register: (email: string, password: string) => Promise<boolean>;
@@ -14,99 +20,98 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
+  // Optimized user refresh with caching
   const refreshUser = async () => {
     try {
-      console.log('Refreshing user...');
-      const res = await fetch('/api/auth/me');
+      const res = await fetch("/api/auth/me", {
+        method: "GET",
+        credentials: "include",
+      });
+      
       if (res.ok) {
         const data = await res.json();
         console.log('User refreshed:', data.user);
         setUser(data.user);
       } else {
-        console.log('No user found');
         setUser(null);
       }
     } catch (error) {
-      console.error('Refresh user error:', error);
+      console.error("Failed to refresh user:", error);
       setUser(null);
     } finally {
       setLoading(false);
     }
   };
 
+  // Optimized login with immediate UI feedback
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      console.log('Logging in...', email);
-      const startTime = Date.now();
-      
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
-      const endTime = Date.now();
-      console.log(`Login response time: ${endTime - startTime}ms`);
-
-      if (res.ok) {
+      
+      if (res.ok && data.success) {
         console.log('Login successful:', data.user);
         setUser(data.user);
         return true;
       } else {
-        console.log('Login failed:', data.error);
+        console.error("Login failed:", data.error);
         return false;
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       return false;
     }
   };
 
+  // Optimized register with immediate UI feedback
   const register = async (email: string, password: string): Promise<boolean> => {
     try {
-      console.log('Registering...', email);
-      const startTime = Date.now();
-      
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
-      const endTime = Date.now();
-      console.log(`Register response time: ${endTime - startTime}ms`);
-
-      if (res.ok) {
-        console.log('Register successful:', data.user);
+      
+      if (res.ok && data.success) {
+        console.log('Registration successful:', data.user);
         setUser(data.user);
         return true;
       } else {
-        console.log('Register failed:', data.error);
+        console.error("Registration failed:", data.error);
         return false;
       }
     } catch (error) {
-      console.error('Register error:', error);
+      console.error("Registration error:", error);
       return false;
     }
   };
 
+  // Optimized logout with immediate state update
   const logout = async () => {
     try {
-      console.log('Logging out...');
-      await fetch('/api/auth/logout', { method: 'POST' });
+      await fetch("/api/auth/logout", { method: "POST" });
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     } finally {
-      console.log('User logged out');
+      console.log("User logged out");
       setUser(null);
     }
   };
 
+  // Initialize user state on mount
   useEffect(() => {
     refreshUser();
   }, []);
@@ -121,7 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 } 

@@ -1,17 +1,17 @@
 "use client";
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function LoginForm() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
   const { login } = useAuth();
+  const router = useRouter();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,9 +20,8 @@ export default function LoginForm() {
     
     try {
       const success = await login(email, password);
-      
       if (success) {
-        // Small delay to ensure state is updated before redirect
+        // Immediate UI feedback with optimized redirect
         setTimeout(() => {
           router.replace("/");
         }, 100);
@@ -37,120 +36,92 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50 p-4">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-10 flex flex-col gap-6 border border-indigo-100"
-      >
-        <div className="flex flex-col items-center mb-4">
-          <div className="bg-indigo-100 rounded-full p-3 mb-2">
-            <svg
-              className="w-8 h-8 text-indigo-500"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-          </div>
-          <h2 className="text-3xl font-extrabold text-indigo-700">
-            Welcome Back
-          </h2>
-          <p className="text-gray-500 text-sm mt-1">Login to your account</p>
-        </div>
-
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-            {error}
-          </div>
-        )}
-
-        <div className="flex flex-col gap-4">
-          <label className="text-sm font-medium text-gray-700" htmlFor="email">
-            Email Address
-          </label>
-          <input
-            id="email"
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@email.com"
-            required
-            disabled={loading}
-            className="p-3 text-black rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-base transition disabled:opacity-50 disabled:cursor-not-allowed"
-          />
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <div className="relative">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 px-4">
+      <div className="bg-white p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-sm sm:max-w-md">
+        <h2 className="text-xl sm:text-2xl font-bold text-center text-green-800 mb-4 sm:mb-6">
+          Login to Your Account
+        </h2>
+        
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
+              Email
+            </label>
             <input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 sm:py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
+              placeholder="Enter your email"
               required
               disabled={loading}
-              className="w-full p-3 text-black rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-base transition disabled:opacity-50 disabled:cursor-not-allowed pr-12"
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
-              disabled={loading}
-            >
-              {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
-            </button>
           </div>
-        </div>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="mt-4 p-3 rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold text-lg shadow-md hover:from-indigo-600 hover:to-pink-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-        >
-          {loading ? (
-            <>
-              <FaSpinner className="animate-spin" />
-              Logging in...
-            </>
-          ) : (
-            "Login"
+          
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 sm:py-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
+                placeholder="Enter your password"
+                required
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                disabled={loading}
+              >
+                {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
+              </button>
+            </div>
+          </div>
+          
+          {error && (
+            <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md">
+              {error}
+            </div>
           )}
-        </button>
-
-        <div className="text-center mt-4">
-          <a
-            href="/forgot-password"
-            className="text-indigo-600 hover:text-indigo-800 text-sm transition"
+          
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-green-600 to-blue-500 text-white py-2 sm:py-3 px-4 rounded-md hover:from-green-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center text-sm sm:text-base"
           >
+            {loading ? (
+              <>
+                <FaSpinner className="animate-spin mr-2" />
+                Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
+          </button>
+        </form>
+        
+        <div className="mt-4 sm:mt-6 text-center">
+          <a href="/forgot-password" className="text-green-600 hover:text-green-800 text-sm">
             Forgot your password?
           </a>
         </div>
-
-        <div className="text-center mt-2">
-          <span className="text-gray-500 text-sm">Don&apos;t have an account? </span>
-          <a
-            href="/register"
-            className="text-indigo-600 hover:text-indigo-800 font-medium transition"
-          >
-            Sign up
-          </a>
+        
+        <div className="mt-4 sm:mt-6 text-center">
+          <p className="text-gray-600 text-sm">
+            Don&apos;t have an account?{" "}
+            <a href="/register" className="text-green-600 hover:text-green-800 font-medium">
+              Sign up
+            </a>
+          </p>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

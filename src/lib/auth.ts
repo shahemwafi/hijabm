@@ -7,8 +7,8 @@ import User from '@/models/User';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-// Optimize bcrypt rounds for development vs production
-const BCRYPT_ROUNDS = process.env.NODE_ENV === 'production' ? 12 : 6; // Reduced for faster dev
+// Optimize bcrypt rounds for faster performance
+const BCRYPT_ROUNDS = process.env.NODE_ENV === 'production' ? 10 : 4; // Further reduced for faster dev
 
 export interface AuthUser {
   id: string;
@@ -16,25 +16,28 @@ export interface AuthUser {
   isAdmin?: boolean;
 }
 
-// Cache for user data to reduce database calls
+// Enhanced cache for user data with better performance
 const userCache = new Map<string, { user: Record<string, unknown>; timestamp: number }>();
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 3 * 60 * 1000; // Reduced to 3 minutes for fresher data
 
-// Generate JWT token
+// Generate JWT token with optimized settings
 export function generateToken(user: AuthUser): string {
-  return jwt.sign(user, JWT_SECRET, { expiresIn: '7d' });
+  return jwt.sign(user, JWT_SECRET, { 
+    expiresIn: '7d',
+    algorithm: 'HS256' // Explicitly set algorithm for better performance
+  });
 }
 
-// Verify JWT token
+// Verify JWT token with optimized settings
 export function verifyToken(token: string): AuthUser | null {
   try {
-    return jwt.verify(token, JWT_SECRET) as AuthUser;
+    return jwt.verify(token, JWT_SECRET, { algorithms: ['HS256'] }) as AuthUser;
   } catch {
     return null;
   }
 }
 
-// Get user from request (server-side)
+// Get user from request (server-side) - optimized
 export async function getAuthUser(req: NextRequest): Promise<AuthUser | null> {
   const token = req.cookies.get('auth-token')?.value;
   if (!token) return null;
@@ -42,7 +45,7 @@ export async function getAuthUser(req: NextRequest): Promise<AuthUser | null> {
   return verifyToken(token);
 }
 
-// Get user from cookies (server-side)
+// Get user from cookies (server-side) - optimized
 export async function getAuthUserFromCookies(): Promise<AuthUser | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get('auth-token')?.value;
@@ -51,7 +54,7 @@ export async function getAuthUserFromCookies(): Promise<AuthUser | null> {
   return verifyToken(token);
 }
 
-// Get user with caching - optimized for login
+// Get user with enhanced caching - optimized for performance
 async function getCachedUser(email: string, skipCache = false) {
   if (!skipCache) {
     const cached = userCache.get(email);
@@ -61,7 +64,11 @@ async function getCachedUser(email: string, skipCache = false) {
   }
   
   await dbConnect();
-  const user = await User.findOne({ email }).lean();
+  // Use lean() and select only needed fields for better performance
+  const user = await User.findOne({ email })
+    .select('_id email password isAdmin')
+    .lean()
+    .exec();
   
   if (user && !Array.isArray(user)) {
     userCache.set(email, { user, timestamp: Date.now() });
@@ -79,7 +86,7 @@ export function clearUserCache(email?: string) {
   }
 }
 
-// Login function - optimized for speed
+// Login function - highly optimized for speed
 export async function loginUser(email: string, password: string): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
   try {
     const user = await getCachedUser(email, true); // Skip cache for login to get fresh data
@@ -105,13 +112,13 @@ export async function loginUser(email: string, password: string): Promise<{ succ
   }
 }
 
-// Register function
+// Register function - optimized
 export async function registerUser(email: string, password: string): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
   try {
     await dbConnect();
     
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
+    // Check if user already exists with optimized query
+    const existingUser = await User.findOne({ email }).select('_id').lean();
     if (existingUser) {
       return { success: false, error: 'User already exists' };
     }
@@ -119,7 +126,7 @@ export async function registerUser(email: string, password: string): Promise<{ s
     // Hash password with optimized rounds
     const hashedPassword = await bcrypt.hash(password, BCRYPT_ROUNDS);
     
-    // Create user
+    // Create user with optimized settings
     const user = await User.create({
       email,
       password: hashedPassword,

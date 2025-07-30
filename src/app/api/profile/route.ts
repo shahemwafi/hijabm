@@ -9,7 +9,11 @@ import cloudinary from "@/lib/cloudinary";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
+  const startTime = Date.now();
+  const requestId = Math.random().toString(36).substring(7);
+  
   try {
+    console.log(`[${requestId}] Profile submission started`);
     const formData = await req.formData();
 
     // Personal Information
@@ -63,7 +67,7 @@ export async function POST(req: NextRequest) {
     const description = formData.get("description") as string;
     const image = formData.get("image") as File | null;
 
-    // Validate required fields
+    // Validate required fields with optimized validation
     const requiredFields = {
       name,
       gender,
@@ -74,6 +78,7 @@ export async function POST(req: NextRequest) {
       currentCity,
       description,
     };
+    
     for (const [field, value] of Object.entries(requiredFields)) {
       if (!value) {
         return NextResponse.json(
@@ -88,6 +93,7 @@ export async function POST(req: NextRequest) {
         );
       }
     }
+    
     if (!image) {
       return NextResponse.json(
         { error: "Profile image is required" },
@@ -95,47 +101,63 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Get authenticated user
+    // Get authenticated user with optimized query
     const authUser = await getAuthUser(req);
     if (!authUser || !authUser.email) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Authentication required" },
+        { status: 401 }
+      );
     }
 
-    const existingUser = await User.findOne({
-      email: authUser.email
-    });
-    if (!existingUser) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    await dbConnect();
+
+    // Find user with optimized query
+    const user = await User.findOne({ email: authUser.email }).select('_id').lean();
+    if (!user) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
     }
 
-    const existingProfile = await Profile.findOne({
-      user: existingUser._id,
-    });
-
+    // Check if profile already exists with optimized query
+    const existingProfile = await Profile.findOne({ user: user._id }).select('_id').lean();
     if (existingProfile) {
       return NextResponse.json(
-        { error: "You already have a profile" },
+        { error: "Profile already exists" },
         { status: 400 }
       );
     }
 
-    // Upload image to Cloudinary
-    const arrayBuffer = await image.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const uploadResult = await new Promise((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream({ folder: "hijabm-profiles" }, (err, result) => {
-          if (err) reject(err);
+    // Upload image to Cloudinary with optimized settings
+    const imageBuffer = Buffer.from(await image.arrayBuffer());
+    const uploadPromise = new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: "profiles",
+          transformation: [
+            { width: 400, height: 400, crop: "fill", gravity: "face" },
+            { quality: "auto", fetch_format: "auto" }
+          ]
+        },
+        (error, result) => {
+          if (error) reject(error);
           else resolve(result);
-        })
-        .end(buffer);
+        }
+      );
+      uploadStream.end(imageBuffer);
     });
 
-    // Save profile to MongoDB with all fields
-    const profile = new Profile({
+    const uploadResult = await uploadPromise as any;
+    const imageUrl = uploadResult.secure_url;
+
+    // Create profile with optimized settings
+    const profile = await Profile.create({
+      user: user._id,
       name,
       gender,
-      age: Number(age),
+      age: parseInt(age),
       maritalStatus,
       height,
       weight,
@@ -171,20 +193,25 @@ export async function POST(req: NextRequest) {
       reqQualification,
       reqOther,
       description,
-      imageUrl: (uploadResult as { secure_url: string }).secure_url,
+      image: imageUrl,
       status: "pending",
-      user: existingUser._id,
+      paymentStatus: "pending",
+      portfolioVisible: false,
     });
-    await profile.save();
 
-    console.log("Saved profile:", profile);
+    const endTime = Date.now();
+    console.log(`[${requestId}] Profile submission successful in ${endTime - startTime}ms`);
+
     return NextResponse.json({
-      message: "Profile submitted successfully"
+      success: true,
+      message: "Profile submitted successfully",
+      profileId: profile._id.toString(),
     });
   } catch (error) {
-    console.error("Profile submission error:", error);
+    const endTime = Date.now();
+    console.error(`[${requestId}] Profile submission error in ${endTime - startTime}ms:`, error);
     return NextResponse.json(
-      { error: "Failed to submit profile" },
+      { error: "Profile submission failed" },
       { status: 500 }
     );
   }

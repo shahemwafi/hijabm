@@ -1,33 +1,435 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Custom CSS Variables */
 :root {
-  --background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 50%, #fce7f3 100%); /* light gold */
-  /* bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100; */
-  --foreground: #B22222; /* crimson */
+  --primary-green: #059669;
+  --primary-blue: #3b82f6;
+  --secondary-green: #10b981;
+  --accent-green: #34d399;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --background-light: #f9fafb;
+  --background-white: #ffffff;
+  --border-light: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Base Styles */
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #eff6ff 100%);
+  min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #FFD700; /* gold */
-  font-family: var(--font-geist-sans), Arial, sans-serif;
-  font-weight: bold;
+/* Typography */
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom Components */
+@layer components {
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-gradient-to-r from-green-600 to-blue-500 text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:from-green-700 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-gray-700 px-6 py-3 rounded-lg font-medium shadow-md border border-gray-300 hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2;
+  }
+
+  .btn-outline {
+    @apply border-2 border-green-600 text-green-600 px-6 py-3 rounded-lg font-medium hover:bg-green-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-200;
+  }
+
+  .card-hover {
+    @apply bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-xl hover:scale-105 transition-all duration-200;
+  }
+
+  /* Input Styles */
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .input-field:focus {
+    @apply shadow-md;
+  }
+
+  /* Form Styles */
+  .form-container {
+    @apply max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8 border border-gray-100;
+  }
+
+  /* Navigation Styles */
+  .nav-link {
+    @apply text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background: linear-gradient(to right, #059669, #3b82f6);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-green-600 to-blue-500 bg-clip-text text-transparent;
+  }
+
+  /* Section Styles */
+  .section {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-center mb-8 gradient-text;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto;
+  }
+
+  /* Container Styles */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Animation Classes */
+  .fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .scale-in {
+    animation: scaleIn 0.4s ease-out;
+  }
+
+  /* Loading Spinner */
+  .spinner {
+    @apply animate-spin rounded-full border-2 border-gray-300 border-t-green-600;
+  }
+
+  /* Status Badges */
+  .badge-success {
+    @apply bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-error {
+    @apply bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-info {
+    @apply bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  /* Grid Layouts */
+  .grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  /* Responsive Text */
+  .text-responsive {
+    @apply text-sm sm:text-base md:text-lg lg:text-xl;
+  }
+
+  /* Custom Scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #059669 #e5e7eb;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #e5e7eb;
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #059669;
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #047857;
+  }
+
+  /* Mobile-specific styles */
+  .mobile-touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  .mobile-safe-area {
+    @apply px-4 sm:px-6;
+  }
+
+  /* Mobile navigation improvements */
+  .mobile-nav-item {
+    @apply block w-full text-left px-4 py-3 text-sm sm:text-base;
+  }
+
+  /* Mobile form improvements */
+  .mobile-form-field {
+    @apply w-full px-3 py-3 text-base;
+  }
+
+  /* Mobile button improvements */
+  .mobile-btn {
+    @apply w-full py-3 px-4 text-base font-medium;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Utility Classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #059669 0%, #3b82f6 100%);
+  }
+
+  .bg-gradient-secondary {
+    background: linear-gradient(135deg, #10b981 0%, #60a5fa 100%);
+  }
+
+  .shadow-soft {
+    box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+  }
+
+  .shadow-medium {
+    box-shadow: 0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .backdrop-blur-custom {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Mobile-specific utilities */
+  .mobile-only {
+    @apply block sm:hidden;
+  }
+
+  .desktop-only {
+    @apply hidden sm:block;
+  }
+
+  .mobile-text-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .mobile-text-lg {
+    @apply text-lg sm:text-xl;
+  }
+
+  .mobile-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .mobile-margin {
+    @apply my-4 sm:my-6 lg:my-8;
+  }
+}
+
+  /* Responsive Design */
+  @media (max-width: 640px) {
+    .container-custom {
+      @apply px-4;
+    }
+    
+    .section {
+      @apply py-8;
+    }
+    
+    .section-title {
+      @apply text-2xl;
+    }
+
+    .card {
+      @apply p-4;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline {
+      @apply py-3 px-4 text-base;
+    }
+
+    .input-field {
+      @apply py-3 px-3 text-base;
+    }
+
+    /* Improve touch targets on mobile */
+    button, a, input, select, textarea {
+      @apply mobile-touch-target;
+    }
+
+    /* Better spacing for mobile */
+    .space-y-4 > * + * {
+      margin-top: 1rem;
+    }
+
+    .space-y-6 > * + * {
+      margin-top: 1.5rem;
+    }
+
+    .space-y-8 > * + * {
+      margin-top: 2rem;
+    }
+  }
+
+  /* Tablet optimizations */
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .container-custom {
+      @apply px-6;
+    }
+    
+    .section {
+      @apply py-12;
+    }
+  }
+
+  /* Large screen optimizations */
+  @media (min-width: 1025px) {
+    .container-custom {
+      @apply px-8;
+    }
+    
+    .section {
+      @apply py-16;
+    }
+  }
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Focus Styles for Accessibility */
+*:focus {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn-primary {
+    @apply border-2 border-green-600;
+  }
+  
+  .input-field {
+    @apply border-2 border-gray-600;
+  }
+}
+
+/* Dark mode support (if needed in future) */
+@media (prefers-color-scheme: dark) {
+  /* Dark mode styles can be added here */
+}
+
+/* Landscape mobile optimizations */
+@media (max-width: 640px) and (orientation: landscape) {
+  .section {
+    @apply py-6;
+  }
+  
+  .form-container {
+    @apply p-4;
+  }
 }
