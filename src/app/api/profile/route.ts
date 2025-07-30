@@ -20,14 +20,60 @@ export async function POST(req: NextRequest) {
     await dbConnect();
     const formData = await req.formData();
 
-    // Extract fields
+    // Extract all fields from form
     const name = formData.get("name") as string;
     const gender = formData.get("gender") as string;
     const age = formData.get("age") as string;
     const maritalStatus = formData.get("maritalStatus") as string;
     const height = formData.get("height") as string;
-    const country = formData.get("nationality") as string;
-    const city = formData.get("currentCity") as string;
+    const weight = formData.get("weight") as string;
+    const color = formData.get("color") as string;
+    const disability = formData.get("disability") as string;
+    const nationality = formData.get("nationality") as string;
+    
+    // Education Details
+    const qualification = formData.get("qualification") as string;
+    const college = formData.get("college") as string;
+    const university = formData.get("university") as string;
+    
+    // Job Details
+    const rank = formData.get("rank") as string;
+    const income = formData.get("income") as string;
+    const natureOfJob = formData.get("natureOfJob") as string;
+    const futurePlans = formData.get("futurePlans") as string;
+    
+    // Religion Details
+    const religion = formData.get("religion") as string;
+    const caste = formData.get("caste") as string;
+    const sect = formData.get("sect") as string;
+    
+    // Property Details
+    const home = formData.get("home") as string;
+    const size = formData.get("size") as string;
+    const propertyLocation = formData.get("propertyLocation") as string;
+    const otherProperties = formData.get("otherProperties") as string;
+    
+    // Family Details
+    const fatherOccupation = formData.get("fatherOccupation") as string;
+    const motherOccupation = formData.get("motherOccupation") as string;
+    const brothers = formData.get("brothers") as string;
+    const sisters = formData.get("sisters") as string;
+    const marriedSiblings = formData.get("marriedSiblings") as string;
+    
+    // Address
+    const currentCity = formData.get("currentCity") as string;
+    const homeTown = formData.get("homeTown") as string;
+    const addressLocation = formData.get("addressLocation") as string;
+    
+    // Requirements
+    const reqAgeLimit = formData.get("reqAgeLimit") as string;
+    const reqHeight = formData.get("reqHeight") as string;
+    const reqCity = formData.get("reqCity") as string;
+    const reqCaste = formData.get("reqCaste") as string;
+    const reqQualification = formData.get("reqQualification") as string;
+    const reqOther = formData.get("reqOther") as string;
+    
+    // Other fields
     const description = formData.get("description") as string;
     const image = formData.get("image") as File | null;
 
@@ -38,8 +84,8 @@ export async function POST(req: NextRequest) {
       age,
       maritalStatus,
       height,
-      country,
-      city,
+      nationality,
+      currentCity,
       description,
     };
     for (const [field, value] of Object.entries(requiredFields)) {
@@ -100,15 +146,45 @@ export async function POST(req: NextRequest) {
         })
         .end(buffer);
     });
-    // Save profile to MongoDB
+    // Save profile to MongoDB with all fields
     const profile = new Profile({
       name,
       gender,
       age: Number(age),
       maritalStatus,
       height,
-      country,
-      city,
+      weight,
+      color,
+      disability,
+      nationality,
+      qualification,
+      college,
+      university,
+      rank,
+      income,
+      natureOfJob,
+      futurePlans,
+      religion,
+      caste,
+      sect,
+      home,
+      size,
+      propertyLocation,
+      otherProperties,
+      fatherOccupation,
+      motherOccupation,
+      brothers,
+      sisters,
+      marriedSiblings,
+      currentCity,
+      homeTown,
+      addressLocation,
+      reqAgeLimit,
+      reqHeight,
+      reqCity,
+      reqCaste,
+      reqQualification,
+      reqOther,
       description,
       imageUrl: (uploadResult as { secure_url: string }).secure_url,
       status: "pending",

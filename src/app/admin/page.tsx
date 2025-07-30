@@ -28,8 +28,38 @@ interface Profile {
   age: number;
   maritalStatus: string;
   height: string;
-  country: string;
-  city: string;
+  weight?: string;
+  color?: string;
+  disability?: string;
+  nationality: string;
+  qualification?: string;
+  college?: string;
+  university?: string;
+  rank?: string;
+  income?: string;
+  natureOfJob?: string;
+  futurePlans?: string;
+  religion?: string;
+  caste?: string;
+  sect?: string;
+  home?: string;
+  size?: string;
+  propertyLocation?: string;
+  otherProperties?: string;
+  fatherOccupation?: string;
+  motherOccupation?: string;
+  brothers?: string;
+  sisters?: string;
+  marriedSiblings?: string;
+  currentCity: string;
+  homeTown?: string;
+  addressLocation?: string;
+  reqAgeLimit?: string;
+  reqHeight?: string;
+  reqCity?: string;
+  reqCaste?: string;
+  reqQualification?: string;
+  reqOther?: string;
   description: string;
   imageUrl: string;
   status: string;
@@ -206,7 +236,7 @@ export default function AdminPage() {
                       <FaVenusMars /> {profile.gender} | Age: {profile.age}
                     </div>
                     <div className="text-green-700 text-sm flex items-center gap-2">
-                      <FaEnvelope /> {profile.city}, {profile.country}
+                      <FaEnvelope /> {profile.currentCity}, {profile.nationality}
                     </div>
                   </div>
                 </div>
@@ -355,7 +385,7 @@ export default function AdminPage() {
                   <div className="flex items-center gap-2">
                     <FaMapMarkerAlt className="text-green-600" />
                     <span className="font-semibold">Location:</span>
-                    <span className="text-green-800">{selectedProfile.city}, {selectedProfile.country}</span>
+                    <span className="text-green-800">{selectedProfile.currentCity}, {selectedProfile.nationality}</span>
                   </div>
                   
                   <div className="flex items-center gap-2">
@@ -367,6 +397,203 @@ export default function AdminPage() {
               </div>
             </div>
             
+            {/* Personal Information */}
+            <div className="mb-6">
+              <h4 className="font-bold text-green-900 mb-3">Personal Information</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-green-50 p-4 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Weight:</span>
+                  <span className="text-green-800">{selectedProfile.weight || "N/A"}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Complexion:</span>
+                  <span className="text-green-800">{selectedProfile.color || "N/A"}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Disability:</span>
+                  <span className="text-green-800">{selectedProfile.disability || "N/A"}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Nationality:</span>
+                  <span className="text-green-800">{selectedProfile.nationality}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Education Details */}
+            {selectedProfile.qualification && (
+              <div className="mb-6">
+                <h4 className="font-bold text-green-900 mb-3">Education Details</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-blue-50 p-4 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Qualification:</span>
+                    <span className="text-blue-800">{selectedProfile.qualification}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">College:</span>
+                    <span className="text-blue-800">{selectedProfile.college || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">University:</span>
+                    <span className="text-blue-800">{selectedProfile.university || "N/A"}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Job Details */}
+            {(selectedProfile.rank || selectedProfile.income || selectedProfile.natureOfJob || selectedProfile.futurePlans) && (
+              <div className="mb-6">
+                <h4 className="font-bold text-green-900 mb-3">Job Details</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-purple-50 p-4 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Rank/Position:</span>
+                    <span className="text-purple-800">{selectedProfile.rank || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Income:</span>
+                    <span className="text-purple-800">{selectedProfile.income || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Nature of Job:</span>
+                    <span className="text-purple-800">{selectedProfile.natureOfJob || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Future Plans:</span>
+                    <span className="text-purple-800">{selectedProfile.futurePlans || "N/A"}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Religion Details */}
+            {(selectedProfile.religion || selectedProfile.caste || selectedProfile.sect) && (
+              <div className="mb-6">
+                <h4 className="font-bold text-green-900 mb-3">Religion Details</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-orange-50 p-4 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Religion:</span>
+                    <span className="text-orange-800">{selectedProfile.religion || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Caste:</span>
+                    <span className="text-orange-800">{selectedProfile.caste || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Sect:</span>
+                    <span className="text-orange-800">{selectedProfile.sect || "N/A"}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Property Details */}
+            {(selectedProfile.home || selectedProfile.size || selectedProfile.propertyLocation || selectedProfile.otherProperties) && (
+              <div className="mb-6">
+                <h4 className="font-bold text-green-900 mb-3">Property Details</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-indigo-50 p-4 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Home:</span>
+                    <span className="text-indigo-800">{selectedProfile.home || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Size:</span>
+                    <span className="text-indigo-800">{selectedProfile.size || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Location:</span>
+                    <span className="text-indigo-800">{selectedProfile.propertyLocation || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Other Properties:</span>
+                    <span className="text-indigo-800">{selectedProfile.otherProperties || "N/A"}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Family Details */}
+            {(selectedProfile.fatherOccupation || selectedProfile.motherOccupation || selectedProfile.brothers || selectedProfile.sisters || selectedProfile.marriedSiblings) && (
+              <div className="mb-6">
+                <h4 className="font-bold text-green-900 mb-3">Family Details</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-pink-50 p-4 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Father's Occupation:</span>
+                    <span className="text-pink-800">{selectedProfile.fatherOccupation || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Mother's Occupation:</span>
+                    <span className="text-pink-800">{selectedProfile.motherOccupation || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Brothers:</span>
+                    <span className="text-pink-800">{selectedProfile.brothers || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Sisters:</span>
+                    <span className="text-pink-800">{selectedProfile.sisters || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Married Siblings:</span>
+                    <span className="text-pink-800">{selectedProfile.marriedSiblings || "N/A"}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Address Details */}
+            <div className="mb-6">
+              <h4 className="font-bold text-green-900 mb-3">Address Details</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-teal-50 p-4 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Current City:</span>
+                  <span className="text-teal-800">{selectedProfile.currentCity}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Home Town:</span>
+                  <span className="text-teal-800">{selectedProfile.homeTown || "N/A"}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Location/Area:</span>
+                  <span className="text-teal-800">{selectedProfile.addressLocation || "N/A"}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Requirements */}
+            {(selectedProfile.reqAgeLimit || selectedProfile.reqHeight || selectedProfile.reqCity || selectedProfile.reqCaste || selectedProfile.reqQualification || selectedProfile.reqOther) && (
+              <div className="mb-6">
+                <h4 className="font-bold text-green-900 mb-3">Requirements</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-yellow-50 p-4 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Age Limit:</span>
+                    <span className="text-yellow-800">{selectedProfile.reqAgeLimit || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Height:</span>
+                    <span className="text-yellow-800">{selectedProfile.reqHeight || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">City:</span>
+                    <span className="text-yellow-800">{selectedProfile.reqCity || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Caste:</span>
+                    <span className="text-yellow-800">{selectedProfile.reqCaste || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Qualification:</span>
+                    <span className="text-yellow-800">{selectedProfile.reqQualification || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Other Demands:</span>
+                    <span className="text-yellow-800">{selectedProfile.reqOther || "N/A"}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* About */}
             <div className="mb-6">
               <h4 className="font-bold text-green-900 mb-2">About</h4>
               <p className="text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-lg">
