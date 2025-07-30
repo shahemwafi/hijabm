@@ -78,6 +78,9 @@ export default function AdminPage() {
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showPostRishtaModal, setShowPostRishtaModal] = useState(false);
+  const [editingProfile, setEditingProfile] = useState<Profile | null>(null);
 
   async function handleLogin() {
     if (
@@ -159,6 +162,109 @@ export default function AdminPage() {
     setShowModal(false);
   }
 
+  function openEditModal(profile: Profile) {
+    setEditingProfile(profile);
+    setShowEditModal(true);
+  }
+
+  function closeEditModal() {
+    setEditingProfile(null);
+    setShowEditModal(false);
+  }
+
+  async function handleEditProfile(formData: FormData) {
+    if (!editingProfile) return;
+    
+    setActionLoading(editingProfile._id + "edit");
+    try {
+      const res = await fetch(`/api/profile/${editingProfile._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          gender: formData.get("gender"),
+          age: parseInt(formData.get("age") as string),
+          maritalStatus: formData.get("maritalStatus"),
+          height: formData.get("height"),
+          weight: formData.get("weight"),
+          color: formData.get("color"),
+          disability: formData.get("disability"),
+          nationality: formData.get("nationality"),
+          qualification: formData.get("qualification"),
+          college: formData.get("college"),
+          university: formData.get("university"),
+          rank: formData.get("rank"),
+          income: formData.get("income"),
+          natureOfJob: formData.get("natureOfJob"),
+          futurePlans: formData.get("futurePlans"),
+          religion: formData.get("religion"),
+          caste: formData.get("caste"),
+          sect: formData.get("sect"),
+          home: formData.get("home"),
+          size: formData.get("size"),
+          propertyLocation: formData.get("propertyLocation"),
+          otherProperties: formData.get("otherProperties"),
+          fatherOccupation: formData.get("fatherOccupation"),
+          motherOccupation: formData.get("motherOccupation"),
+          brothers: formData.get("brothers"),
+          sisters: formData.get("sisters"),
+          marriedSiblings: formData.get("marriedSiblings"),
+          currentCity: formData.get("currentCity"),
+          homeTown: formData.get("homeTown"),
+          addressLocation: formData.get("addressLocation"),
+          reqAgeLimit: formData.get("reqAgeLimit"),
+          reqHeight: formData.get("reqHeight"),
+          reqCity: formData.get("reqCity"),
+          reqCaste: formData.get("reqCaste"),
+          reqQualification: formData.get("reqQualification"),
+          reqOther: formData.get("reqOther"),
+          description: formData.get("description"),
+          AccountHolder: formData.get("AccountHolder"),
+        }),
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        setProfiles(prev => prev.map(p => 
+          p._id === editingProfile._id ? { ...p, ...data.profile } : p
+        ));
+        closeEditModal();
+        alert("Profile updated successfully!");
+      } else {
+        const data = await res.json();
+        setError(data.error || "Failed to update profile");
+      }
+    } catch {
+      setError("Failed to update profile");
+    } finally {
+      setActionLoading(null);
+    }
+  }
+
+  async function handlePostRishta(formData: FormData) {
+    setActionLoading("post-rishta");
+    try {
+      const res = await fetch("/api/admin/post-rishta", {
+        method: "POST",
+        body: formData,
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        alert("Rishta profile posted successfully!");
+        setShowPostRishtaModal(false);
+        fetchProfiles(); // Refresh the list
+      } else {
+        const data = await res.json();
+        setError(data.error || "Failed to post rishta");
+      }
+    } catch {
+      setError("Failed to post rishta");
+    } finally {
+      setActionLoading(null);
+    }
+  }
+
   if (!authed) {
     return (
       <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-6">
@@ -197,9 +303,17 @@ export default function AdminPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex flex-col items-center p-6">
       <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-5xl w-full border border-green-100">
-        <h1 className="text-3xl font-extrabold text-green-900 mb-6 drop-shadow text-center">
-          All Rishta Profiles
-        </h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-extrabold text-green-900 drop-shadow">
+            All Rishta Profiles
+          </h1>
+          <button
+            onClick={() => setShowPostRishtaModal(true)}
+            className="bg-gradient-to-r from-green-600 to-blue-500 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:from-green-700 hover:to-blue-600 transition-all transform hover:scale-105"
+          >
+            Post New Rishta
+          </button>
+        </div>
         {loading ? (
           <div className="text-green-700 text-center">Loading profiles...</div>
         ) : profiles.length === 0 ? (
@@ -295,6 +409,12 @@ export default function AdminPage() {
                     onClick={() => openProfileModal(profile)}
                   >
                     <FaEye /> View More
+                  </button>
+                  <button
+                    className="flex-1 bg-yellow-600 text-white py-2 rounded-full font-semibold shadow hover:bg-yellow-700 transition flex items-center justify-center gap-2"
+                    onClick={() => openEditModal(profile)}
+                  >
+                    <FaUser /> Edit
                   </button>
                   {profile.status !== "approved" && (
                     <button
@@ -686,6 +806,444 @@ export default function AdminPage() {
                 </button>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Profile Modal */}
+      {showEditModal && editingProfile && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-green-900">Edit Profile</h2>
+              <button
+                onClick={closeEditModal}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                &times;
+              </button>
+            </div>
+            
+            <form onSubmit={(e) => { e.preventDefault(); handleEditProfile(new FormData(e.currentTarget)); }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Personal Information */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-green-900">Personal Information</h3>
+                  <input
+                    name="name"
+                    defaultValue={editingProfile.name}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Name"
+                    required
+                  />
+                  <select
+                    name="gender"
+                    defaultValue={editingProfile.gender}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                  <input
+                    name="age"
+                    type="number"
+                    defaultValue={editingProfile.age}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Age"
+                    required
+                  />
+                  <input
+                    name="maritalStatus"
+                    defaultValue={editingProfile.maritalStatus}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Marital Status"
+                    required
+                  />
+                  <input
+                    name="height"
+                    defaultValue={editingProfile.height}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Height"
+                    required
+                  />
+                  <input
+                    name="weight"
+                    defaultValue={editingProfile.weight || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Weight"
+                  />
+                  <input
+                    name="color"
+                    defaultValue={editingProfile.color || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Complexion"
+                  />
+                  <input
+                    name="nationality"
+                    defaultValue={editingProfile.nationality}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Nationality"
+                    required
+                  />
+                </div>
+
+                {/* Education & Career */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-green-900">Education & Career</h3>
+                  <input
+                    name="qualification"
+                    defaultValue={editingProfile.qualification || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Qualification"
+                  />
+                  <input
+                    name="college"
+                    defaultValue={editingProfile.college || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="College"
+                  />
+                  <input
+                    name="university"
+                    defaultValue={editingProfile.university || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="University"
+                  />
+                  <input
+                    name="rank"
+                    defaultValue={editingProfile.rank || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Rank/Position"
+                  />
+                  <input
+                    name="income"
+                    defaultValue={editingProfile.income || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Income"
+                  />
+                  <input
+                    name="natureOfJob"
+                    defaultValue={editingProfile.natureOfJob || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Nature of Job"
+                  />
+                </div>
+
+                {/* Family Information */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-green-900">Family Information</h3>
+                  <input
+                    name="religion"
+                    defaultValue={editingProfile.religion || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Religion"
+                  />
+                  <input
+                    name="caste"
+                    defaultValue={editingProfile.caste || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Caste"
+                  />
+                  <input
+                    name="sect"
+                    defaultValue={editingProfile.sect || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Sect"
+                  />
+                  <input
+                    name="fatherOccupation"
+                    defaultValue={editingProfile.fatherOccupation || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Father's Occupation"
+                  />
+                  <input
+                    name="motherOccupation"
+                    defaultValue={editingProfile.motherOccupation || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Mother's Occupation"
+                  />
+                </div>
+
+                {/* Address */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-green-900">Address</h3>
+                  <input
+                    name="currentCity"
+                    defaultValue={editingProfile.currentCity}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Current City"
+                    required
+                  />
+                  <input
+                    name="homeTown"
+                    defaultValue={editingProfile.homeTown || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Home Town"
+                  />
+                  <input
+                    name="addressLocation"
+                    defaultValue={editingProfile.addressLocation || ""}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Address Location"
+                  />
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="mt-6">
+                <h3 className="font-bold text-green-900 mb-2">Description</h3>
+                <textarea
+                  name="description"
+                  defaultValue={editingProfile.description}
+                  rows={4}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  placeholder="Description"
+                  required
+                />
+              </div>
+
+              {/* Account Information */}
+              <div className="mt-6">
+                <h3 className="font-bold text-green-900 mb-2">Account Information</h3>
+                <input
+                  name="AccountHolder"
+                  defaultValue={editingProfile.AccountHolder || ""}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  placeholder="Account Holder Name"
+                />
+              </div>
+
+              <div className="flex gap-3 mt-6 pt-4 border-t">
+                <button
+                  type="button"
+                  onClick={closeEditModal}
+                  className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={actionLoading === editingProfile._id + "edit"}
+                  className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50"
+                >
+                  {actionLoading === editingProfile._id + "edit" ? "Updating..." : "Update Profile"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Post Rishta Modal */}
+      {showPostRishtaModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-green-900">Post New Rishta</h2>
+              <button
+                onClick={() => setShowPostRishtaModal(false)}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                &times;
+              </button>
+            </div>
+            
+            <form onSubmit={(e) => { e.preventDefault(); handlePostRishta(new FormData(e.currentTarget)); }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Personal Information */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-green-900">Personal Information</h3>
+                  <input
+                    name="name"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Name"
+                    required
+                  />
+                  <select
+                    name="gender"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                  <input
+                    name="age"
+                    type="number"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Age"
+                    required
+                  />
+                  <input
+                    name="maritalStatus"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Marital Status"
+                    required
+                  />
+                  <input
+                    name="height"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Height"
+                    required
+                  />
+                  <input
+                    name="weight"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Weight"
+                  />
+                  <input
+                    name="color"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Complexion"
+                  />
+                  <input
+                    name="nationality"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Nationality"
+                    required
+                  />
+                </div>
+
+                {/* Education & Career */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-green-900">Education & Career</h3>
+                  <input
+                    name="qualification"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Qualification"
+                  />
+                  <input
+                    name="college"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="College"
+                  />
+                  <input
+                    name="university"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="University"
+                  />
+                  <input
+                    name="rank"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Rank/Position"
+                  />
+                  <input
+                    name="income"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Income"
+                  />
+                  <input
+                    name="natureOfJob"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Nature of Job"
+                  />
+                </div>
+
+                {/* Family Information */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-green-900">Family Information</h3>
+                  <input
+                    name="religion"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Religion"
+                  />
+                  <input
+                    name="caste"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Caste"
+                  />
+                  <input
+                    name="sect"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Sect"
+                  />
+                  <input
+                    name="fatherOccupation"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Father's Occupation"
+                  />
+                  <input
+                    name="motherOccupation"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Mother's Occupation"
+                  />
+                </div>
+
+                {/* Address */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-green-900">Address</h3>
+                  <input
+                    name="currentCity"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Current City"
+                    required
+                  />
+                  <input
+                    name="homeTown"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Home Town"
+                  />
+                  <input
+                    name="addressLocation"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="Address Location"
+                  />
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="mt-6">
+                <h3 className="font-bold text-green-900 mb-2">Description</h3>
+                <textarea
+                  name="description"
+                  rows={4}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  placeholder="Description"
+                  required
+                />
+              </div>
+
+              {/* Image Upload */}
+              <div className="mt-6">
+                <h3 className="font-bold text-green-900 mb-2">Profile Image</h3>
+                <input
+                  name="image"
+                  type="file"
+                  accept="image/*"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
+
+              {/* Account Information */}
+              <div className="mt-6">
+                <h3 className="font-bold text-green-900 mb-2">Account Information</h3>
+                <input
+                  name="AccountHolder"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  placeholder="Account Holder Name"
+                />
+              </div>
+
+              <div className="flex gap-3 mt-6 pt-4 border-t">
+                <button
+                  type="button"
+                  onClick={() => setShowPostRishtaModal(false)}
+                  className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={actionLoading === "post-rishta"}
+                  className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50"
+                >
+                  {actionLoading === "post-rishta" ? "Posting..." : "Post Rishta"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

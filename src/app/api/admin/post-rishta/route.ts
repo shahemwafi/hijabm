@@ -1,19 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Profile from "@/models/Profile";
-import User from "@/models/User";
-import { getAuthUser } from "@/lib/auth";
-import { containsContactInfo } from "@/lib/validate";
 import cloudinary from "@/lib/cloudinary";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
-  const startTime = Date.now();
-  const requestId = Math.random().toString(36).substring(7);
-  
   try {
-    console.log(`[${requestId}] Profile submission started`);
     const formData = await req.formData();
 
     // Personal Information
@@ -66,8 +59,9 @@ export async function POST(req: NextRequest) {
     // Other fields
     const description = formData.get("description") as string;
     const image = formData.get("image") as File | null;
+    const AccountHolder = formData.get("AccountHolder") as string;
 
-    // Validate required fields with optimized validation
+    // Validate required fields
     const requiredFields = {
       name,
       gender,
@@ -86,12 +80,6 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
-      if (containsContactInfo(value)) {
-        return NextResponse.json(
-          { error: `Contact info is not allowed in ${field}` },
-          { status: 400 }
-        );
-      }
     }
     
     if (!image) {
@@ -101,36 +89,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Get authenticated user with optimized query
-    const authUser = await getAuthUser(req);
-    if (!authUser || !authUser.email) {
-      return NextResponse.json(
-        { error: "Authentication required" },
-        { status: 401 }
-      );
-    }
-
     await dbConnect();
 
-    // Find user with optimized query
-    const user = await User.findOne({ email: authUser.email }).select('_id').lean();
-    if (!user) {
-      return NextResponse.json(
-        { error: "User not found" },
-        { status: 404 }
-      );
-    }
-
-    // Check if profile already exists with optimized query
-    const existingProfile = await Profile.findOne({ user: user._id as string }).select('_id').lean();
-    if (existingProfile) {
-      return NextResponse.json(
-        { error: "Profile already exists" },
-        { status: 400 }
-      );
-    }
-
-    // Upload image to Cloudinary with optimized settings
+    // Upload image to Cloudinary
     const imageBuffer = Buffer.from(await image.arrayBuffer());
     const uploadPromise = new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
@@ -152,9 +113,8 @@ export async function POST(req: NextRequest) {
     const uploadResult = await uploadPromise as { secure_url: string };
     const imageUrl = uploadResult.secure_url;
 
-    // Create profile with optimized settings
+    // Create profile with admin privileges (auto-approved)
     const profile = await Profile.create({
-      user: user._id as string,
       name,
       gender,
       age: parseInt(age),
@@ -194,48 +154,23 @@ export async function POST(req: NextRequest) {
       reqOther,
       description,
       image: imageUrl,
-      status: "pending",
-      paymentStatus: "pending",
-      portfolioVisible: false,
+      status: "approved", // Auto-approved when posted by admin
+      paymentStatus: "paid", // Auto-marked as paid
+      portfolioVisible: true,
+      AccountHolder,
+      user: null, // No user associated since it's admin-posted
     });
-
-    const endTime = Date.now();
-    console.log(`[${requestId}] Profile submission successful in ${endTime - startTime}ms`);
 
     return NextResponse.json({
       success: true,
-      message: "Profile submitted successfully",
+      message: "Rishta profile posted successfully by admin",
       profileId: profile._id.toString(),
     });
   } catch (error) {
-    const endTime = Date.now();
-    console.error(`[${requestId}] Profile submission error in ${endTime - startTime}ms:`, error);
+    console.error("Admin rishta posting error:", error);
     return NextResponse.json(
-      { error: "Profile submission failed" },
+      { error: "Failed to post rishta profile" },
       { status: 500 }
     );
   }
-}
-
-
-export async function GET(req: NextRequest) {
-  await dbConnect();
-
-  const { searchParams } = new URL(req.url);
-  const status = searchParams.get("status");
-
-  const filter: Record<string, unknown> = {};
-  if (status) {
-    filter.status = status;
-  }
-
-  try {
-    const profiles = await Profile.find(filter).sort({ createdAt: -1 }).lean();
-    return NextResponse.json({ profiles });
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to fetch profiles" },
-      { status: 500 }
-    );
-  }
-}
+} 

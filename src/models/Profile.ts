@@ -61,7 +61,7 @@ export interface IProfile extends Document {
   AccountHolder?: string;
   paymentStatus: "pending" | "paid";
   paymentScreenshot?: string;
-  user: Types.ObjectId;
+  user?: Types.ObjectId;
   createdAt: Date;
 }
 
@@ -134,7 +134,7 @@ const ProfileSchema = new Schema<IProfile>({
     default: "pending",
   },
   paymentScreenshot: { type: String },
-  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  user: { type: Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now },
 });
 
