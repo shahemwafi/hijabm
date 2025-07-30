@@ -56,37 +56,37 @@ export default function RootLayout({
                 <div className="hidden md:flex items-center space-x-8">
                   <Link 
                     href="/" 
-                    className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200"
+                    className="text-gray-700 hover:text-green-600 hover:bg-green-50 px-3 py-2 rounded-lg font-medium transition-all duration-200"
                   >
                     Home
                   </Link>
                   <Link 
                     href="/about" 
-                    className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200"
+                    className="text-gray-700 hover:text-green-600 hover:bg-green-50 px-3 py-2 rounded-lg font-medium transition-all duration-200"
                   >
                     About
                   </Link>
                   <Link 
                     href="/pay" 
-                    className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200"
+                    className="text-gray-700 hover:text-green-600 hover:bg-green-50 px-3 py-2 rounded-lg font-medium transition-all duration-200"
                   >
                     Post Rishta
                   </Link>
                   <Link 
                     href="/portfolio" 
-                    className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200"
+                    className="text-gray-700 hover:text-green-600 hover:bg-green-50 px-3 py-2 rounded-lg font-medium transition-all duration-200"
                   >
                     Portfolio
                   </Link>
                   <Link 
                     href="/terms" 
-                    className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200"
+                    className="text-gray-700 hover:text-green-600 hover:bg-green-50 px-3 py-2 rounded-lg font-medium transition-all duration-200"
                   >
                     Terms
                   </Link>
                   <Link 
                     href="/contact" 
-                    className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200"
+                    className="text-gray-700 hover:text-green-600 hover:bg-green-50 px-3 py-2 rounded-lg font-medium transition-all duration-200"
                   >
                     Contact
                   </Link>

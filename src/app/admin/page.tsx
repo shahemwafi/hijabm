@@ -403,43 +403,43 @@ export default function AdminPage() {
                     </div>
                   )}
                 </div>
-                <div className="flex gap-2 mt-2">
+                <div className="flex flex-wrap gap-2 mt-4">
                   <button
-                    className="flex-1 bg-blue-600 text-white py-2 rounded-full font-semibold shadow hover:bg-blue-700 transition flex items-center justify-center gap-2"
+                    className="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200 flex items-center gap-2 shadow-sm"
                     onClick={() => openProfileModal(profile)}
                   >
-                    <FaEye /> View More
+                    <FaEye className="w-4 h-4" /> View
                   </button>
                   <button
-                    className="flex-1 bg-yellow-600 text-white py-2 rounded-full font-semibold shadow hover:bg-yellow-700 transition flex items-center justify-center gap-2"
+                    className="px-4 py-2 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 transition-colors duration-200 flex items-center gap-2 shadow-sm"
                     onClick={() => openEditModal(profile)}
                   >
-                    <FaUser /> Edit
+                    <FaUser className="w-4 h-4" /> Edit
                   </button>
                   {profile.status !== "approved" && (
                     <button
-                      className="flex-1 bg-green-600 text-white py-2 rounded-full font-semibold shadow hover:bg-green-700 transition disabled:opacity-60 flex items-center justify-center gap-2"
+                      className="px-4 py-2 bg-green-500 text-white text-sm font-medium rounded-lg hover:bg-green-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-sm"
                       disabled={actionLoading === profile._id + "approved"}
                       onClick={() => updateStatus(profile._id, "approved")}
                     >
-                      <FaCheck /> Approve
+                      <FaCheck className="w-4 h-4" /> Approve
                     </button>
                   )}
                   {profile.status !== "rejected" && (
                     <button
-                      className="flex-1 bg-red-500 text-white py-2 rounded-full font-semibold shadow hover:bg-red-600 transition disabled:opacity-60 flex items-center justify-center gap-2"
+                      className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-sm"
                       disabled={actionLoading === profile._id + "rejected"}
                       onClick={() => updateStatus(profile._id, "rejected")}
                     >
-                      <FaTimes /> Reject
+                      <FaTimes className="w-4 h-4" /> Reject
                     </button>
                   )}
                   <button
-                    className="flex-1 bg-gray-600 text-white py-2 rounded-full font-semibold shadow hover:bg-gray-700 transition disabled:opacity-60 flex items-center justify-center gap-2"
+                    className="px-4 py-2 bg-gray-500 text-white text-sm font-medium rounded-lg hover:bg-gray-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-sm"
                     disabled={actionLoading === profile._id + "delete"}
                     onClick={() => deleteProfile(profile._id)}
                   >
-                    <FaTrash /> Delete
+                    <FaTrash className="w-4 h-4" /> Delete
                   </button>
                 </div>
               </div>

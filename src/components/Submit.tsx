@@ -80,57 +80,21 @@ export default function SubmitPage({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 py-4 sm:py-6 lg:py-8">
-      <div className="container-custom max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="form-container bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-12">
+      <div className="container-custom max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 max-h-[90vh] overflow-y-auto">
           {/* Header */}
-          <div className="text-center mb-6 sm:mb-8 lg:mb-10">
-            <div className="flex justify-center mb-4 sm:mb-6">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center shadow-xl">
-                <FaUser className="text-white text-xl sm:text-2xl lg:text-3xl" />
-              </div>
-            </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3">
-              Submit Your Rishta Profile
-            </h1>
-            <p className="text-gray-600 text-sm sm:text-base lg:text-lg max-w-3xl mx-auto">
-              Create your profile with dignity and respect. All information is kept private and secure.
-            </p>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-green-900">Submit Your Rishta Profile</h2>
           </div>
 
-          {/* Progress Indicator */}
-          <div className="flex items-center justify-center mb-6 sm:mb-8 lg:mb-10">
-            <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-6">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base lg:text-lg shadow-lg">
-                1
-              </div>
-              <div className="w-12 h-1 sm:w-16 sm:h-1.5 lg:w-24 bg-green-200 rounded-full"></div>
-              <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm sm:text-base lg:text-lg">
-                2
-              </div>
-              <div className="w-12 h-1 sm:w-16 sm:h-1.5 lg:w-24 bg-gray-200 rounded-full"></div>
-              <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm sm:text-base lg:text-lg">
-                3
-              </div>
-            </div>
-          </div>
-
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6 sm:space-y-8 lg:space-y-10">
-            {/* PERSONAL INFORMATION */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaUser className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Personal Information</h2>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
-                    Gender <span className="text-red-500">*</span>
-                  </label>
+          <form ref={formRef} onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Personal Information */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-green-900">Personal Information</h3>
+                
                   <select
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="gender"
                     required
                   >
@@ -138,527 +102,274 @@ export default function SubmitPage({
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
-                </div>
 
-                <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
-                    Full Name <span className="text-red-500">*</span>
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="name"
-                    placeholder="Enter your full name"
+                  placeholder="Full Name"
                     required
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
-                    Date of Birth <span className="text-red-500">*</span>
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="dob"
                     type="date"
                     required
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
-                    Marital Status <span className="text-red-500">*</span>
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="maritalStatus"
-                    placeholder="e.g., Never Married, Divorced"
+                  placeholder="Marital Status"
                     required
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
-                    Height <span className="text-red-500">*</span>
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="height"
-                    placeholder="e.g., 5ft 6in"
+                  placeholder="Height"
                     required
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
-                    Weight
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="weight"
-                    placeholder="Weight in kg"
+                  placeholder="Weight"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
-                    Complexion
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="color"
-                    placeholder="e.g., Fair, Wheatish"
+                  placeholder="Complexion"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">
-                    Nationality <span className="text-red-500">*</span>
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="nationality"
-                    placeholder="Your nationality"
+                  placeholder="Nationality"
                     required
                   />
-                </div>
-              </div>
-            </div>
-
-            {/* EDUCATION DETAILS */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaUniversity className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Education Details</h2>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Qualification <span className="text-red-500">*</span>
-                  </label>
+              {/* Education & Career */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-green-900">Education & Career</h3>
+                
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="qualification"
-                    placeholder="e.g., Bachelor's, Master's"
-                    required
+                  placeholder="Qualification"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    College/University
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="college"
-                    placeholder="College name"
+                  placeholder="College"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    University
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="university"
-                    placeholder="University name"
-                  />
-                </div>
-              </div>
-            </div>
+                  placeholder="University"
+                />
 
-            {/* JOB DETAILS */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaBriefcase className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Job Details</h2>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Position/Rank
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="rank"
-                    placeholder="e.g., Software Engineer, Manager"
+                  placeholder="Rank/Position"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Monthly Income
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="income"
-                    placeholder="Monthly income"
+                  placeholder="Income"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Nature of Job
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="natureOfJob"
-                    placeholder="e.g., Private, Government"
+                  placeholder="Nature of Job"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Future Plans
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="futurePlans"
-                    placeholder="Your future career plans"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* RELIGION DETAILS */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaCheckCircle className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Religion Details</h2>
+                  placeholder="Future Plans"
+                />
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Religion <span className="text-red-500">*</span>
-                  </label>
+              {/* Religion Details */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-green-900">Religion Details</h3>
+                
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="religion"
-                    placeholder="Your religion"
+                  placeholder="Religion"
                     required
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Caste
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="caste"
-                    placeholder="Your caste"
+                  placeholder="Caste"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Sect
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="sect"
-                    placeholder="Your sect"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* PROPERTY DETAILS */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaHome className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Property Details</h2>
+                  placeholder="Sect"
+                />
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Home Type
-                  </label>
+              {/* Property Details */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-green-900">Property Details</h3>
+                
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="home"
-                    placeholder="e.g., Owned, Rented"
+                  placeholder="Home Type"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Property Size
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="size"
-                    placeholder="e.g., 5 Marla, 1 Kanal"
+                  placeholder="Property Size"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Location
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="propertyLocation"
-                    placeholder="Property location"
+                  placeholder="Property Location"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Other Properties
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="otherProperties"
-                    placeholder="Any other properties"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* FAMILY DETAILS */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaUsers className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Family Details</h2>
+                  placeholder="Other Properties"
+                />
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Father&apos;s Occupation
-                  </label>
+              {/* Family Information */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-green-900">Family Information</h3>
+                
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="fatherOccupation"
-                    placeholder="Father's profession"
+                  placeholder="Father's Occupation"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Mother&apos;s Occupation
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="motherOccupation"
-                    placeholder="Mother's profession"
+                  placeholder="Mother's Occupation"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Brothers Details
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="brothers"
-                    placeholder="Number and details of brothers"
+                  placeholder="Brothers Details"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Sisters Details
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="sisters"
-                    placeholder="Number and details of sisters"
+                  placeholder="Sisters Details"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Married Siblings
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="marriedSiblings"
-                    placeholder="Number of married siblings"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* ADDRESS */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaMapMarkerAlt className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Address</h2>
+                  placeholder="Married Siblings"
+                />
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Current City <span className="text-red-500">*</span>
-                  </label>
+              {/* Address */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-green-900">Address</h3>
+                
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="currentCity"
-                    placeholder="Your current city"
+                  placeholder="Current City"
                     required
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Home Town
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="homeTown"
-                    placeholder="Your home town"
+                  placeholder="Home Town"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Country
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="addressLocation"
-                    placeholder="Your country"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* REQUIREMENTS */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaListUl className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Your Requirements</h2>
+                  placeholder="Country"
+                />
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Age Limit
-                  </label>
+              {/* Requirements */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-green-900">Your Requirements</h3>
+                
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="reqAgeLimit"
-                    placeholder="Preferred age range"
+                  placeholder="Age Limit"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Height Preference
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="reqHeight"
-                    placeholder="Preferred height"
+                  placeholder="Height Preference"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    City Preference
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="reqCity"
-                    placeholder="Preferred cities"
+                  placeholder="City Preference"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Caste Preference
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="reqCaste"
-                    placeholder="Preferred caste"
+                  placeholder="Caste Preference"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Qualification Preference
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="reqQualification"
-                    placeholder="Preferred qualification"
+                  placeholder="Qualification Preference"
                   />
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Other Requirements
-                  </label>
                   <input
-                    className="input-field"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     name="reqOther"
-                    placeholder="Any other requirements"
+                  placeholder="Other Requirements"
                   />
-                </div>
               </div>
             </div>
 
-            {/* DESCRIPTION */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaInfoCircle className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Profile Description</h2>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  About You <span className="text-red-500">*</span>
-                </label>
+            {/* Description */}
+            <div className="mt-6">
+              <h3 className="font-bold text-green-900 mb-2">Description</h3>
                 <textarea
-                  className="input-field"
                   name="description"
                   rows={4}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   placeholder="Tell us about yourself, your values, and what you're looking for. Please do not include any contact information."
                   required
                 />
-                                        <p className="text-xs text-gray-500 mt-2">
-                          Share your background, values, and what you&apos;re looking for. No contact information allowed.
-                        </p>
-              </div>
+                <p className="text-xs text-gray-500 mt-2">
+                Share your background, values, and what you&rsquo;re looking for. No contact information allowed.
+                </p>
             </div>
 
-            {/* IMAGE UPLOAD */}
-            <div className="card">
-              <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6 lg:mb-8">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center">
-                  <FaImage className="text-white text-sm sm:text-base lg:text-lg" />
-                </div>
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800">Profile Image</h2>
-              </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Upload Photo <span className="text-red-500">*</span>
-                  </label>
+            {/* Image Upload */}
+            <div className="mt-6">
+              <h3 className="font-bold text-green-900 mb-2">Profile Image</h3>
                   <div className="flex items-center justify-center w-full">
                     <label className="flex flex-col items-center justify-center w-full h-24 sm:h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -677,11 +388,10 @@ export default function SubmitPage({
                         className="hidden"
                       />
                     </label>
-                  </div>
                 </div>
                 
                 {imagePreview && (
-                  <div className="flex justify-center">
+                <div className="flex justify-center mt-4">
                     <div className="relative">
                       <Image
                         src={imagePreview}
@@ -693,18 +403,17 @@ export default function SubmitPage({
                     </div>
                   </div>
                 )}
-              </div>
             </div>
 
             {/* Submit Button */}
-            <div className="text-center">
+            <div className="flex gap-3 mt-6 pt-4 border-t">
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-primary text-sm sm:text-base lg:text-lg px-6 sm:px-8 lg:px-12 py-2.5 sm:py-3 lg:py-4 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
+                className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50"
               >
                 {loading ? (
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center justify-center space-x-2">
                     <FaSpinner className="animate-spin" />
                     <span>Submitting...</span>
                   </div>
@@ -716,13 +425,13 @@ export default function SubmitPage({
 
             {/* Messages */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm sm:text-base">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm sm:text-base mt-4">
                 {error}
               </div>
             )}
             
             {success && (
-              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm sm:text-base">
+              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm sm:text-base mt-4">
                 {success}
               </div>
             )}
