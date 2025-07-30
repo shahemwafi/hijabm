@@ -25,7 +25,7 @@ export default function ProfileView({ profile, setSelectedProfile }: { profile: 
           Gender: {profile.gender} | Age: {profile.age}
         </div>
         <div className="text-green-700 text-md mb-1">
-          {profile.city}, {profile.country}
+          {profile.currentCity}, {profile.nationality}
         </div>
         <div className="text-green-700 text-md mb-1">
           Height: {profile.height}
