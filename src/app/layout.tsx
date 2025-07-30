@@ -41,6 +41,9 @@ export default async function RootLayout({
             <Link href="/portfolio">Portfolio</Link>
             <Link href="/terms">Terms</Link>
             <Link href="/contact">Contact</Link>
+            {session && (
+              <Link href="/profile">My Profile</Link>
+            )}
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {(session?.user as any)?.isAdmin && (
               <Link href="/admin">Admin</Link>
