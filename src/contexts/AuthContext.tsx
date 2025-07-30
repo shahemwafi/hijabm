@@ -22,22 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const res = await fetch('/api/auth/me');
       if (res.ok) {
         const data = await res.json();
-        // Also check database for latest admin status
-        const debugRes = await fetch('/api/debug-user');
-        if (debugRes.ok) {
-          const debugData = await debugRes.json();
-          if (debugData.authenticated && debugData.dbUser) {
-            // Use database admin status
-            setUser({
-              ...data.user,
-              isAdmin: debugData.dbUser.isAdmin
-            });
-          } else {
-            setUser(data.user);
-          }
-        } else {
-          setUser(data.user);
-        }
+        setUser(data.user);
       } else {
         setUser(null);
       }
@@ -59,21 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = await res.json();
 
       if (res.ok) {
-        // Check database for admin status after login
-        const debugRes = await fetch('/api/debug-user');
-        if (debugRes.ok) {
-          const debugData = await debugRes.json();
-          if (debugData.authenticated && debugData.dbUser) {
-            setUser({
-              ...data.user,
-              isAdmin: debugData.dbUser.isAdmin
-            });
-          } else {
-            setUser(data.user);
-          }
-        } else {
-          setUser(data.user);
-        }
+        setUser(data.user);
         return true;
       } else {
         return false;
@@ -107,8 +78,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
-      setUser(null);
     } catch {
+      // Ignore logout errors
+    } finally {
       setUser(null);
     }
   };

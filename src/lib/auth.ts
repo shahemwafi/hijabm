@@ -7,11 +7,18 @@ import User from '@/models/User';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
+// Optimize bcrypt rounds for development vs production
+const BCRYPT_ROUNDS = process.env.NODE_ENV === 'production' ? 12 : 8;
+
 export interface AuthUser {
   id: string;
   email: string;
   isAdmin?: boolean;
 }
+
+// Cache for user data to reduce database calls
+const userCache = new Map<string, { user: any; timestamp: number }>();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 // Generate JWT token
 export function generateToken(user: AuthUser): string {
@@ -44,12 +51,36 @@ export async function getAuthUserFromCookies(): Promise<AuthUser | null> {
   return verifyToken(token);
 }
 
+// Get user with caching
+async function getCachedUser(email: string) {
+  const cached = userCache.get(email);
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    return cached.user;
+  }
+  
+  await dbConnect();
+  const user = await User.findOne({ email }).lean();
+  
+  if (user) {
+    userCache.set(email, { user, timestamp: Date.now() });
+  }
+  
+  return user;
+}
+
+// Clear user cache
+export function clearUserCache(email?: string) {
+  if (email) {
+    userCache.delete(email);
+  } else {
+    userCache.clear();
+  }
+}
+
 // Login function
 export async function loginUser(email: string, password: string): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
   try {
-    await dbConnect();
-    
-    const user = await User.findOne({ email });
+    const user = await getCachedUser(email);
     if (!user) {
       return { success: false, error: 'Invalid credentials' };
     }
@@ -83,8 +114,8 @@ export async function registerUser(email: string, password: string): Promise<{ s
       return { success: false, error: 'User already exists' };
     }
     
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash password with optimized rounds
+    const hashedPassword = await bcrypt.hash(password, BCRYPT_ROUNDS);
     
     // Create user
     const user = await User.create({
@@ -99,9 +130,12 @@ export async function registerUser(email: string, password: string): Promise<{ s
       isAdmin: user.isAdmin
     };
     
+    // Clear cache for this user
+    clearUserCache(email);
+    
     return { success: true, user: authUser };
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error('Register error:', error);
     return { success: false, error: 'Registration failed' };
   }
 } 

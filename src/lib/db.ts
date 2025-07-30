@@ -21,12 +21,22 @@ global.mongoose = cached;
 
 async function dbConnect(): Promise<Mongoose> {
   if (cached.conn) return cached.conn;
+  
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
+    const opts = {
       bufferCommands: false,
-      // useNewUrlParser and useUnifiedTopology are default in Mongoose 6+
-    });
+      maxPoolSize: 10, // Maintain up to 10 socket connections
+      serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      family: 4, // Use IPv4, skip trying IPv6
+      // Optimize for performance
+      maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
+      minPoolSize: 1, // Maintain at least 1 socket connection
+    };
+
+    cached.promise = mongoose.connect(MONGODB_URI, opts);
   }
+  
   try {
     cached.conn = await cached.promise;
   } catch (error) {
@@ -34,6 +44,7 @@ async function dbConnect(): Promise<Mongoose> {
     console.error('MongoDB connection error:', error);
     throw error;
   }
+  
   return cached.conn;
 }
 
