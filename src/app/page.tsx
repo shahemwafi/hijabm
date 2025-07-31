@@ -6,21 +6,27 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section with Video Background */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
         {/* Video Background */}
         <video
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
+          poster="/cover.png"
           className="absolute inset-0 w-full h-full object-cover z-0"
+          style={{ objectPosition: 'center center' }}
         >
           <source src="/cover.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         
+        {/* Fallback background in case video fails to load */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 z-0"></div>
+        
         {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40 z-10"></div>
+        <div className="absolute inset-0 bg-black/50 z-10"></div>
         
         {/* Content */}
         <div className="container-custom relative z-20">
