@@ -5,29 +5,44 @@ import { FaUserShield, FaHeart, FaLock, FaStar, FaUsers, FaShieldAlt, FaPray, Fa
 export default function HomePage() {
   return (
     <main className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-green-50 via-white to-blue-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-blue-600/10"></div>
-        <div className="container-custom relative z-10">
+      {/* Hero Section with Video Background */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Video Background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="/cover.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40 z-10"></div>
+        
+        {/* Content */}
+        <div className="container-custom relative z-20">
           <div className="text-center max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-center mb-4 sm:mb-6">
               <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-r from-green-600 to-blue-500 rounded-full flex items-center justify-center shadow-xl">
                 <span className="text-white font-bold text-xl sm:text-2xl lg:text-3xl">H</span>
               </div>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-gray-800 mb-4 sm:mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white mb-4 sm:mb-6 leading-tight drop-shadow-lg">
               Hijab Marriage Bureau
             </h1>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-6 sm:mb-8 px-4 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 px-4 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
               Dignified, Shariah-compliant matchmaking for Muslims worldwide. 
               Find your soulmate with respect and Islamic values.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-              <Link href="/pay" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center gap-2 group">
+              <Link href="/pay" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center gap-2 group bg-white text-green-600 hover:bg-gray-50 shadow-lg">
                 Start Your Journey
                 <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link href="/about" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
+              <Link href="/about" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 border-white text-white hover:bg-white hover:text-green-600 shadow-lg">
                 Learn More
               </Link>
             </div>
