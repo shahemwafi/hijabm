@@ -52,11 +52,11 @@ export default function HomePage() {
               Find your soulmate with respect and Islamic values.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-              <Link href="/pay" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center gap-2 group bg-white text-green-600 hover:bg-gray-50 shadow-lg">
+              <Link href="/pay" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center gap-2 group bg-gradient-to-r from-green-600 to-blue-500 text-white hover:from-green-700 hover:to-blue-600 shadow-lg rounded-lg font-semibold">
                 Start Your Journey
                 <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link href="/about" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 border-white text-white hover:bg-white hover:text-green-600 shadow-lg">
+              <Link href="/about" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 border-white text-white hover:bg-white hover:text-green-600 shadow-lg rounded-lg font-semibold">
                 Learn More
               </Link>
             </div>
