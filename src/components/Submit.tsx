@@ -82,13 +82,19 @@ export default function SubmitPage({
             <div className="space-y-4">
               <h3 className="font-bold text-green-900">Personal Information</h3>
               
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Full Name *
+              </label>
               <input
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 name="name"
-                placeholder="Name"
+                placeholder="Enter your full name"
                 required
               />
 
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Gender *
+              </label>
               <select
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 name="gender"
@@ -99,43 +105,62 @@ export default function SubmitPage({
                 <option value="female">Female</option>
               </select>
 
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Date of Birth *
+              </label>
               <input
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 name="dob"
                 type="date"
+                placeholder="Select your date of birth"
                 required
               />
 
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Marital Status *
+              </label>
               <input
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 name="maritalStatus"
-                placeholder="Marital Status"
+                placeholder="e.g., Single, Divorced, Widowed"
                 required
               />
 
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Height *
+              </label>
               <input
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 name="height"
-                placeholder="Height"
+                placeholder="e.g., 5'8 or 172 cm"
                 required
               />
 
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Weight
+              </label>
               <input
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 name="weight"
-                placeholder="Weight"
+                placeholder="e.g., 70 kg"
               />
 
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Complexion
+              </label>
               <input
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 name="color"
-                placeholder="Complexion"
+                placeholder="e.g., Fair, Wheatish, Dark"
               />
 
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Nationality *
+              </label>
               <input
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 name="nationality"
-                placeholder="Nationality"
+                placeholder="e.g., Pakistani, American, British"
                 required
               />
             </div>
