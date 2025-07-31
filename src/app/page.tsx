@@ -7,26 +7,37 @@ export default function HomePage() {
     <main className="min-h-screen">
       {/* Hero Section with Video Background */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+        {/* Background Image Fallback */}
+        <div 
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          style={{
+            backgroundImage: 'url(/cover.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        ></div>
+        
         {/* Video Background */}
         <video
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           poster="/cover.png"
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          className="absolute inset-0 w-full h-full object-cover z-10"
           style={{ objectPosition: 'center center' }}
+          onError={(e) => console.log('Video error:', e)}
+          onLoadStart={() => console.log('Video loading started')}
+          onCanPlay={() => console.log('Video can play')}
         >
           <source src="/cover.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         
-        {/* Fallback background in case video fails to load */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 z-0"></div>
-        
         {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/50 z-10"></div>
+        <div className="absolute inset-0 bg-black/40 z-20"></div>
         
         {/* Content */}
         <div className="container-custom relative z-20">
