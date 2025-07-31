@@ -28,9 +28,6 @@ export default function HomePage() {
           poster="/cover.png"
           className="absolute inset-0 w-full h-full object-cover z-10"
           style={{ objectPosition: 'center center' }}
-          onError={(e) => console.log('Video error:', e)}
-          onLoadStart={() => console.log('Video loading started')}
-          onCanPlay={() => console.log('Video can play')}
         >
           <source src="/cover.mp4" type="video/mp4" />
           Your browser does not support the video tag.
