@@ -69,16 +69,15 @@ export default function SubmitPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 py-4 sm:py-6 lg:py-8">
-      <div className="w-full">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-h-[90vh] overflow-y-auto">
-          {/* Header */}
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-green-900">Submit Your Rishta Profile</h2>
-          </div>
+    <div className="w-full">
+      <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-h-[80vh] overflow-y-auto">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-green-900">Submit Your Rishta Profile</h2>
+        </div>
 
-          <form ref={formRef} onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form ref={formRef} onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                                           {/* Personal Information */}
               <div className="space-y-4">
                 <h3 className="font-bold text-green-900">Personal Information</h3>

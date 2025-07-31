@@ -165,8 +165,8 @@ export default function PayPage({ CurrentStep, profile }: { CurrentStep: number;
 
   const [step, setStep] = useState(CurrentStep);
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-6">
-      <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-lg w-full border border-green-100 text-center">
+    <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4 sm:p-6">
+      <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 lg:p-10 w-full max-w-4xl mx-auto border border-green-100">
         {/* Progress Stepper */}
         <div className="flex items-center justify-center gap-4 mb-8">
           <div className="flex flex-col items-center">
